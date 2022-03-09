@@ -1,0 +1,64 @@
+\documentclass{protokol}
+
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{icomma}
+
+% Plovouci bloky (obrazky, tabulky)
+\usepackage{floatrow}
+\floatsetup[table]{capposition=top}
+\floatsetup[figure]{frameset={\fboxsep16pt}}
+\usepackage{subcaption}
+
+% Tabulky
+\usepackage{tabu}
+\usepackage{booktabs}
+\usepackage{csvsimple}
+\usepackage{multirow}
+\usepackage{multicol}
+
+% Jednotky
+\usepackage{siunitx}
+\sisetup{
+	locale               = DE,
+	inter-unit-product   = {% raw %}\ensuremath{{}\cdot{}},{% endraw %}
+	list-units           = single,
+	list-separator       = {; },
+	list-final-separator = \text{ a },
+	list-pair-separator  = \text{ a },
+	range-phrase         = \text{ až },
+	range-units          = single,
+}
+\usepackage{amsmath}
+
+% Obvody
+\usepackage{circuitikz}
+
+% Obrazky a grafy
+% \usepackage{graphicx}
+\graphicspath{
+	{plots/}
+	{build/plots/}
+}
+\usepackage{epstopdf}
+\epstopdfsetup{outdir=./build/plots/}
+
+\jmenopraktika={Praktikum z fyziky plazmatu}  % jmeno predmetu
+\jmeno={Pavel Kosík, Jan Slaný}                             % jmeno mericiho
+\obor={F}                               % zkratka studovaneho oboru
+\skupina={Út 15:00}                     % doba vyuky seminarni skupiny
+\rocnik={IV}
+\semestr={VIII}
+
+\cisloulohy={{"{"}}{{cookiecutter.subproject_number}}{{"}"}}
+\jmenoulohy={{"{"}}{{cookiecutter.subproject_name}}{{"}"}}
+
+\datum={{"{"}}{{cookiecutter.date}}{{"}"}}                  % datum mereni ulohy
+\tlak={{"{"}}{{cookiecutter.pressure}}{{"}"}}% [hPa]
+\teplota={{"{"}}{{cookiecutter.temperature}}{{"}"}}% [C]
+\vlhkost={{"{"}}{{cookiecutter.humidity}}{{"}"}}% [%]
+
+\begin{document}
+\header
+
+\end{document}

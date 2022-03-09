@@ -1,0 +1,22 @@
+{
+  "template": "git@bitbucket.org:Singon/school-lab-template.git",
+  "commit": "d4913be64d6bc3b38834769a5d97ccc3f4938f72",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "project_name": "Praktikum z fyziky plazmatu",
+      "project_slug": "Plasma",
+      "header_title": "Praktikum z fyziky plazmatu",
+      "header_author": "Pavel Kosík, Jan Slaný",
+      "header_fieldofstudy": "F",
+      "header_time": "Út 15:00",
+      "header_schoolyear": "IV",
+      "header_schoolterm": "VIII",
+      "_copy_without_render": [
+        "protokol.cls"
+      ],
+      "_template": "git@bitbucket.org:Singon/school-lab-template.git"
+    }
+  },
+  "directory": null
+}
