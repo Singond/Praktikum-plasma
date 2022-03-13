@@ -16,25 +16,45 @@ function D = load_data(file)
 		endif
 		error("Unknown file format");
 	endif
-	[data, pos, msg] = textscan(f, "%*d %s %s %s %s %s");
-	D.timestring = data{1};
+	[data, pos, msg] = textscan(f, "%f %s %s %s %s %s");
+	D.idx = data{1};
+	D.timestring = data{2};
 	D.timestruct = cellfun(@strptime, D.timestring, {"%H:%M:%S"});
-	D.dc = strcmp(data{2}, "DC");
-	v = strrep(data{3}, ",", ".");
+	D.timeraw = arrayfun(@mktime, D.timestruct);
+	## The timestamps are rounded off to seconds.
+	## Fit a line through them to obtain equidistant time points.
+	b = ols(D.timeraw, [D.idx, ones(size(D.idx))]);
+	D.timelinearized = b(1) .* D.idx + b(2);
+	## The mean difference between the corrected and original time values
+	## is a measure of the time bias applied by the linearization.
+	## The closer to zero, the better.
+	D.timeerror = mean(D.timelinearized - D.timeraw);
+	D.dc = strcmp(data{3}, "DC");
+	v = strrep(data{4}, ",", ".");
 	v = str2double(v);
 	v(isnan(v)) = NA;
 	D.val = v;
-	D.unit = data{4};
-	D.pass = strcmp(data{5}, "pass");
+	D.unit = data{5};
+	D.pass = strcmp(data{6}, "pass");
 
 	if (filelocal)
 		fclose(f);
 	endif
 endfunction
 
+function x = align(udata, idata)
+	x.U = udata.val;
+	x.I = idata.val;
+	starttime = min(udata.timelinearized(1), udata.timelinearized(1));
+	x.tU = udata.timelinearized - starttime;
+	x.tI = idata.timelinearized - starttime;
+end
+
 U = struct();
 I = struct();
+X = struct();
 for k = 1:7
 	U(k) = load_data(sprintf("data/voltage%02d.txt", k));
 	I(k) = load_data(sprintf("data/current%02d.txt", k));
+	X(k) = align(U(k), I(k));
 endfor
