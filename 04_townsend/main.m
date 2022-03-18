@@ -7,7 +7,12 @@ function D = process(file)
 	D.Iall = data(:,3:5);       # Current data [pA]
 	D.I = mean(D.Iall, 2);      # Average current [pA]
 	D.Eall = D.U ./ D.x;        # Electric field intensity [V/mm]
-	D.E = mean(D.Eall);         # Average electric field intensity [V)/mm]
+	D.E = mean(D.Eall);         # Average electric field intensity [V/mm]
+
+	## Fit log(I) = log(I_0) + alpha*x
+	b = ols(log(D.I), [D.x, ones(size(D.x))]);
+	D.townsend = b(1);
+	D.I0 = exp(b(2));
 endfunction
 
 E(3) = process("data/data-01.tsv");
