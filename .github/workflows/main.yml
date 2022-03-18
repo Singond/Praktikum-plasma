@@ -1,0 +1,21 @@
+name: build
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Build output
+        uses: docker://singond/lab-octave
+        run: make
+      - name: Create a release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: "${{github.tag}}"
+          token: ${{secrets.GITHUB_TOKEN}}
+          artifacts: "*.pdf"
