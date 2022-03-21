@@ -12,7 +12,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Build output
         uses: docker://singond/lab-octave
-        run: make
+        with:
+          entrypoint: make
       - name: Create a release
         uses: ncipollo/release-action@v1
         with:
