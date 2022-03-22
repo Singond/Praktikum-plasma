@@ -1,4 +1,8 @@
-0;  # Not a function
+global rt = 9;              # Tube radius [mm]
+global rr = 40;             # Resonator radius [mm]
+global me = 9.109E-31;      # Electron mass [kg]
+global perm = 8.854E-12;    # Permittivity of free space [SI]
+global ec = 1.602E-19;      # Elementary charge [C]
 
 function D = importdata(file)
 	filelocal = false;
@@ -21,10 +25,22 @@ function D = importdata(file)
 	endif
 endfunction
 
-E(1) = importdata("data/data01.tsv");
-E(2) = importdata("data/data02.tsv");
-E(3) = importdata("data/data03.tsv");
-E(4) = importdata("data/data04.tsv");
-E(5) = importdata("data/data05.tsv");
-E(6) = importdata("data/data06.tsv");
-E(7) = importdata("data/data07.tsv");
+function n = density(fr, f0)
+	global perm me rr rt ec;
+	persistent c = 8 * pi^2 * 0.271 / 0.64;
+	n = c * perm * me * (rr / rt)^2 .* (fr - f0) .* fr .* 1e12 ./ ec^2;
+end
+
+function X = process(file)
+	X = importdata(file);
+	X.df = X.fr - X.f0;
+	X.n = density(X.fr, X.f0);
+end
+
+X(1) = process("data/data01.tsv");
+X(2) = process("data/data02.tsv");
+X(3) = process("data/data03.tsv");
+X(4) = process("data/data04.tsv");
+X(5) = process("data/data05.tsv");
+X(6) = process("data/data06.tsv");
+X(7) = process("data/data07.tsv");
