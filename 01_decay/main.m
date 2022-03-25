@@ -19,7 +19,8 @@ function D = importdata(file)
 	D.tr = data(:,1);                    # Time offset at resonance [us]
 	D.fr = data(:,2);                    # Resonance frequency [MHz]
 	D.f0 = data(1,3);
-
+	D.tr(D.fr < D.f0) = [];
+	D.fr(D.fr < D.f0) = [];
 	if (filelocal)
 		fclose(f);
 	endif
