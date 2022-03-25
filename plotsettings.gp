@@ -2,9 +2,9 @@ set samples 200, 200
 set isosamples 50,50
 
 set decimalsign ','
-set border 3
-set xtics out nomirror
-set ytics out nomirror
+set border 15
+set xtics in mirror
+set ytics in mirror
 
 # Line styles (based on "set 1" from gnuplot-palettes)
 set style line 1 lw 2 lc rgb '#E41A1C' pt 13 ps 2   # red
