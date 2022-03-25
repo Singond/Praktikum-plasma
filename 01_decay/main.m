@@ -38,8 +38,8 @@ function X = process(file)
 	X.n = density(X.fr, X.f0);
 end
 
-X(1) = process("data/data01.tsv");
-X(2) = process("data/data02.tsv");
+X(2) = process("data/data01.tsv");
+X(1) = process("data/data02.tsv");
 X(3) = process("data/data03.tsv");
 X(4) = process("data/data04.tsv");
 X(5) = process("data/data05.tsv");
