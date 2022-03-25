@@ -32,10 +32,23 @@ function n = density(fr, f0)
 	n = c * perm * me * (rr / rt)^2 .* (fr - f0) .* fr .* 1e12 ./ ec^2;
 end
 
-function X = process(file)
-	X = importdata(file);
-	X.df = X.fr - X.f0;
-	X.n = density(X.fr, X.f0);
+function x = process(file)
+	x = importdata(file);
+	x.df = x.fr - x.f0;
+	x.n = density(x.fr, x.f0);
+
+	## Fit 1/n with a line to determine a (coeff. of recombination)
+	v = (1:numel(x.n)/2)';
+	b = ols(1./x.n(v), [x.tr(v), ones(size(v))]);
+	x.a_a = b(1);
+	x.n0_a = 1/b(2);
+
+	## Fit log(n) with a line to determine D (coeff. of recombination)
+	## DoL = D / Lambda^2
+	v = (8:numel(x.n)-2)';
+	b = ols(log(x.n(v)), [x.tr(v), ones(size(v))]);
+	x.DoL_b = -b(1);
+	x.n0_b = exp(b(2));
 end
 
 X(2) = process("data/data01.tsv");
