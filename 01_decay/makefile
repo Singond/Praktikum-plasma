@@ -2,7 +2,7 @@ PROJECT_NAME=Plasma-01
 include ../basic.make
 
 # Uncomment the following line to force Make to use a specific shell
-# SHELL := /bin/bash
+SHELL := /bin/bash
 MAKEFLAGS += --no-builtin-rules
 ifneq (,$(shell which latexmk 2> /dev/null))
 	LATEX := latexmk --pdf
@@ -13,10 +13,14 @@ endif
 .PHONY: all
 all: protokol.pdf
 
-tex_resources = build/plots # List prerequisities for protokol.tex
+tex_resources = build/plots \
+$(shell echo plots/fit-{rec,log}-{10,20,50,100,200,300,380}.{eps,tex})
 
 build/plots:
 	mkdir -p build/plots
+
+plots/*: main.m export.m
+	octave --norc export.m
 
 .PHONY: tex_resources
 tex_resources: makefile ${tex_resources}

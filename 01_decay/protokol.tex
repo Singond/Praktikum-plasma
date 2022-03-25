@@ -58,7 +58,37 @@
 \teplota={}% [C]
 \vlhkost={}% [%]
 
+\newcommand\tm{t}
+\newcommand\freq{f}
+\newcommand\dens{n}
+\newcommand\diffuse{D}
+\newcommand\recomb{\alpha}
+
 \begin{document}
 \header
+
+\newcommand\plotfit[1]{%
+	\input{plots/fit-rec-#1}%
+	\input{plots/fit-log-#1}%
+}
+
+\begin{figure}[htp]
+	\centering
+	\plotfit{10}
+	\plotfit{20}
+	\plotfit{50}
+	\plotfit{100}%
+	\label{fig:argon}
+	\caption{Určování koeficientu difuze $\diffuse$ a~rekombinace $\recomb$.}
+\end{figure}
+
+\begin{figure}[htp]
+	\centering
+	\plotfit{200}
+	\plotfit{300}
+	\plotfit{380}%
+	\label{fig:argon}
+	\caption{Určování koeficientu difuze $\diffuse$ a~rekombinace $\recomb$.}
+\end{figure}
 
 \end{document}

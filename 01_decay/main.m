@@ -51,6 +51,7 @@ function x = process(file)
 	x.n0_b = exp(b(2));
 end
 
+X = struct();
 X(2) = process("data/data01.tsv");
 X(1) = process("data/data02.tsv");
 X(3) = process("data/data03.tsv");
