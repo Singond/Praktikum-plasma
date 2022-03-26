@@ -1,6 +1,8 @@
 materials
 tmp/
 .~*
+*.aux
+*.log
 *.ods
 *.xls
 *.xlsx
