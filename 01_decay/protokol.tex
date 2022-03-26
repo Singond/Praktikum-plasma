@@ -21,6 +21,7 @@
 \usepackage{siunitx}
 \sisetup{
 	locale               = DE,
+	group-digits         = false,
 	inter-unit-product   = \ensuremath{{}\cdot{}},
 	list-units           = single,
 	list-separator       = {; },
@@ -61,13 +62,20 @@
 \newcommand\tm{t}
 \newcommand\freq{f}
 \newcommand\dens{n}
+\newcommand\pres{p}
 \newcommand\diffuse{D}
 \newcommand\recomb{\alpha}
+\newcommand\diffuselen{\Lambda}
+\newcommand\doll{\diffuse/\diffuselen^2}
 
 \begin{document}
 \header
 
 \newcommand\plotfit[1]{%
+	\sisetup{
+		round-mode = figures,
+		round-precision = 2,
+	}%
 	\input{plots/fit-rec-#1}%
 	\input{plots/fit-log-#1}%
 }
