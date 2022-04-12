@@ -1,7 +1,6 @@
 materials
 tmp/
 .~*
-*.aux
 *.log
 *.ods
 *.xls
@@ -9,6 +8,14 @@ tmp/
 *.pdf
 *.md.backup
 octave-workspace
+
+# LaTeX temporary files
+protokol.aux
+protokol.log
+protokol.bbl
+protokol.blg
+protokol.fls
+protokol.fdb_latexmk
 
 # Eclipse files
 .externalToolBuilders/
