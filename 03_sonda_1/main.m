@@ -51,6 +51,16 @@ function [utime, itime] = align(udata, idata)
 	itime = idata.timelinearized - starttime;
 endfunction
 
+function x = load_experiment(udata, idata)
+	x.Utimeerror = udata.timeerror;
+	x.Itimeerror = idata.timeerror;
+	x.Uunit = udata.unit;
+	x.Iunit = idata.unit;
+	x.Uraw = udata.val;
+	x.Iraw = -idata.val;
+	[x.Utime, x.Itime] = align(udata, idata);
+endfunction
+
 function [uu, ii, tt] = extract_vac(utime, uvals, itime, ivals, tranges, pts)
 	assert(columns(tranges), 2);
 	uranges = interp1(utime, uvals, tranges);
@@ -89,16 +99,6 @@ endfunction
 
 function x = extract_vacx(x, varargin)
 	[x.U, x.I] = extract_vac(x.Utime, x.Uraw, x.Itime, x.Iraw, varargin{:});
-endfunction
-
-function x = load_experiment(udata, idata)
-	x.Utimeerror = udata.timeerror;
-	x.Itimeerror = idata.timeerror;
-	x.Uunit = udata.unit;
-	x.Iunit = idata.unit;
-	x.Uraw = udata.val;
-	x.Iraw = -idata.val;
-	[x.Utime, x.Itime] = align(udata, idata);
 endfunction
 
 U = struct();
