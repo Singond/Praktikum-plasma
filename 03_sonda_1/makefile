@@ -1,3 +1,6 @@
+SHELL := /bin/bash
+MAKEFLAGS += --no-builtin-rules
+
 PROJECT_NAME=Plasma-03
 include ../basic.make
 
@@ -13,10 +16,15 @@ endif
 .PHONY: all
 all: protokol.pdf
 
-tex_resources = build/plots # List prerequisities for protokol.tex
+figs = $(shell echo plots/vac-{1..7}.{eps,tex})
+
+tex_resources = build/plots ${figs}
 
 build/plots:
 	mkdir -p build/plots
+
+plots/vac-%.tex plots/vac-%.eps: ../plotsettings.gp main.m export.m
+	octave --norc export.m
 
 .PHONY: tex_resources
 tex_resources: makefile ${tex_resources}
