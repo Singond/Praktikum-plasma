@@ -112,7 +112,7 @@ for k = 1:7
 	x.p = p(k);
 	X(k) = x;
 endfor
-clear U I k;
+clear U I k x;
 
 X(1).U = [];
 X(1).I = [];
