@@ -91,7 +91,12 @@ function [uu, ii, tt] = extract_vac(utime, uvals, itime, ivals, tranges, pts)
 		else
 			tk = (-b - sqrt(b.**2 - 4*a.*(c - uu))) ./ (2*a);
 		endif
-		ii(:,k) = interp1(itime, ivals, tk);
+		iik = interp1(itime, ivals, tk);
+		if (any(isnan(iik)))
+			warning("extract_vac: Some values of current are invalid (NaN). \
+Try changing the range [%g %g].", tr);
+		endif
+		ii(:,k) = iik;
 		tt(:,k) = tk;
 		k++;
 	endfor
@@ -116,7 +121,7 @@ clear U I k x;
 
 X(1).U = [];
 X(1).I = [];
-X(1) = extract_vacx(X(1), [7 277; 288 555], 500);
+X(1) = extract_vacx(X(1), [7 276; 288 555], 500);
 X(2) = extract_vacx(X(2), [15 282; 288 557], 500);
 X(3) = extract_vacx(X(3), [12 281; 288 558], 500);
 X(4) = extract_vacx(X(4), [13 281; 291 560], 500);
