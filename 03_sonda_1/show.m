@@ -29,7 +29,7 @@ function plot_vac(X)
 			else
 				args(end+[1 2]) = {"handlevisibility", "off"};
 			endif
-			plot(ax, x.U, ii, "color", color, args{:});
+			plot(ax, x.Us, ii, "color", color, args{:});
 			first = false;
 		endfor
 	endfor
