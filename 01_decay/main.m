@@ -1,8 +1,12 @@
+pkg load optim;
+
 global rt = 9;              # Tube radius [mm]
 global rr = 40;             # Resonator radius [mm]
 global me = 9.109E-31;      # Electron mass [kg]
 global perm = 8.854E-12;    # Permittivity of free space [SI]
 global ec = 1.602E-19;      # Elementary charge [C]
+
+global L = rt*1E-3/2.405;   # Diffusion length of fundamental mode [m]
 
 function D = importdata(file)
 	filelocal = false;
@@ -32,7 +36,13 @@ function n = density(fr, f0)
 	n = c * perm * me * (rr / rt)^2 .* (fr - f0) .* fr .* 1e12 ./ ec^2;
 end
 
+function n = densitymodel(t, DoL, a, c)
+	 n = 1 ./ (c .* exp(t.*DoL) - a./DoL);
+endfunction
+
 function x = process(file)
+	global L;
+
 	x = importdata(file);
 	x.df = x.fr - x.f0;
 	x.n = density(x.fr, x.f0);
@@ -49,6 +59,19 @@ function x = process(file)
 	b = ols(log(x.n(v)), [x.tr(v), ones(size(v))]);
 	x.logfit.DoL = -b(1);
 	x.logfit.n = exp(b(2));
+
+	## Fit with 1/(c.exp(tD/L^2) - aL^2/D),
+	## using previously found a and D as initial guesses.
+	scale = 1e-14;
+	b0 = ones(3,1);
+	b0(1) = 0.1;
+	b0(2) = x.invfit.a / x.logfit.DoL;
+	b0(3) = x.logfit.DoL * L^2;
+	[ym, b, cvg, iter] = leasqr(x.tr, x.n.*scale, b0,
+		@(x,b) 1./(b(1).*exp(x*b(3)) - b(2)), [], 50);
+	x.nlfit.c = b(1)*scale;
+	x.nlfit.DoL = b(3);
+	x.nlfit.a = b(2)*b(3)*scale;
 end
 
 X = struct();

@@ -40,3 +40,19 @@ end
 hold off;
 xlabel("t [us]");
 ylabel("log n");
+
+figure(4);
+clf;
+title("Electron density");
+hold on;
+for x = X
+	c = get(gca, "colororderindex");
+	plot(x.tr, x.n, sprintf("d;%.0f Pa;", x.p));
+	set(gca, "colororderindex", c);
+	tt = linspace(min(x.tr), max(x.tr), 1000);
+	plot(tt, densitymodel(tt, x.nlfit.DoL, x.nlfit.a, x.nlfit.c),
+		"displayname", ["fit"]);
+end
+hold off;
+xlabel("t [us]");
+ylabel("n [m^{-3}]");
