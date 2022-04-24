@@ -5,7 +5,7 @@ clf;
 title("Resonance frequency")
 hold on;
 for x = X
-	plot(gca, x.tr, x.fr, sprintf("d;%.0f Pa;", x.p));
+	plot(x.tr, x.fr, sprintf("d;%.0f Pa;", x.p));
 end
 hold off;
 xlabel("t [us]");
@@ -17,10 +17,10 @@ title("Electron density (reciprocal)");
 hold on;
 for x = X
 	c = get(gca, "colororderindex");
-	plot(gca, x.tr, 1./x.n, sprintf("d;%.0f Pa;", x.p));
+	plot(x.tr, 1./x.n, sprintf("d;%.0f Pa;", x.p));
 	set(gca, "colororderindex", c);
 	tt = linspace(min(x.tr), max(x.tr), 1000);
-	plot(gca, tt, x.invfit.a .* tt + 1/x.invfit.n, "displayname", ["x"]);
+	plot(tt, x.invfit.a .* tt + 1/x.invfit.n, "displayname", ["x"]);
 end
 hold off;
 xlabel("t [us]");
@@ -32,10 +32,10 @@ title("Electron density (logarithmic)");
 hold on;
 for x = X
 	c = get(gca, "colororderindex");
-	plot(gca, x.tr, log(x.n), sprintf("d;%.0f Pa;", x.p));
+	plot(x.tr, log(x.n), sprintf("d;%.0f Pa;", x.p));
 	set(gca, "colororderindex", c);
 	tt = linspace(min(x.tr), max(x.tr), 1000);
-	plot(gca, tt, -x.logfit.DoL .* tt + log(x.logfit.n), "displayname", ["fit"]);
+	plot(tt, -x.logfit.DoL .* tt + log(x.logfit.n), "displayname", ["fit"]);
 end
 hold off;
 xlabel("t [us]");
