@@ -40,15 +40,15 @@ function x = process(file)
 	## Fit 1/n with a line to determine a (coeff. of recombination)
 	v = (1:numel(x.n)/2)';
 	b = ols(1./x.n(v), [x.tr(v), ones(size(v))]);
-	x.a_a = b(1);
-	x.n0_a = 1/b(2);
+	x.invfit.a = b(1);
+	x.invfit.n = 1/b(2);
 
 	## Fit log(n) with a line to determine D (coeff. of recombination)
 	## DoL = D / Lambda^2
 	v = (8:numel(x.n)-2)';
 	b = ols(log(x.n(v)), [x.tr(v), ones(size(v))]);
-	x.DoL_b = -b(1);
-	x.n0_b = exp(b(2));
+	x.logfit.DoL = -b(1);
+	x.logfit.n = exp(b(2));
 end
 
 X = struct();

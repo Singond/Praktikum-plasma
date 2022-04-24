@@ -20,7 +20,7 @@ for x = X
 	plot(gca, x.tr, 1./x.n, sprintf("d;%.0f Pa;", x.p));
 	set(gca, "colororderindex", c);
 	tt = linspace(min(x.tr), max(x.tr), 1000);
-	plot(gca, tt, x.a_a .* tt + 1/x.n0_a, "displayname", ["x"]);
+	plot(gca, tt, x.invfit.a .* tt + 1/x.invfit.n, "displayname", ["x"]);
 end
 hold off;
 xlabel("t [us]");
@@ -35,7 +35,7 @@ for x = X
 	plot(gca, x.tr, log(x.n), sprintf("d;%.0f Pa;", x.p));
 	set(gca, "colororderindex", c);
 	tt = linspace(min(x.tr), max(x.tr), 1000);
-	plot(gca, tt, -x.DoL_b .* tt + log(x.n0_b), "displayname", ["fit"]);
+	plot(gca, tt, -x.logfit.DoL .* tt + log(x.logfit.n), "displayname", ["fit"]);
 end
 hold off;
 xlabel("t [us]");
