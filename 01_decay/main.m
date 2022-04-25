@@ -62,10 +62,13 @@ function x = process(file)
 
 	## Fit with 1/(c.exp(tD/L^2) - aL^2/D),
 	## using previously found a and D as initial guesses.
+	## Scale down the values of n to similar order of magnitude as t,
+	## which seems to increase the chances of a successful fit.
+	## Afterwards, scale the fitted parameters up again.
 	scale = 1e-14;
 	b0 = ones(3,1);
-	b0(1) = 0.1;
-	b0(2) = x.invfit.a / x.logfit.DoL;
+	b0(1) = 1e-15 / scale;
+	b0(2) = x.invfit.a / (x.logfit.DoL * scale);
 	b0(3) = x.logfit.DoL * L^2;
 	[ym, b, cvg, iter] = leasqr(x.tr, x.n.*scale, b0,
 		@(x,b) 1./(b(1).*exp(x*b(3)) - b(2)), [], 50);
