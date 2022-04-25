@@ -65,6 +65,7 @@
 \newcommand\dens{n}
 \newcommand\pres{p}
 \newcommand\diffuse{D}
+\newcommand\diffuseunit{\metre\squared\per\second}
 \newcommand\recomb{\alpha}
 \newcommand\recombunit{\metre\cubed\per\second}
 \newcommand\diffuselen{\Lambda}
@@ -100,6 +101,30 @@
 	\plotfit{380}%
 	\label{fig:argon}
 	\caption{Určování koeficientu difuze $\diffuse$ a~rekombinace $\recomb$.}
+\end{figure}
+
+\begin{figure}[htp]
+	\centering
+	\input{plots/density}
+	\label{fig:density}
+	\caption{Naměřená koncentrace částic $\dens$
+		a její aproximace modelovou funkcí.}
+\end{figure}
+
+\begin{figure}[htp]
+	\centering
+	\input{plots/density-pres}
+	\label{fig:density-pres}
+	\caption{Závislost koncentrace částic $\dens$ na tlaku $\pres$.}
+\end{figure}
+
+\begin{figure}[htp]
+	\centering
+	\input{plots/recomb-pres}
+	\input{plots/diffuse-pres}
+	\label{fig:diffuse-pres}
+	\caption{Závislost koeficientu difuze $\diffuse$
+		a~koeficientu rekombinace $\recomb$ na tlaku $\pres$.}
 \end{figure}
 
 \end{document}

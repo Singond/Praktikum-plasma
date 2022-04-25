@@ -14,7 +14,9 @@ endif
 all: protokol.pdf
 
 tex_resources = build/plots \
-$(shell echo plots/fit-{rec,log}-{10,20,50,100,200,300,380}.{eps,tex})
+$(shell echo plots/fit-{rec,log}-{10,20,50,100,200,300,380}.{eps,tex}) \
+$(shell echo plots/{density,recomb,diffuse}-pres.{eps,tex}) \
+$(shell echo plots/density.{eps,tex})
 
 build/plots:
 	mkdir -p build/plots
