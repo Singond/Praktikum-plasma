@@ -162,8 +162,7 @@ Na osciloskopu byl pro každou hodnotu $\freqsig$ odečten čas $\tm$ od vypnut�
 proudu ve výbojce, při němž měl výstupní signál maximum.
 Pro~tento čas byla rezonátoru přisouzena rezonanční frekvence $\freqsig$
 a z~ní spočtena koncentrace částic $\dens$ podle vztahu \eqref{eq:resonator}.
-
-Naměřené hodnoty frekvence jsou na obrázku č.~\ref{fig:freq}.
+Takto naměřené hodnoty frekvence jsou na obrázku č.~\ref{fig:freq}.
 
 \begin{figure}[htp]
 	\centering
@@ -173,16 +172,27 @@ Naměřené hodnoty frekvence jsou na obrázku č.~\ref{fig:freq}.
 	\label{fig:freq}
 \end{figure}
 
+\subsection{Určení převládajícího procesu}
+Koeficienty $\diffuse$ a~$\recomb$ byly určeny nejprve předběžně pomocí
+zjednodušených modelů, které předpokládaly vždy jen jeden rozpadový proces.
+Uvažujeme-li pouze difuzi, ze vztahu \eqref{eq:dens-diffuse} plyne,
+že funkce $\ln(\dens)$ je lineární.
+Naměřená data byla aproximována touto přímkou a~z její směrnice
+byl spočten první odhad koeficientu difuze $\diffuse$.
+Pro objemovou rekombinaci platí podle vztahu \eqref{eq:dens-recomb},
+že závislost $1/\dens$ je lineární.
+Z~této aproximace byl určen počáteční odhad koeficientu rekombinace $\recomb$.
+Hodnoty $\ln(\dens)$, $1/\dens$, jimi proložené přímky a~z~nich spočtené
+parametry jsou na obrázcích č.~\ref{fig:fit1} a~\ref{fig:fit2}.
 
 \newcommand\plotfit[1]{%
 	\sisetup{
 		round-mode = figures,
 		round-precision = 2,
 	}%
-	\input{plots/fit-rec-#1}%
 	\input{plots/fit-log-#1}%
+	\input{plots/fit-rec-#1}%
 }
-
 \begin{figure}[htp]
 	\centering
 	\plotfit{10}
@@ -190,17 +200,41 @@ Naměřené hodnoty frekvence jsou na obrázku č.~\ref{fig:freq}.
 	\plotfit{50}
 	\plotfit{100}%
 	\caption{Určování koeficientu difuze $\diffuse$ a~rekombinace $\recomb$.}
-	\label{fig:argon}
+	\label{fig:fit1}
 \end{figure}
-
 \begin{figure}[htp]
 	\centering
 	\plotfit{200}
 	\plotfit{300}
 	\plotfit{380}%
 	\caption{Určování koeficientu difuze $\diffuse$ a~rekombinace $\recomb$.}
-	\label{fig:argon}
+	\label{fig:fit2}
 \end{figure}
+
+Pro přesnější stanovení obou koeficientů je nutno použít model,
+který zahrnuje oba procesy. Tento je popsán diferenciální rovnicí:
+\begin{equation}
+	\label{eq:dens-general}
+	\frac{\partial \dens(\tm)}{\partial \tm}
+		= \frac{\diffuse}{\diffuselen^2}\dens(\tm) - \recomb\dens^2(\tm),
+\end{equation}
+jejíž řešení lze napsat ve tvaru:
+\begin{equation}
+	\dens(\tm)=\frac{1}{
+		c\euler^{\tm\diffuse/\diffuselen^2}
+		- \frac{\recomb\diffuselen^2}{\diffuse}
+	}.
+\end{equation}
+Aproximací dat touto funkcí získáme kromě koeficientů $\diffuse$ a $\recomb$
+také konstantu $c$.
+
+Proklad byl proveden Levenberg-Marquardtovým algoritmem.
+Počáteční hodnoty parametrů byly určeny z~předběžně určených hodnot
+koeficientů.
+Koncentrace částic v~plazmatu v~době trvání výboje $\densinit$
+byla extrapolována dosazením $\tm = 0$ do proložené funkce.
+Spočtené průběhy koncentrací $\dens$ a~přísluš\-ných modelových funkcí
+jsou vyneseny na~obrázku č.~\ref{fig:density}.
 
 \begin{figure}[htp]
 	\centering
@@ -210,20 +244,32 @@ Naměřené hodnoty frekvence jsou na obrázku č.~\ref{fig:freq}.
 	\label{fig:density}
 \end{figure}
 
+\section{Výsledky}
+Měření bylo opakováno pro sedm hodnot tlaku.
+V~grafech na obrázku č.~\ref{fig:diffuse-recomb-pres} je naměřená
+závislost koeficientů $\diffuse$ a~$\recomb$ na tlaku $\pres$.
+Je patrno, že koeficient $\diffuse$ klesá s~rostoucím tlakem.
+To je v~souladu s~očekáváním, že difuze se bude více projevovat
+při nižších tlacích.
+Překvapivým výsledkem je průběh koeficientu $\recomb$.
+Ve~vyšších tlacích roste, což odpovídá očekávání,
+ale při hodnotách $\SIlist{10;20}{\pascal}$ je neúměrně vysoký.
+Tuto anomálii se nepodařilo objasnit.
+
+\begin{figure}[htp]
+	\centering
+	\input{plots/diffuse-pres}
+	\input{plots/recomb-pres}
+	\caption{Závislost koeficientu difuze $\diffuse$
+		a~koeficientu rekombinace $\recomb$ na tlaku $\pres$.}
+	\label{fig:diffuse-recomb-pres}
+\end{figure}
+
 \begin{figure}[htp]
 	\centering
 	\input{plots/density-pres}
 	\caption{Závislost koncentrace částic $\dens$ na tlaku $\pres$.}
 	\label{fig:density-pres}
-\end{figure}
-
-\begin{figure}[htp]
-	\centering
-	\input{plots/recomb-pres}
-	\input{plots/diffuse-pres}
-	\caption{Závislost koeficientu difuze $\diffuse$
-		a~koeficientu rekombinace $\recomb$ na tlaku $\pres$.}
-	\label{fig:diffuse-pres}
 \end{figure}
 
 \end{document}
