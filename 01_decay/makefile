@@ -24,6 +24,9 @@ build/plots:
 plots/%.eps plots/%.tex: export_%.m main.m
 	octave --norc $<
 
+plots/%-pres.eps plots/%-pres.tex: export_%_pres.m main.m
+	octave --norc $<
+
 plots/%.eps plots/%.tex: main.m export.m
 	octave --norc export.m
 
