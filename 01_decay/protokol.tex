@@ -60,46 +60,216 @@
 \teplota={}% [C]
 \vlhkost={}% [%]
 
+\newcommand\euler{e}
+\newcommand\elemcharge{e}
+\newcommand\permitvac{\varepsilon_0}
+
 \newcommand\tm{t}
 \newcommand\freq{f}
+\newcommand\freqbase{\freq_0}
+\newcommand\freqplas{\freq_1}
+\newcommand\freqsig{\freq'}
+\newcommand\deltafreq{\Delta\freq}
+\newcommand\emass{m_\mathrm{e}}
 \newcommand\dens{n}
+\newcommand\densinit{n_0}
 \newcommand\pres{p}
 \newcommand\diffuse{D}
+\newcommand\diffuseunit{\metre\squared\per\second}
 \newcommand\recomb{\alpha}
 \newcommand\recombunit{\metre\cubed\per\second}
 \newcommand\diffuselen{\Lambda}
 \newcommand\doll{\diffuse/\diffuselen^2}
 \newcommand\dollunit{\second^{-1}}
+\newcommand\tuberadius{r_\mathrm{t}}
+\newcommand\resradius{r_\mathrm{r}}
 
 \begin{document}
 \header
+
+\section{Teorie}
+Po přerušení přívodu energie do plazmatu se plazma začne rozpadat.
+Rozpadem rozumíme postupné klesání koncentrace nabitých částic,
+které je způsobeno převážně difuzí,
+při níž elektrony difundují na stěny výbojky a rekombinují,
+a~objemovou rekombinací.
+
+Úkolem tohoto praktika je zkoumat konkrétní výboj a~určit,
+který z~procesů při jeho rozpadu převládá.
+K~tomu je nutno stanovit koeficient difuze $\diffuse$
+a~koeficient objemové rekombinace $\recomb$.
+
+\subsection{Difuze v plazmatu}
+Při nižších tlacích je převládajícím mechanismem rozpadu difuze.
+Pro popis difuzních ztrát vyjdeme z~rovnice kontinuity elektronů:
+\begin{equation}
+	\label{eq:continuity}
+	\frac{\partial \dens}{\partial \tm} - \nabla^2 (\diffuse\dens) = 0,
+\end{equation}
+kde $\dens$ je koncentrace elektronů a $\diffuse$ je koeficient difuze.
+Za předpokladu, že $\dens$ je konstantní v~celém objemu,
+výbojka má válcový tvar a že difuze probíhá výhradně v~základním vidu,
+můžeme koncentraci elektronů v~čase vyjádřit jako:
+\begin{equation}
+	\label{eq:dens-diffuse}
+	\dens(\tm)= \densinit\euler^{-\frac{\diffuse}{\diffuselen^2}\tm},
+\end{equation}
+kde $\densinit = \dens(0)$ je počáteční koncentrace
+a~$\diffuselen$ je difuzní délka.
+Její hodnota je přibližně $\diffuselen \approx \frac{\tuberadius}{\num{2.405}}$,
+kde $\tuberadius$ je poloměr trubice a~faktor $\num{2.405}$ je první kořen
+Besselovy funkce prvního druhu $J_0$.
+
+\subsection{Objemová rekombinace}
+S~rostoucím tlakem roste vliv rekombinace nabitých částic v~objemu plazmatu.
+Rekombinační ztráty lze popsat jednoduchou diferenciální rovnicí:
+\begin{equation}
+	\label{eq:dens-recomb}
+	\frac{\mathrm{d} n}{\mathrm{d} t} = -\recomb \dens^2,
+\end{equation}
+kde $\recomb$ je koeficient rekombinace.
+Řešením této rovnice je časový vývoj ve~tvaru:
+\begin{equation}
+	\dens(\tm)= \frac{\densinit}{1 + \densinit\recomb\tm},
+\end{equation}
+kde $\densinit$ je opět počáteční koncentrace částic.
+
+\section{Měření}
+
+\subsection{Stanovení koncentrace elektronů}
+Časový průběh koncentrace elektronů $\dens$ při dohasínání výboje
+byl určen pomocí rezonátorové metody popsané J. C. Slaterem v~roce 1946.
+Výbojová trubice byla umístěna do středu toroidního rezonátoru,
+do něhož byl přiveden laditelný vysokofrekvenční signál.
+Výstupní signál byl snímán osciloskopem.
+Zaplnění části rezonátoru plazmatem způsobuje změnu jeho rezonanční
+frekvence z~původní $\freqbase$ na $\freqplas$.
+Pomocí poruchové metody lze z~tohoto rozdílu
+$\deltafreq = \freqplas - \freqbase$ přibližně vyjádřit koncentraci $\dens$
+jako:
+\begin{equation}
+	\label{eq:resonator}
+	\dens=\frac{\num{0.271}}{\num{0.64}} \frac{\resradius^2}{\tuberadius^2}
+		\frac{8\pi^2 \permitvac\emass\freq}{\elemcharge^2} \deltafreq,
+\end{equation}
+kde $\tuberadius$ je poloměr výbojové trubice, $\emass$ hmotnost elektronu,
+$\permitvac$ permitivita vakua, $\elemcharge$ elementární náboj
+a~$\freq$ rezonanční frekvence rezonátoru.
+
+Frekvence vstupního signálu $\freqsig$ byla postupně měněna v~rozsahu
+od~$\freqbase$ do~$\freqplas$.
+Na osciloskopu byl pro každou hodnotu $\freqsig$ odečten čas $\tm$ od vypnutí
+proudu ve výbojce, při němž měl výstupní signál maximum.
+Pro~tento čas byla rezonátoru přisouzena rezonanční frekvence $\freqsig$
+a z~ní spočtena koncentrace částic $\dens$ podle vztahu \eqref{eq:resonator}.
+Takto naměřené hodnoty frekvence jsou na obrázku č.~\ref{fig:freq}.
+
+\begin{figure}[htp]
+	\centering
+	\input{plots/freq}
+	\caption{Naměřený průběh rezonanční frekvence rezonátoru $\freq$
+		pro několik hodnot tlaku.}
+	\label{fig:freq}
+\end{figure}
+
+\subsection{Určení převládajícího procesu}
+Koeficienty $\diffuse$ a~$\recomb$ byly určeny nejprve předběžně pomocí
+zjednodušených modelů, které předpokládaly vždy jen jeden rozpadový proces.
+Uvažujeme-li pouze difuzi, ze vztahu \eqref{eq:dens-diffuse} plyne,
+že funkce $\ln(\dens)$ je lineární.
+Naměřená data byla aproximována touto přímkou a~z její směrnice
+byl spočten první odhad koeficientu difuze $\diffuse$.
+Pro objemovou rekombinaci platí podle vztahu \eqref{eq:dens-recomb},
+že závislost $1/\dens$ je lineární.
+Z~této aproximace byl určen počáteční odhad koeficientu rekombinace $\recomb$.
+Hodnoty $\ln(\dens)$, $1/\dens$, jimi proložené přímky a~z~nich spočtené
+parametry jsou na obrázcích č.~\ref{fig:fit1} a~\ref{fig:fit2}.
 
 \newcommand\plotfit[1]{%
 	\sisetup{
 		round-mode = figures,
 		round-precision = 2,
 	}%
-	\input{plots/fit-rec-#1}%
 	\input{plots/fit-log-#1}%
+	\input{plots/fit-rec-#1}%
 }
-
 \begin{figure}[htp]
 	\centering
 	\plotfit{10}
 	\plotfit{20}
 	\plotfit{50}
 	\plotfit{100}%
-	\label{fig:argon}
 	\caption{Určování koeficientu difuze $\diffuse$ a~rekombinace $\recomb$.}
+	\label{fig:fit1}
 \end{figure}
-
 \begin{figure}[htp]
 	\centering
 	\plotfit{200}
 	\plotfit{300}
 	\plotfit{380}%
-	\label{fig:argon}
 	\caption{Určování koeficientu difuze $\diffuse$ a~rekombinace $\recomb$.}
+	\label{fig:fit2}
+\end{figure}
+
+Pro přesnější stanovení obou koeficientů je nutno použít model,
+který zahrnuje oba procesy. Tento je popsán diferenciální rovnicí:
+\begin{equation}
+	\label{eq:dens-general}
+	\frac{\partial \dens(\tm)}{\partial \tm}
+		= \frac{\diffuse}{\diffuselen^2}\dens(\tm) - \recomb\dens^2(\tm),
+\end{equation}
+jejíž řešení lze napsat ve tvaru:
+\begin{equation}
+	\dens(\tm)=\frac{1}{
+		c\euler^{\tm\diffuse/\diffuselen^2}
+		- \frac{\recomb\diffuselen^2}{\diffuse}
+	}.
+\end{equation}
+Aproximací dat touto funkcí získáme kromě koeficientů $\diffuse$ a $\recomb$
+také konstantu $c$.
+
+Proklad byl proveden Levenberg-Marquardtovým algoritmem.
+Počáteční hodnoty parametrů byly určeny z~předběžně určených hodnot
+koeficientů.
+Koncentrace částic v~plazmatu v~době trvání výboje $\densinit$
+byla extrapolována dosazením $\tm = 0$ do proložené funkce.
+Spočtené průběhy koncentrací $\dens$ a~přísluš\-ných modelových funkcí
+jsou vyneseny na~obrázku č.~\ref{fig:density}.
+
+\begin{figure}[htp]
+	\centering
+	\input{plots/density}
+	\caption{Naměřená koncentrace částic $\dens$
+		a její aproximace modelovou funkcí.}
+	\label{fig:density}
+\end{figure}
+
+\section{Výsledky}
+Měření bylo opakováno pro sedm hodnot tlaku.
+V~grafech na obrázku č.~\ref{fig:diffuse-recomb-pres} je naměřená
+závislost koeficientů $\diffuse$ a~$\recomb$ na tlaku $\pres$.
+Je patrno, že koeficient $\diffuse$ klesá s~rostoucím tlakem.
+To je v~souladu s~očekáváním, že difuze se bude více projevovat
+při nižších tlacích.
+Překvapivým výsledkem je průběh koeficientu $\recomb$.
+Ve~vyšších tlacích roste, což odpovídá očekávání,
+ale při hodnotách $\SIlist{10;20}{\pascal}$ je neúměrně vysoký.
+Tuto anomálii se nepodařilo objasnit.
+
+\begin{figure}[htp]
+	\centering
+	\input{plots/diffuse-pres}
+	\input{plots/recomb-pres}
+	\caption{Závislost koeficientu difuze $\diffuse$
+		a~koeficientu rekombinace $\recomb$ na tlaku $\pres$.}
+	\label{fig:diffuse-recomb-pres}
+\end{figure}
+
+\begin{figure}[htp]
+	\centering
+	\input{plots/density-pres}
+	\caption{Závislost koncentrace částic $\dens$ na tlaku $\pres$.}
+	\label{fig:density-pres}
 \end{figure}
 
 \end{document}

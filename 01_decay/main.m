@@ -74,7 +74,9 @@ function x = process(file)
 		@(x,b) 1./(b(1).*exp(x*b(3)) - b(2)), [], 50);
 	x.nlfit.c = b(1)*scale;
 	x.nlfit.DoL = b(3);
-	x.nlfit.a = b(2)*b(3)*scale;
+	x.a = x.nlfit.a = b(2)*b(3)*scale;
+	x.D = x.nlfit.DoL ./ L^2;
+	x.n0 = densitymodel(0, x.nlfit.DoL, x.nlfit.a, x.nlfit.c);
 end
 
 X = struct();
@@ -85,3 +87,8 @@ X(4) = process("data/data04.tsv");
 X(5) = process("data/data05.tsv");
 X(6) = process("data/data06.tsv");
 X(7) = process("data/data07.tsv");
+
+p = [X.p]';
+n0 = [X.n0]';
+a = [X.a]';
+D = [X.D]';

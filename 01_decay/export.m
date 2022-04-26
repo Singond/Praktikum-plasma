@@ -10,7 +10,7 @@ for x = X
 	tt = linspace(min(x.tr), max(x.tr), 1000);
 	gp.plot(tt, (x.invfit.a .* tt + 1/x.invfit.n) .* yscale, "w l ls 1 dt 2");
 	gp.xlabel('čas $\\tm\\,[\\si{\\micro\\second}]$');
-	gp.ylabel('$1/\\dens\\,[\\si{\\per\\metre\\cubed}]$');
+	gp.ylabel('$1/\\dens\\,[\\si{\\metre^{-3}}]$');
 	gp.exec(sprintf("set label \"\
 $\\\\pres=\\\\SI{%.0f}{\\\\pascal}$\\n\
 $\\\\recomb=\\\\SI{%g}{\\\\recombunit}$\
