@@ -24,7 +24,7 @@ build/plots:
 plots/%.eps plots/%.tex: export_%.m main.m
 	octave --norc $<
 
-plots/%: main.m export.m
+plots/%.eps plots/%.tex: main.m export.m
 	octave --norc export.m
 
 .PHONY: tex_resources
