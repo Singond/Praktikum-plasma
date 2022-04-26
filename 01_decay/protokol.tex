@@ -60,9 +60,19 @@
 \teplota={}% [C]
 \vlhkost={}% [%]
 
+\newcommand\euler{e}
+\newcommand\elemcharge{e}
+\newcommand\permitvac{\varepsilon_0}
+
 \newcommand\tm{t}
 \newcommand\freq{f}
+\newcommand\freqbase{\freq_0}
+\newcommand\freqplas{\freq_1}
+\newcommand\freqsig{\freq'}
+\newcommand\deltafreq{\Delta\freq}
+\newcommand\emass{m_\mathrm{e}}
 \newcommand\dens{n}
+\newcommand\densinit{n_0}
 \newcommand\pres{p}
 \newcommand\diffuse{D}
 \newcommand\diffuseunit{\metre\squared\per\second}
@@ -71,9 +81,98 @@
 \newcommand\diffuselen{\Lambda}
 \newcommand\doll{\diffuse/\diffuselen^2}
 \newcommand\dollunit{\second^{-1}}
+\newcommand\tuberadius{r_\mathrm{t}}
+\newcommand\resradius{r_\mathrm{r}}
 
 \begin{document}
 \header
+
+\section{Teorie}
+Po přerušení přívodu energie do plazmatu se plazma začne rozpadat.
+Rozpadem rozumíme postupné klesání koncentrace nabitých částic,
+které je způsobeno převážně difuzí,
+při níž elektrony difundují na stěny výbojky a rekombinují,
+a~objemovou rekombinací.
+
+Úkolem tohoto praktika je zkoumat konkrétní výboj a~určit,
+který z~procesů při jeho rozpadu převládá.
+K~tomu je nutno stanovit koeficient difuze $\diffuse$
+a~koeficient objemové rekombinace $\recomb$.
+
+\subsection{Difuze v plazmatu}
+Při nižších tlacích je převládajícím mechanismem rozpadu difuze.
+Pro popis difuzních ztrát vyjdeme z~rovnice kontinuity elektronů:
+\begin{equation}
+	\label{eq:continuity}
+	\frac{\partial \dens}{\partial \tm} - \nabla^2 (\diffuse\dens) = 0,
+\end{equation}
+kde $\dens$ je koncentrace elektronů a $\diffuse$ je koeficient difuze.
+Za předpokladu, že $\dens$ je konstantní v~celém objemu,
+výbojka má válcový tvar a že difuze probíhá výhradně v~základním vidu,
+můžeme koncentraci elektronů v~čase vyjádřit jako:
+\begin{equation}
+	\label{eq:dens-diffuse}
+	\dens(\tm)= \densinit\euler^{-\frac{\diffuse}{\diffuselen^2}\tm},
+\end{equation}
+kde $\densinit = \dens(0)$ je počáteční koncentrace
+a~$\diffuselen$ je difuzní délka.
+Její hodnota je přibližně $\diffuselen \approx \frac{\tuberadius}{\num{2.405}}$,
+kde $\tuberadius$ je poloměr trubice a~faktor $\num{2.405}$ je první kořen
+Besselovy funkce prvního druhu $J_0$.
+
+\subsection{Objemová rekombinace}
+S~rostoucím tlakem roste vliv rekombinace nabitých částic v~objemu plazmatu.
+Rekombinační ztráty lze popsat jednoduchou diferenciální rovnicí:
+\begin{equation}
+	\label{eq:dens-recomb}
+	\frac{\mathrm{d} n}{\mathrm{d} t} = -\recomb \dens^2,
+\end{equation}
+kde $\recomb$ je koeficient rekombinace.
+Řešením této rovnice je časový vývoj ve~tvaru:
+\begin{equation}
+	\dens(\tm)= \frac{\densinit}{1 + \densinit\recomb\tm},
+\end{equation}
+kde $\densinit$ je opět počáteční koncentrace částic.
+
+\section{Měření}
+
+\subsection{Stanovení koncentrace elektronů}
+Časový průběh koncentrace elektronů $\dens$ při dohasínání výboje
+byl určen pomocí rezonátorové metody popsané J. C. Slaterem v~roce 1946.
+Výbojová trubice byla umístěna do středu toroidního rezonátoru,
+do něhož byl přiveden laditelný vysokofrekvenční signál.
+Výstupní signál byl snímán osciloskopem.
+Zaplnění části rezonátoru plazmatem způsobuje změnu jeho rezonanční
+frekvence z~původní $\freqbase$ na $\freqplas$.
+Pomocí poruchové metody lze z~tohoto rozdílu
+$\deltafreq = \freqplas - \freqbase$ přibližně vyjádřit koncentraci $\dens$
+jako:
+\begin{equation}
+	\label{eq:resonator}
+	\dens=\frac{\num{0.271}}{\num{0.64}} \frac{\resradius^2}{\tuberadius^2}
+		\frac{8\pi^2 \permitvac\emass\freq}{\elemcharge^2} \deltafreq,
+\end{equation}
+kde $\tuberadius$ je poloměr výbojové trubice, $\emass$ hmotnost elektronu,
+$\permitvac$ permitivita vakua, $\elemcharge$ elementární náboj
+a~$\freq$ rezonanční frekvence rezonátoru.
+
+Frekvence vstupního signálu $\freqsig$ byla postupně měněna v~rozsahu
+od~$\freqbase$ do~$\freqplas$.
+Na osciloskopu byl pro každou hodnotu $\freqsig$ odečten čas $\tm$ od vypnutí
+proudu ve výbojce, při němž měl výstupní signál maximum.
+Pro~tento čas byla rezonátoru přisouzena rezonanční frekvence $\freqsig$
+a z~ní spočtena koncentrace částic $\dens$ podle vztahu \eqref{eq:resonator}.
+
+Naměřené hodnoty frekvence jsou na obrázku č.~\ref{fig:freq}.
+
+\begin{figure}[htp]
+	\centering
+	\input{plots/freq}
+	\caption{Naměřený průběh rezonanční frekvence rezonátoru $\freq$
+		pro několik hodnot tlaku.}
+	\label{fig:freq}
+\end{figure}
+
 
 \newcommand\plotfit[1]{%
 	\sisetup{
