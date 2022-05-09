@@ -16,6 +16,16 @@
 \usepackage{csvsimple}
 \usepackage{multirow}
 \usepackage{multicol}
+\usepackage{pgfplotstable}
+\pgfplotstableset{
+	use comma,
+	set thousands separator = {},
+	every head row/.style = {
+		before row = \toprule,
+		after row = \midrule
+	},
+	every last row/.style = {after row = \bottomrule},
+}
 
 % Jednotky
 \usepackage{siunitx}
@@ -44,6 +54,7 @@
 }
 \usepackage{epstopdf}
 \epstopdfsetup{outdir=./build/plots/}
+\pgfplotsset{compat=1.17}
 
 \jmenopraktika={Praktikum z fyziky plazmatu}  % jmeno predmetu
 \jmeno={Pavel Kosík, Jan Slaný}                             % jmeno mericiho
@@ -61,6 +72,7 @@
 \vlhkost={}% [%]
 
 \newcommand\euler{e}
+\newcommand\emass{m_\mathrm{e}}
 \newcommand\elemcharge{e}
 \newcommand\permitvac{\varepsilon_0}
 
@@ -70,7 +82,7 @@
 \newcommand\freqplas{\freq_1}
 \newcommand\freqsig{\freq'}
 \newcommand\deltafreq{\Delta\freq}
-\newcommand\emass{m_\mathrm{e}}
+\newcommand\curdis{I}
 \newcommand\dens{n}
 \newcommand\densinit{n_0}
 \newcommand\pres{p}
@@ -243,6 +255,13 @@ jsou vyneseny na~obrázku č.~\ref{fig:density}.
 		a její aproximace modelovou funkcí.}
 	\label{fig:density}
 \end{figure}
+\begin{figure}[htp]
+	\centering
+	\input{plots/density-inv}
+	\caption{Naměřená koncentrace částic $\dens$
+		a její aproximace modelovou funkcí.}
+	\label{fig:density-inv}
+\end{figure}
 
 \section{Výsledky}
 Měření bylo opakováno pro sedm hodnot tlaku.
@@ -255,6 +274,98 @@ Překvapivým výsledkem je průběh koeficientu $\recomb$.
 Ve~vyšších tlacích roste, což odpovídá očekávání,
 ale při hodnotách $\SIlist{10;20}{\pascal}$ je neúměrně vysoký.
 Tuto anomálii se nepodařilo objasnit.
+
+\shorthandoff{-}
+\begin{table}
+	\centering
+	\caption{Hodnoty difuzního koeficientu $\diffuse$,
+		koeficientu rekombinace $\recomb$ a koncentrace elektronů $\dens$
+		určené různými metodami.}
+	\label{tab:results}
+	\pgfplotstableset{
+		header = false,
+		skip first n = 1,
+		col sep = tab,
+	}
+	\pgfplotstabletypeset[
+		columns = {[index] 0, [index] 2, [index] 3, [index] 4,
+			[index] 5, [index] 6, [index] 7, [index] 8},
+		column type = {r r r r r r r r},
+		every head row/.append style = {
+			output empty row,
+			before row = {
+				\toprule
+				&
+				\multicolumn{2}{c}{$\ln\dens$} &
+				\multicolumn{2}{c}{$1/\dens$} &
+				\multicolumn{3}{c}{obecné $\dens$}
+				\\
+				\cmidrule(lr){2-3}
+				\cmidrule(lr){4-5}
+				\cmidrule(lr){6-8}
+				\multicolumn{1}{c}{$\pres$} &
+				\multicolumn{1}{c}{$\diffuse$} &
+				\multicolumn{1}{c}{$\densinit$} &
+				\multicolumn{1}{c}{$\recomb$} &
+				\multicolumn{1}{c}{$\densinit$} &
+				\multicolumn{1}{c}{$\diffuse$} &
+				\multicolumn{1}{c}{$\recomb$} &
+				\multicolumn{1}{c}{$\densinit$}
+				\\
+				$[\si{\pascal}]$ &
+				$[\si{\diffuseunit}]$ &
+				$[\SI{e15}{\metre^{-3}}]$ &
+				$[\SI{e-20}{\recombunit}]$ &
+				$[\SI{e15}{\metre^{-3}}]$ &
+				$[\si{\diffuseunit}]$ &
+				$[\SI{e-20}{\recombunit}]$ &
+				$[\SI{e15}{\metre^{-3}}]$
+				\\
+			},
+		},
+		zerofill,
+		columns/0/.style = {
+			column name = $\pres\,[\si{\pascal}]$,
+			precision = 0,
+		},
+		columns/2/.style = {
+			column name = $\diffuse\,[\si{\metre\squared\per\second}]$,
+			precision = 1,
+		},
+		columns/3/.style = {
+			column name = $\densinit\,[\SI{e15}{\metre^{-3}}]$,
+			precision = 1,
+			multiply with = 1e-15,
+		},
+		columns/4/.style = {
+			column name = $\recomb\,[\si{\metre\squared\per\second}]$,
+			precision = 3,
+			multiply with = 1e18,
+		},
+		columns/5/.style = {
+			column name = $\densinit\,[\SI{e15}{\metre^{-3}}]$,
+			precision = 1,
+			fixed,
+			multiply with = 1e-15,
+		},
+		columns/6/.style = {
+			column name = $\diffuse\,[\si{\metre\squared\per\second}]$,
+			precision = 1,
+		},
+		columns/7/.style = {
+			column name = $\recomb\,[\SI{e-20}{\metre\cubed\per\second}]$,
+			fixed,
+			precision = 3,
+			multiply with = 1e18,
+		},
+		columns/8/.style = {
+			column name = $\densinit\,[\SI{e15}{\metre^{-3}}]$,
+			precision = 1,
+			multiply with = 1e-15,
+		},
+	]{results/summary.tsv}
+\end{table}
+\shorthandon{-}
 
 \begin{figure}[htp]
 	\centering

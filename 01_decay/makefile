@@ -16,7 +16,8 @@ all: protokol.pdf
 tex_resources = build/plots \
 $(shell echo plots/fit-{rec,log}-{10,20,50,100,200,300,380}.{eps,tex}) \
 $(shell echo plots/{density,recomb,diffuse}-pres.{eps,tex}) \
-$(shell echo plots/{density,freq}.{eps,tex})
+$(shell echo plots/{density,freq}.{eps,tex}) \
+results/summary.tsv
 
 build/plots:
 	mkdir -p build/plots
@@ -29,6 +30,9 @@ plots/%-pres.eps plots/%-pres.tex: export_%_pres.m main.m
 
 plots/%.eps plots/%.tex: main.m export.m
 	octave --norc export.m
+
+results/summary.tsv: export_results.m main.m
+	octave --norc $<
 
 .PHONY: tex_resources
 tex_resources: makefile ${tex_resources}
