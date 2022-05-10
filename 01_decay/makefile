@@ -16,13 +16,16 @@ all: protokol.pdf
 tex_resources = build/plots \
 $(shell echo plots/fit-{rec,log}-{10,20,50,100,200,300,380}.{eps,tex}) \
 $(shell echo plots/{density,recomb,diffuse}-pres.{eps,tex}) \
-$(shell echo plots/{density,freq}.{eps,tex}) \
+$(shell echo plots/{density,density-inv,density-log,freq}.{eps,tex}) \
 results/summary.tsv
 
 build/plots:
 	mkdir -p build/plots
 
 plots/%.eps plots/%.tex: export_%.m main.m
+	octave --norc $<
+
+plots/density-%.eps plots/density-%.tex: export_density_%.m main.m
 	octave --norc $<
 
 plots/%-pres.eps plots/%-pres.tex: export_%_pres.m main.m
