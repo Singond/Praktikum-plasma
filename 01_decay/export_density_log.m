@@ -14,6 +14,6 @@ for k = 1:numel(X)
 		sprintf("w l ls %d t ''", k));
 endfor
 gp.xlabel('čas $\\tm\\,[\\si{\\micro\\second}]$');
-gp.exec("set key top right samplen 2 spacing 1.5 at graph 0.95,0.9");
+gp.exec("set key top right samplen 2 spacing 1.5 at graph 0.95,0.9 maxrows 4");
 gp.ylabel('$\\ln(\\dens/\\si{\\metre^{3}})$');
 gp.export("plots/density-log.tex", "epslatex", "size 17cm,11cm");
