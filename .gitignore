@@ -17,6 +17,8 @@ protokol.blg
 protokol.fls
 protokol.fdb_latexmk
 
+*.geany
+
 # Eclipse files
 .externalToolBuilders/
 .settings/
