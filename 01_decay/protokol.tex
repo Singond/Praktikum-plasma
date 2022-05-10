@@ -226,12 +226,13 @@ parametry jsou na obrázcích č.~\ref{fig:fit1} a~\ref{fig:fit2}.
 Pro přesnější stanovení obou koeficientů je nutno použít model,
 který zahrnuje oba procesy. Tento je popsán diferenciální rovnicí:
 \begin{equation}
-	\label{eq:dens-general}
+	\label{eq:dens-general-eq}
 	\frac{\partial \dens(\tm)}{\partial \tm}
 		= \frac{\diffuse}{\diffuselen^2}\dens(\tm) - \recomb\dens^2(\tm),
 \end{equation}
 jejíž řešení lze napsat ve tvaru:
 \begin{equation}
+	\label{eq:dens-general}
 	\dens(\tm)=\frac{1}{
 		\paramc\euler^{\tm\diffuse/\diffuselen^2}
 		- \frac{\recomb\diffuselen^2}{\diffuse}
@@ -252,21 +253,23 @@ jsou vyneseny na~obrázku č.~\ref{fig:density}.
 	\centering
 	\input{plots/density}
 	\caption{Naměřená koncentrace částic $\dens$
-		a její aproximace modelovou funkcí.}
+		a její aproximace modelovou funkcí \eqref{eq:dens-general}.}
 	\label{fig:density}
 \end{figure}
 \begin{figure}[htp]
 	\centering
 	\input{plots/density-inv}
 	\caption{Naměřená koncentrace částic $\dens$
-		a její aproximace modelovou funkcí (převrácená hodnota).}
+		a její aproximace modelovou funkcí \eqref{eq:dens-general}
+		(převrácená hodnota).}
 	\label{fig:density-inv}
 \end{figure}
 \begin{figure}[htp]
 	\centering
 	\input{plots/density-log}
 	\caption{Naměřená koncentrace částic $\dens$
-		a její aproximace modelovou funkcí (logaritmus).}
+		a její aproximace modelovou funkcí \eqref{eq:dens-general}
+		(logaritmus).}
 	\label{fig:density-log}
 \end{figure}
 
