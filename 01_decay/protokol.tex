@@ -150,14 +150,14 @@ kde $\densinit$ je opět počáteční koncentrace částic.
 \subsection{Stanovení koncentrace elektronů}
 Časový průběh koncentrace elektronů $\dens$ při dohasínání výboje
 byl určen pomocí rezonátorové metody popsané J. C. Slaterem v~roce 1946.
-Výbojová trubice byla umístěna do středu toroidního rezonátoru,
+Výbojová trubice byla umístěna do středu válcového rezonátoru,
 do něhož byl přiveden laditelný vysokofrekvenční signál.
-Výstupní signál byl snímán osciloskopem.
+Výstupní signál byl snímán diodou připojenou na osciloskop.
 Zaplnění části rezonátoru plazmatem způsobuje změnu jeho rezonanční
 frekvence z~původní $\freqbase$ na $\freqplas$.
-Pomocí poruchové metody lze z~tohoto rozdílu
-$\deltafreq = \freqplas - \freqbase$ přibližně vyjádřit koncentraci $\dens$
-jako:
+Označme rozdíl frekvencí $\deltafreq = \freqplas - \freqbase$.
+Předpokládáme-li, že v~rezonátoru převládá vid $\mathrm{TM}_{010}$,
+lze koncentraci $\dens$ přibližně vyjádřit pomocí poruchové metody jako:
 \begin{equation}
 	\label{eq:resonator}
 	\dens=\frac{\num{0.271}}{\num{0.64}} \frac{\resradius^2}{\tuberadius^2}
@@ -187,11 +187,11 @@ Takto naměřené hodnoty frekvence jsou na obrázku č.~\ref{fig:freq}.
 Koeficienty $\diffuse$ a~$\recomb$ byly určeny nejprve předběžně pomocí
 zjednodušených modelů, které předpokládaly vždy jen jeden rozpadový proces.
 Uvažujeme-li pouze difuzi, ze vztahu \eqref{eq:dens-diffuse} plyne,
-že funkce $\ln(\dens)$ je lineární.
+že funkce $\ln(\dens)$ má být lineární.
 Naměřená data byla aproximována touto přímkou a~z její směrnice
 byl spočten první odhad koeficientu difuze $\diffuse$.
 Pro objemovou rekombinaci platí podle vztahu \eqref{eq:dens-recomb},
-že závislost $1/\dens$ je lineární.
+že závislost $1/\dens$ má být lineární.
 Z~této aproximace byl určen počáteční odhad koeficientu rekombinace $\recomb$.
 Hodnoty $\ln(\dens)$, $1/\dens$, jimi proložené přímky a~z~nich spočtené
 parametry jsou na obrázcích č.~\ref{fig:fit1} a~\ref{fig:fit2}.
@@ -222,6 +222,7 @@ parametry jsou na obrázcích č.~\ref{fig:fit1} a~\ref{fig:fit2}.
 	\label{fig:fit2}
 \end{figure}
 
+\newcommand\paramc{C}
 Pro přesnější stanovení obou koeficientů je nutno použít model,
 který zahrnuje oba procesy. Tento je popsán diferenciální rovnicí:
 \begin{equation}
@@ -232,12 +233,12 @@ který zahrnuje oba procesy. Tento je popsán diferenciální rovnicí:
 jejíž řešení lze napsat ve tvaru:
 \begin{equation}
 	\dens(\tm)=\frac{1}{
-		c\euler^{\tm\diffuse/\diffuselen^2}
+		\paramc\euler^{\tm\diffuse/\diffuselen^2}
 		- \frac{\recomb\diffuselen^2}{\diffuse}
 	}.
 \end{equation}
 Aproximací dat touto funkcí získáme kromě koeficientů $\diffuse$ a $\recomb$
-také konstantu $c$.
+také konstantu $\paramc$.
 
 Proklad byl proveden Levenberg-Marquardtovým algoritmem.
 Počáteční hodnoty parametrů byly určeny z~předběžně určených hodnot
