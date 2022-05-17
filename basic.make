@@ -16,13 +16,19 @@ plots/%.eps plots/%.tex: %.tsv %.m
 	@mkdir -p plots
 	octave $*.m
 
+ifneq ($(wildcard .templates),)
+templatedir = .templates
+else
+templatedir = ../templates
+endif
+
 # Initialize an Eclipse project.
 # The optional ".template" suffix on template names will be stripped.
 .PHONY: eclipse
 eclipse:
 	@echo "Initializing Eclipse project..."
-	@for file in $$(find ../templates/eclipse/ -type f); do \
-		frel="$${file#../templates/eclipse/}"; \
+	@for file in $$(find ${templatedir}/eclipse/ -type f); do \
+		frel="$${file#${templatedir}/eclipse/}"; \
 		case "$$frel" in \
 			*/*) mkdir -p "$${frel%/*}" ;; \
 			*) ;; \

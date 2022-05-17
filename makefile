@@ -1,5 +1,6 @@
 PROJECTS := $(shell find . -maxdepth 1 -type d -regextype posix-egrep -regex '\./[0-9]{2}_.*' -printf '%P\n')
-PDF_OUTPUT := $(PROJECTS:%=%.pdf)
+TEX_PROJECTS := $(shell find * -maxdepth 1 -regextype posix-egrep -regex '[0-9]{2}_[^/]*/protokol.tex' -printf '%h\n')
+PDF_OUTPUT := $(TEX_PROJECTS:%=%.pdf)
 
 .PHONY: all
 all: pdf

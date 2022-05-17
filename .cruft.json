@@ -1,6 +1,6 @@
 {
   "template": "git@bitbucket.org:Singon/school-lab-template.git",
-  "commit": "ce21b8c0b619a2231fdc3b9580503864f02f8a2a",
+  "commit": "26ae63866011dda0d9cb3dcdb09b1bf42b6fff56",
   "context": {
     "cookiecutter": {
       "project_name": "Praktikum z fyziky plazmatu",
@@ -17,5 +17,6 @@
       "_template": "git@bitbucket.org:Singon/school-lab-template.git"
     }
   },
-  "directory": "multi"
+  "directory": "multi",
+  "checkout": null
 }
