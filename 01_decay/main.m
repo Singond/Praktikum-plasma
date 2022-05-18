@@ -49,16 +49,24 @@ function x = process(file)
 
 	## Fit 1/n with a line to determine a (coeff. of recombination)
 	v = (1:numel(x.n)/2)';
-	b = ols(1./x.n(v), [x.tr(v), ones(size(v))]);
+	xx = [x.tr(v), ones(size(v))];
+	[b, s, r] = ols(1./x.n(v), xx);
 	x.invfit.a = b(1);
 	x.invfit.n = 1/b(2);
+	x.invfit.r = r;
+	be = s * sqrt(diag(inv(xx'*xx)));
+	x.invfit.a_ste = be(1);
 
 	## Fit log(n) with a line to determine D (coeff. of recombination)
 	## DoL = D / Lambda^2
 	v = (8:numel(x.n)-2)';
-	b = ols(log(x.n(v)), [x.tr(v), ones(size(v))]);
+	xx = [x.tr(v), ones(size(v))];
+	[b, s, r] = ols(log(x.n(v)), xx);
 	x.logfit.DoL = -b(1);
 	x.logfit.n = exp(b(2));
+	x.logfit.r = r;
+	be = s * sqrt(diag(inv(xx'*xx)));
+	x.logfit.DoL_ste = be(1);
 
 	## Fit with 1/(c.exp(tD/L^2) - aL^2/D),
 	## using previously found a and D as initial guesses.
