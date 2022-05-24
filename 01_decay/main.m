@@ -78,18 +78,23 @@ function x = process(file)
 	b0(1) = 1e-15 / scale;
 	b0(2) = x.invfit.a / (x.logfit.DoL * scale);
 	b0(3) = x.logfit.DoL * L^2;
-	[ym, b, cvg, iter] = leasqr(x.tr, x.n.*scale, b0,
+	[ym, b, cvg, iter, ~, covp] = leasqr(x.tr, x.n.*scale, b0,
 		@(x,b) 1./(b(1).*exp(x*b(3)) - b(2)), [], 50);
 	if (!cvg)
 		warning("Convergence not reached for %s after %d iterations",
 			file, iter);
 	endif
+	be = sqrt(diag(covp));
 	x.nlfit.c = b(1)*scale;
 	x.nlfit.DoL = b(3);
 	x.nlfit.convergence = cvg;
 	x.nlfit.iterations = iter;
 	x.a = x.nlfit.a = b(2)*b(3)*scale;
 	x.D = x.nlfit.DoL ./ L^2;
+	x.nlfit.a_ste = hypot(be(2)*b(3)*scale, be(2)*b(3)*scale);
+	x.nlfit.c_ste = be(1) * scale;
+	x.nlfit.DoL_ste = be(3);
+	x.nlfit.D_ste = be(3) ./ L^2;
 	x.n0 = densitymodel(0, x.nlfit.DoL, x.nlfit.a, x.nlfit.c);
 end
 
