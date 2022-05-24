@@ -54,7 +54,7 @@ function x = process(file)
 	x.invfit.a = b(1);
 	x.invfit.n = 1/b(2);
 	x.invfit.r = r;
-	be = s * sqrt(diag(inv(xx'*xx)));
+	be = sqrt(s * diag(inv(xx'*xx)));
 	x.invfit.a_ste = be(1);
 
 	## Fit log(n) with a line to determine D (coeff. of recombination)
@@ -65,7 +65,7 @@ function x = process(file)
 	x.logfit.DoL = -b(1);
 	x.logfit.n = exp(b(2));
 	x.logfit.r = r;
-	be = s * sqrt(diag(inv(xx'*xx)));
+	be = sqrt(s * diag(inv(xx'*xx)));
 	x.logfit.DoL_ste = be(1);
 
 	## Fit with 1/(c.exp(tD/L^2) - aL^2/D),
