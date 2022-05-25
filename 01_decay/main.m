@@ -56,6 +56,7 @@ function x = process(file)
 	x.invfit.r = r;
 	be = sqrt(s * diag(inv(xx'*xx)));
 	x.invfit.a_ste = be(1);
+	x.invfit.n_ste = be(2)/b(2)^2;
 
 	## Fit log(n) with a line to determine D (coeff. of recombination)
 	## DoL = D / Lambda^2
@@ -67,6 +68,7 @@ function x = process(file)
 	x.logfit.r = r;
 	be = sqrt(s * diag(inv(xx'*xx)));
 	x.logfit.DoL_ste = be(1);
+	x.logfit.n_ste = x.logfit.n * be(2);
 
 	## Fit with 1/(c.exp(tD/L^2) - aL^2/D),
 	## using previously found a and D as initial guesses.
@@ -96,6 +98,12 @@ function x = process(file)
 	x.nlfit.DoL_ste = be(3);
 	x.nlfit.D_ste = be(3) ./ L^2;
 	x.n0 = densitymodel(0, x.nlfit.DoL, x.nlfit.a, x.nlfit.c);
+	dndDoL = -(x.n0)^2 * (x.nlfit.a/(x.nlfit.DoL)^2);
+	dndc = -(x.n0)^2;
+	dnda = (x.n0)^2 / x.nlfit.DoL;
+	x.n0_ste = hypot(dndDoL * x.nlfit.DoL_ste,
+		dnda * x.nlfit.a_ste,
+		dndc * x.nlfit.c_ste);
 end
 
 X = struct();
