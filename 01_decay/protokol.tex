@@ -297,10 +297,27 @@ Tuto anomálii se nepodařilo objasnit.
 		skip first n = 1,
 		col sep = tab,
 	}
+	\sisetup{
+		round-mode = uncertainty,
+		round-precision = 1,
+		separate-uncertainty = true,
+		table-alignment-mode = format,
+		table-number-alignment = center,
+	}
 	\pgfplotstabletypeset[
+		string type,
 		columns = {[index] 0, [index] 2, [index] 3, [index] 4,
 			[index] 5, [index] 6, [index] 7, [index] 8},
-		column type = {r r r r r r r r},
+		column type = {@{}
+			S[table-format = 3]
+			S[table-format = 3.0(1)]
+			S[table-format = 2.1(1)]
+			S[table-format = 3.1(1)]
+			S[table-format = +4.0(4)]
+			S[table-format = 3.0(2)]
+			S[table-format = 2.0(2)]
+			S[table-format = 3.0(3)]
+		@{}},
 		every head row/.append style = {
 			output empty row,
 			before row = {
@@ -334,45 +351,6 @@ Tuto anomálii se nepodařilo objasnit.
 			},
 		},
 		zerofill,
-		columns/0/.style = {
-			column name = $\pres\,[\si{\pascal}]$,
-			precision = 0,
-		},
-		columns/2/.style = {
-			column name = $\diffuse\,[\si{\metre\squared\per\second}]$,
-			precision = 1,
-		},
-		columns/3/.style = {
-			column name = $\densinit\,[\SI{e15}{\metre^{-3}}]$,
-			precision = 1,
-			multiply with = 1e-15,
-		},
-		columns/4/.style = {
-			column name = $\recomb\,[\si{\metre\squared\per\second}]$,
-			precision = 3,
-			multiply with = 1e18,
-		},
-		columns/5/.style = {
-			column name = $\densinit\,[\SI{e15}{\metre^{-3}}]$,
-			precision = 1,
-			fixed,
-			multiply with = 1e-15,
-		},
-		columns/6/.style = {
-			column name = $\diffuse\,[\si{\metre\squared\per\second}]$,
-			precision = 1,
-		},
-		columns/7/.style = {
-			column name = $\recomb\,[\SI{e-20}{\metre\cubed\per\second}]$,
-			fixed,
-			precision = 3,
-			multiply with = 1e18,
-		},
-		columns/8/.style = {
-			column name = $\densinit\,[\SI{e15}{\metre^{-3}}]$,
-			precision = 1,
-			multiply with = 1e-15,
-		},
 	]{results/summary.tsv}
 \end{table}
 \shorthandon{-}
