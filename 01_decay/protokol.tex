@@ -146,6 +146,29 @@ kde $\recomb$ je koeficient rekombinace.
 kde $\densinit$ je opět počáteční koncentrace částic.
 
 \section{Měření}
+\subsection{Experimentální uspořádání}
+
+\begin{figure}
+	\begin{circuitikz}
+		% Tube
+		\draw (-0.4,0.4) arc (180:360:0.4)
+			-- (0.4,5.6)
+			arc (0:180:0.4)
+			-- (-0.4, 0.4);
+		\draw[thick] (0,0) -- (0,0.5);
+		\draw[thick] (-0.2,0.5) -- (0.2,0.5);
+		\draw[thick] (0,6) -- (0,5.5);
+		\draw[thick] (-0.2,5.5) -- (0.2,5.5);
+
+		% Resonator
+		\draw (0.45,2) -- (1,2) -- (1,4) -- (0.45,4);
+		\draw (-0.45,2) -- (-1,2) -- (-1,4) -- (-0.45,4);
+
+		\draw (-6,1) -- (-4,1) to[ammeter] (-2,1) -- (-2,7) -- (0,7) -- (0,6);
+
+		\draw (1,3) -- (3,3);
+	\end{circuitikz}
+\end{figure}
 
 \subsection{Stanovení koncentrace elektronů}
 Časový průběh koncentrace elektronů $\dens$ při dohasínání výboje
