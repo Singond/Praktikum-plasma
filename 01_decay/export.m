@@ -18,7 +18,7 @@ $\\\\recomb=\\\\SI{%g}{\\\\recombunit}$\
 		x.p, x.invfit.a));
 	gp.exec("set key off");
 	gp.exec("set lmargin 6");
-	gp.export(sprintf("plots/fit-rec-%d.tex", x.p),
+	gp.export(sprintf("plots/fit-rec-%d.tex", x.p_air),
 		"epslatex", "size 8cm,6cm");
 	clear gp;
 
@@ -36,7 +36,7 @@ $\\\\doll=\\\\SI{%g}{\\\\dollunit}$\
 \" at graph 0.2,0.3",
 		x.p, x.logfit.DoL));
 	gp.exec("set key off");
-	gp.export(sprintf("plots/fit-log-%d.tex", x.p),
+	gp.export(sprintf("plots/fit-log-%d.tex", x.p_air),
 		"epslatex", "size 8cm,6cm");
 end
 clear gp;

@@ -7,6 +7,7 @@ global perm = 8.854E-12;    # Permittivity of free space [SI]
 global ec = 1.602E-19;      # Elementary charge [C]
 
 global L = rt*1E-3/2.405;   # Diffusion length of fundamental mode [m]
+global k_Ar = 1.29;         # Pirani gauge correction factor for argon
 
 function D = importdata(file)
 	filelocal = false;
@@ -17,11 +18,11 @@ function D = importdata(file)
 		filelocal = true;
 	endif
 
-	D.I = fscanf(f, "# I = %f mA ", 1);  # Current [mA]
-	D.p = fscanf(f, "# p = %f Pa ", 1);  # Pressure [Pa]
+	D.I = fscanf(f, "# I = %f mA ", 1);      # Current [mA]
+	D.p_air = fscanf(f, "# p = %f Pa ", 1);  # Indicated pressure [Pa]
 	data = dlmread(f, "", 1, 0);
-	D.tr = data(:,1);                    # Time offset at resonance [us]
-	D.fr = data(:,2);                    # Resonance frequency [MHz]
+	D.tr = data(:,1);                        # Time offset at resonance [us]
+	D.fr = data(:,2);                        # Resonance frequency [MHz]
 	D.f0 = data(1,3);
 	D.tr(D.fr < D.f0) = [];
 	D.fr(D.fr < D.f0) = [];
@@ -41,9 +42,13 @@ function n = densitymodel(t, DoL, a, c)
 endfunction
 
 function x = process(file)
-	global L;
+	global L k_Ar;
 
 	x = importdata(file);
+
+	## Correct pressure
+	x.p = x.p_air * k_Ar;
+
 	x.df = x.fr - x.f0;
 	x.n = density(x.fr, x.f0);
 

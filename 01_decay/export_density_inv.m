@@ -8,7 +8,7 @@ nscale = 1e-14;
 for k = 1:numel(X)
 	x = X(k);
 	gp.plot(x.tr, (1./x.n)./nscale,
-		sprintf("w p ls %d t '\\SI{%g}{\\pascal}'", k, x.p));
+		sprintf("w p ls %d t '\\SI{%.0f}{\\pascal}'", k, x.p));
 	tt = linspace(min(x.tr), max(x.tr), 1000);
 	gp.plot(tt, (1./densitymodel(tt, x.nlfit.DoL, x.nlfit.a, x.nlfit.c))./nscale,
 		sprintf("w l ls %d t ''", k));
