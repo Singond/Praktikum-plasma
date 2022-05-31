@@ -148,7 +148,8 @@ kde $\densinit$ je opět počáteční koncentrace částic.
 \section{Měření}
 \subsection{Experimentální uspořádání}
 
-\begin{figure}
+\begin{figure}[hb]
+	\ctikzset{bipoles/oscope/waveform=sin}
 	\begin{circuitikz}
 		% Tube
 		\draw (-0.4,0.4) arc (180:360:0.4)
@@ -161,13 +162,43 @@ kde $\densinit$ je opět počáteční koncentrace částic.
 		\draw[thick] (-0.2,5.5) -- (0.2,5.5);
 
 		% Resonator
+		\node[rotate=90] at (0.7,3) {rezonátor};
 		\draw (0.45,2) -- (1,2) -- (1,4) -- (0.45,4);
 		\draw (-0.45,2) -- (-1,2) -- (-1,4) -- (-0.45,4);
 
-		\draw (-6,1) -- (-4,1) to[ammeter] (-2,1) -- (-2,7) -- (0,7) -- (0,6);
+		% Resonator source
+		\node[vsourcesinshape, rotate=90] (hf) at (-9,3) {};
+		\node[jump crossing] (cr) at (-2,3) {};
+		\draw (hf) to[vR] (-6,3)
+			to[rmeter, t=$\lambda$, label=vlnoměr] (-5,3) to[vR] (cr.w);
+		\draw (cr.e) -- (-1,3);
 
-		\draw (1,3) -- (3,3);
+		% Resonator to oscilloscope
+		\node[fourport] (osc) at (4,2.6) {osciloskop};
+		\node[oscopeshape] at (4,2.6) {};
+		\draw (1,0 |- osc.port4) to[empty diode] (osc.port4);
+
+		% Main circuit
+		\node[fourport, t=VN] (hv) at (-8.5,0) {};
+		\node[fourport, t=M] (m) at (-6,0) {};
+		\draw (hv.port2) -- (m.port1);
+		\draw (hv.port3) -- (m.port4);
+		\draw (m.port3) to[rmeter, t={A}] (m.port3 -| -2,0)
+			-- (-2,6.5) -- (0,6.5) -- (0,6);
+		\draw (m.port2) to[R, -*, label=$R$] (m.port2 -| 0,0)
+			-- (m.port2 -| 2,0) -- (2,0 |- osc.port1) -- (osc.port1);
+		\draw (m.port2 -| 0,0) -- (0,0);
+
+		% Trigger
+		\node[fourport, t=GM] (gm) at (-6,-2.5) {};
+		\draw (m.south) -- (gm.north);
+		\draw (gm.east) -- (gm.east -| osc.south) -- (osc.south);
 	\end{circuitikz}
+	\caption{Schéma měřicí aparatury.
+		VN~-- zdroj vysokého napětí;
+		M~-- elektronický pentodový spínač;
+		GM~-- generátor pravoúhlých pulzů.}
+	\label{fig:circuit}
 \end{figure}
 
 \subsection{Stanovení koncentrace elektronů}
