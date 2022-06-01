@@ -1,7 +1,7 @@
 pkg load report;
 
 main;
-compare;
+##compare;
 
 pp = 1:500;
 nn = pp / (kb * temp);
