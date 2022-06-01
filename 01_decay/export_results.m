@@ -13,9 +13,10 @@ hdr = strjoin(hdr, "\t");
 fputs(f, hdr);
 fputs(f, "\n");
 invfit = [[[X.invfit].a]' [[X.invfit].n]'];
-logfit = [[[X.logfit].DoL]'./L^2 [[X.logfit].n]'];
+logfit = [[[X.logfit].D]' [[X.logfit].n]'];
 num = "%f";
 unc = "%f+-%f";
+Dscale = 1e-3;
 nscale = 1e15;
 ascale = 1e-20;
 for x = X
@@ -23,7 +24,7 @@ for x = X
 	fwrite(f, "\t");
 	fprintf(f, num, x.I);
 	fwrite(f, "\t");
-	fprintf(f, unc, x.logfit.DoL./L^2, x.logfit.DoL_ste./L^2);
+	fprintf(f, unc, x.logfit.D/Dscale, x.logfit.D_ste/Dscale);
 	fwrite(f, "\t");
 	fprintf(f, unc, x.logfit.n/nscale, x.logfit.n_ste/nscale);
 	fwrite(f, "\t");
@@ -31,7 +32,7 @@ for x = X
 	fwrite(f, "\t");
 	fprintf(f, unc, x.invfit.n/nscale, x.invfit.n_ste/nscale);
 	fwrite(f, "\t");
-	fprintf(f, unc, x.D, x.nlfit.D_ste);
+	fprintf(f, unc, x.D/Dscale, x.nlfit.D_ste/Dscale);
 	fwrite(f, "\t");
 	fprintf(f, unc, x.a/ascale, x.nlfit.a_ste/ascale);
 	fwrite(f, "\t");

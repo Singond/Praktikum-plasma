@@ -73,9 +73,11 @@ function x = process(file)
 	[b, s, r] = ols(log(x.n(v)), xx);
 	x.logfit.DoL = -b(1);
 	x.logfit.n = exp(b(2));
+	x.logfit.D = x.logfit.DoL .* L^2;
 	x.logfit.r = r;
 	be = sqrt(s * diag(inv(xx'*xx)));
 	x.logfit.DoL_ste = be(1);
+	x.logfit.D_ste = be(1) .* L^2;
 	x.logfit.n_ste = x.logfit.n * be(2);
 
 	## Fit with 1/(c.exp(tD/L^2) - aL^2/D),
@@ -87,7 +89,7 @@ function x = process(file)
 	b0 = ones(3,1);
 	b0(1) = 1e-15 / scale;
 	b0(2) = x.invfit.a / (x.logfit.DoL * scale);
-	b0(3) = x.logfit.DoL * L^2;
+	b0(3) = x.logfit.D;
 	[ym, b, cvg, iter, ~, covp] = leasqr(x.tr, x.n.*scale, b0,
 		@(x,b) 1./(b(1).*exp(x*b(3)) - b(2)), [], 50);
 	if (!cvg)
@@ -100,11 +102,11 @@ function x = process(file)
 	x.nlfit.convergence = cvg;
 	x.nlfit.iterations = iter;
 	x.a = x.nlfit.a = b(2)*b(3)*scale;
-	x.D = x.nlfit.DoL ./ L^2;
+	x.D = x.nlfit.DoL .* L^2;
 	x.nlfit.a_ste = hypot(be(2)*b(3)*scale, be(2)*b(3)*scale);
 	x.nlfit.c_ste = be(1) * scale;
 	x.nlfit.DoL_ste = be(3);
-	x.nlfit.D_ste = be(3) ./ L^2;
+	x.nlfit.D_ste = be(3) .* L^2;
 	x.n0 = densitymodel(0, x.nlfit.DoL, x.nlfit.a, x.nlfit.c);
 	dndDoL = -(x.n0)^2 * (x.nlfit.a/(x.nlfit.DoL)^2);
 	dndc = -(x.n0)^2;
