@@ -5,7 +5,9 @@ global rr = 40;             # Resonator radius [mm]
 global me = 9.109E-31;      # Electron mass [kg]
 global perm = 8.854E-12;    # Permittivity of free space [SI]
 global ec = 1.602E-19;      # Elementary charge [C]
+global kb = 1.381E-23;      # Boltzmann constant [J/K]
 
+global temp = 300;          # Temperature [K]
 global L = rt*1E-3/2.405;   # Diffusion length of fundamental mode [m]
 global k_Ar = 1.29;         # Pirani gauge correction factor for argon
 
@@ -42,7 +44,7 @@ function n = densitymodel(t, DoL, a, c)
 endfunction
 
 function x = process(file)
-	global L k_Ar;
+	global kb L k_Ar temp;
 
 	x = importdata(file);
 
@@ -50,7 +52,8 @@ function x = process(file)
 	x.p = x.p_air * k_Ar;
 
 	x.df = x.fr - x.f0;
-	x.n = density(x.fr, x.f0);
+	x.n = density(x.fr, x.f0);  # Electron density
+	x.nt = x.p / (kb * temp);   # Total density (assuming ideal gas)
 
 	## Fit 1/n with a line to determine a (coeff. of recombination)
 	v = (1:numel(x.n)/2)';
@@ -122,5 +125,6 @@ X(7) = process("data/data07.tsv");
 
 p = [X.p]';
 n0 = [X.n0]';
+nt = [X.nt]';
 a = [X.a]';
 D = [X.D]';

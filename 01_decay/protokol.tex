@@ -41,6 +41,7 @@
 	range-units          = single,
 	per-mode             = symbol,
 }
+\DeclareSIUnit\townsend{Td}
 \usepackage{amsmath}
 
 % Obvody
@@ -57,6 +58,8 @@
 \pgfplotsset{compat=1.17}
 
 \usepackage[hidelinks,pdfusetitle]{hyperref}
+\usepackage[backend=biber, sorting=none, sortlocale=cs_CZ]{biblatex}
+\addbibresource{references.bib}
 
 \jmenopraktika={Praktikum z fyziky plazmatu}  % jmeno predmetu
 \jmeno={Pavel Kosík, Jan Slaný}                             % jmeno mericiho
@@ -97,6 +100,7 @@
 \newcommand\dollunit{\second^{-1}}
 \newcommand\tuberadius{r_\mathrm{t}}
 \newcommand\resradius{r_\mathrm{r}}
+\newcommand\elfield{E}
 
 \begin{document}
 \header
@@ -437,7 +441,10 @@ Tuto anomálii se nepodařilo objasnit.
 	\input{plots/diffuse-pres}
 	\input{plots/recomb-pres}
 	\caption{Závislost koeficientu difuze $\diffuse$
-		a~koeficientu rekombinace $\recomb$ na tlaku $\pres$.}
+		a~koeficientu rekombinace $\recomb$ na tlaku $\pres$.
+		Difuzní koeficient je porovnán s~hodnotami uvedenými v~databázi
+		Biagi\cite{biagi} za předpokladu
+		$\elfield/\dens = \SI{10}{\townsend}$.}
 	\label{fig:diffuse-recomb-pres}
 \end{figure}
 

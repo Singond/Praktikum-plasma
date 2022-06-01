@@ -88,3 +88,10 @@ end
 hold off;
 xlabel("t [us]");
 ylabel("n [m^{-3}]");
+
+figure(7);
+clf;
+title("Diffusion coefficient");
+plot(p, D, "d");
+xlabel("p [Pa]");
+ylabel("D [m^2/s]");
