@@ -7,10 +7,11 @@ gp.load("../plotsettings.gp");
 nscale = 1e15;
 for k = 1:numel(X)
 	x = X(k);
-	gp.plot(x.tr, x.n./nscale,
+	gp.plot(x.tr.*1e6, x.n./nscale,
 		sprintf("w p ls %d t '\\SI{%.0f}{\\pascal}'", k, x.p));
 	tt = linspace(min(x.tr), max(x.tr), 1000);
-	gp.plot(tt, densitymodel(tt, x.nlfit.DoL, x.nlfit.a, x.nlfit.c)./nscale,
+	gp.plot(tt.*1e6,
+		densitymodel(tt, x.nlfit.DoL, x.nlfit.a, x.nlfit.c)./nscale,
 		sprintf("w l ls %d t ''", k));
 endfor
 gp.xlabel('čas $\\tm\\,[\\si{\\micro\\second}]$');

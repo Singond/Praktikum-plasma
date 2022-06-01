@@ -23,9 +23,9 @@ function D = importdata(file)
 	D.I = fscanf(f, "# I = %f mA ", 1);      # Current [mA]
 	D.p_air = fscanf(f, "# p = %f Pa ", 1);  # Indicated pressure [Pa]
 	data = dlmread(f, "", 1, 0);
-	D.tr = data(:,1);                        # Time offset at resonance [us]
-	D.fr = data(:,2);                        # Resonance frequency [MHz]
-	D.f0 = data(1,3);
+	D.tr = data(:,1) .* 1e-6;                # Time offset at resonance [s]
+	D.fr = data(:,2) .* 1e6;                 # Resonance frequency [Hz]
+	D.f0 = data(1,3) .* 1e6;
 	D.tr(D.fr < D.f0) = [];
 	D.fr(D.fr < D.f0) = [];
 	if (filelocal)
@@ -36,7 +36,7 @@ endfunction
 function n = density(fr, f0)
 	global perm me rr rt ec;
 	persistent c = 8 * pi^2 * 0.271 / 0.64;
-	n = c * perm * me * (rr / rt)^2 .* (fr - f0) .* fr .* 1e12 ./ ec^2;
+	n = c * perm * me * (rr / rt)^2 .* (fr - f0) .* fr ./ ec^2;
 end
 
 function n = densitymodel(t, DoL, a, c)

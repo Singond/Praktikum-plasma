@@ -369,6 +369,7 @@ Tuto anomálii se nepodařilo objasnit.
 \shorthandoff{-}
 \begin{table}[hb]
 	\centering
+	\small
 	\caption{Hodnoty difuzního koeficientu $\diffuse$,
 		koeficientu rekombinace $\recomb$ a koncentrace elektronů $\dens$
 		určené různými metodami.}
@@ -391,12 +392,12 @@ Tuto anomálii se nepodařilo objasnit.
 			[index] 5, [index] 6, [index] 7, [index] 8},
 		column type = {@{}
 			S[table-format = 3]
-			S[table-format = 3.0(1)]
-			S[table-format = 2.1(1)]
-			S[table-format = 3.1(1)]
+			S[table-format = 2.1(1.1)]
+			S[table-format = 2.1(1.1)]
+			S[table-format = 3.1(1.1)]
 			S[table-format = +4.0(4)]
-			S[table-format = 3.0(2)]
-			S[table-format = 2.0(2)]
+			S[table-format = 2.1(1.1)]
+			S[table-format = 2.0(1)]
 			S[table-format = 3.0(3)]
 		@{}},
 		every head row/.append style = {
@@ -421,12 +422,12 @@ Tuto anomálii se nepodařilo objasnit.
 				\multicolumn{1}{c}{$\densinit$}
 				\\
 				$[\si{\pascal}]$ &
-				$[\si{\diffuseunit}]$ &
+				$[\SI{e-3}{\diffuseunit}]$ &
 				$[\SI{e15}{\metre^{-3}}]$ &
-				$[\SI{e-20}{\recombunit}]$ &
+				$[\SI{e-14}{\recombunit}]$ &
 				$[\SI{e15}{\metre^{-3}}]$ &
-				$[\si{\diffuseunit}]$ &
-				$[\SI{e-20}{\recombunit}]$ &
+				$[\SI{e-3}{\diffuseunit}]$ &
+				$[\SI{e-14}{\recombunit}]$ &
 				$[\SI{e15}{\metre^{-3}}]$
 				\\
 			},
@@ -442,9 +443,10 @@ Tuto anomálii se nepodařilo objasnit.
 	\input{plots/recomb-pres}
 	\caption{Závislost koeficientu difuze $\diffuse$
 		a~koeficientu rekombinace $\recomb$ na tlaku $\pres$.
-		Difuzní koeficient je porovnán s~hodnotami uvedenými v~databázi
-		Biagi\cite{biagi} za předpokladu
-		$\elfield/\dens = \SI{10}{\townsend}$.}
+% 		Difuzní koeficient je porovnán s~hodnotami uvedenými v~databázi
+% 		Biagi\cite{biagi} za předpokladu
+% 		$\elfield/\dens = \SI{10}{\townsend}$.
+	}
 	\label{fig:diffuse-recomb-pres}
 \end{figure}
 
@@ -464,8 +466,8 @@ byl určen koeficient difuze $\diffuse$
 a~koeficient objemové rekombinace $\recomb$.
 
 Ukázalo se, že difuzní koeficient $\diffuse$ vycházel řádově
-v~desítkách $\si{\diffuseunit}$ a~s~rostoucím tlakem klesal.
-Koeficient rekombinace $\recomb$ vycházel v~řádu $\SI{e-20}{\recombunit}$
+v~desetinách $\si{\diffuseunit}$ a~s~rostoucím tlakem klesal.
+Koeficient rekombinace $\recomb$ vycházel v~řádu $\SI{e-13}{\recombunit}$
 a~s~rostoucím tlakem rostl.
 
 \end{document}

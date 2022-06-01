@@ -6,9 +6,10 @@ for x = X
 	gp = gnuplotter();
 	gp.load("../plotsettings.gp");
 	yscale = 1e15;
-	gp.plot(x.tr, yscale./x.n, sprintf("ls 1 t '%.0f Pa'", x.p));
+	gp.plot(x.tr.*1e6, yscale./x.n, sprintf("ls 1 t '%.0f Pa'", x.p));
 	tt = linspace(min(x.tr), max(x.tr), 1000);
-	gp.plot(tt, (x.invfit.a .* tt + 1/x.invfit.n) .* yscale, "w l ls 1 dt 2");
+	gp.plot(tt.*1e6, (x.invfit.a .* tt + 1/x.invfit.n) .* yscale,
+		"w l ls 1 dt 2");
 	gp.xlabel('čas $\\tm\\,[\\si{\\micro\\second}]$');
 	gp.ylabel('$1/\\dens\\,[\\si{\\metre^{-3}}]$');
 	gp.exec("set xtics right rotate by 45");
@@ -25,9 +26,10 @@ $\\\\recomb=\\\\SI{%g}{\\\\recombunit}$\
 
 	gp = gnuplotter();
 	gp.load("../plotsettings.gp");
-	gp.plot(x.tr, log(x.n), sprintf("ls 1 t '%.0f Pa'", x.p));
+	gp.plot(x.tr.*1e6, log(x.n), sprintf("ls 1 t '%.0f Pa'", x.p));
 	tt = linspace(min(x.tr), max(x.tr), 1000);
-	gp.plot(tt, -x.logfit.DoL .* tt + log(x.logfit.n), "w l ls 1 dt 2");
+	gp.plot(tt.*1e6, -x.logfit.DoL .* tt + log(x.logfit.n),
+		"w l ls 1 dt 2");
 	gp.xlabel('čas $\\tm\\,[\\si{\\micro\\second}]$');
 	gp.ylabel('$\\ln\\dens$');
 	gp.exec("set xtics right rotate by 45");

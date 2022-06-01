@@ -18,7 +18,7 @@ num = "%f";
 unc = "%f+-%f";
 Dscale = 1e-3;
 nscale = 1e15;
-ascale = 1e-20;
+ascale = 1e-14;
 for x = X
 	fprintf(f, "%.0f", x.p);
 	fwrite(f, "\t");
