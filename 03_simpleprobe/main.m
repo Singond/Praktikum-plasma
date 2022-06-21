@@ -80,18 +80,18 @@ function [uu, ii, tt] = extract_vac(utime, uvals, itime, ivals, tranges, pts)
 		## Fit a parabola through them to correct this.
 		ts = utime(sel);
 		us = uvals(sel);
-		bb = ols(us, [ts.**2 ts ones(size(ts))]);
+		bb = ols(us, [ts.^2 ts ones(size(ts))]);
 		a = bb(1);
 		b = bb(2);
 		c = bb(3);
 		## Calculate time values corresponding to uu.
 		## Use trial and error to select the correct root
 		## of the quadratic equation.
-		t0 = (-b + sqrt(b**2 - 4*a*(c - mean([umin umax])))) / (2*a);
+		t0 = (-b + sqrt(b^2 - 4*a*(c - mean([umin umax])))) / (2*a);
 		if (t0 > tmin && t0 < tmax)
-			tk = (-b + sqrt(b.**2 - 4*a.*(c - uu))) ./ (2*a);
+			tk = (-b + sqrt(b.^2 - 4*a.*(c - uu))) ./ (2*a);
 		else
-			tk = (-b - sqrt(b.**2 - 4*a.*(c - uu))) ./ (2*a);
+			tk = (-b - sqrt(b.^2 - 4*a.*(c - uu))) ./ (2*a);
 		endif
 		iik = interp1(itime, ivals, tk);
 		if (any(isnan(iik)))
