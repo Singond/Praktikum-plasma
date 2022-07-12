@@ -124,8 +124,13 @@ function x = process(x)
 	n = numel(x.Ie);
 	partb = (round(n/4):round(n/2))';
 	partc = (round(3*n/4):n)';
-	b = ols(log(x.Ie(partb)), [x.U(partb) ones(size(find(partb)))]);
-	c = ols(log(x.Ie(partc)), [x.U(partc) ones(size(find(partc)))]);
+	logIe = log(x.Ie);
+	b = ols(real(log(x.Ie(partb))), [x.U(partb) ones(size(find(partb)))]);
+	c = ols(real(log(x.Ie(partc))), [x.U(partc) ones(size(find(partc)))]);
+	x.b = b;
+	x.c = c;
+	x.bfit = @(U) exp(b(1) .* U + b(2));
+	x.cfit = @(U) exp(c(1) .* U + c(2));
 	x.Up = (c(2) - b(2)) / (b(1) - c(1));
 
 	## Probe voltage wrt plasma

@@ -15,7 +15,6 @@ function plot_rawdata_all(X)
 endfunction
 
 function plot_vac(X)
-	clf;
 	ax = gca();
 	hold on;
 	for x = X
@@ -38,3 +37,32 @@ function plot_vac(X)
 	ylabel(ax, "current I [uA]");
 	legend location northwest;
 endfunction
+
+function plot_logvac(x)
+	hold on;
+	color = get(gca, "colororder")(get(gca, "colororderindex"), :);
+
+	semilogy(x.U, x.Ie, "", "color", color);
+	ub = x.U;
+	semilogy(ub, x.bfit(ub), "--", "color", color);
+	uc = x.U;
+	semilogy(uc, x.cfit(uc), ":", "color", color);
+
+	hold off;
+	xlabel("voltage U [V]");
+	ylabel("current I [uA]");
+endfunction
+
+figure(1);
+clf;
+title("V-A characteristics");
+plot_vac(X);
+
+figure(2);
+clf;
+title("V-A characteristics (log)");
+hold on;
+for x = X
+	plot_logvac(x)
+endfor
+hold off;
