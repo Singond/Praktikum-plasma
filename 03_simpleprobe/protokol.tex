@@ -65,7 +65,7 @@
 \newcommand\ielec{I_\mathrm{e}}
 \newcommand\flpot{V_\mathrm{fl}}
 \newcommand\plpot{V_\mathrm{p}}
-\newcommand\potprobe{V_\mathrm{p}}
+\newcommand\potprobe{V_\mathrm{s}}
 \newcommand\uprobe{U_\mathrm{s}}
 
 \begin{document}
@@ -77,6 +77,7 @@
 	\begin{figure}[htp]
 		\centering
 		\input{plots/vac-#1}
+		\input{plots/vac-log-#1}
 		\caption{Voltampérová charakteristika sondy
 			při výbojovém proudu $\idisch = \SI{#2}{\milli\ampere}$
 			a tlaku $\pres = \SI{#3}{\pascal}$.}

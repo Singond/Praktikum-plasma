@@ -17,6 +17,7 @@ endif
 all: protokol.pdf
 
 figs = $(shell echo plots/vac-{1..7}.{eps,tex})
+figs += $(shell echo plots/vac-log-{1..7}.{eps,tex})
 
 tex_resources = build/plots ${figs}
 
