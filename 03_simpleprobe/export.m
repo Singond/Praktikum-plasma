@@ -26,7 +26,7 @@ for x = X
 	gp.ylabel('sondový proud $\\iprobe\\,[\\si{\\micro\\ampere}]$');
 	gp.exec("set key top left reverse Left samplen 2 height 1");
 	gp.exec(sprintf("set label \
-\"$\\\\idisch=\\\\SI{%.0f}{\\\\micro\\\\ampere}$\\n\
+\"$\\\\idisch=\\\\SI{%.0f}{\\\\milli\\\\ampere}$\\n\
 $\\\\pres=\\\\SI{%.0f}{\\\\pascal}$\\n\
 $\\\\plpot=\\\\SI{%.0f}{\\\\volt}$\" \
 		at graph 0.1,0.52",
