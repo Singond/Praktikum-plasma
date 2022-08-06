@@ -44,6 +44,13 @@
 \usepackage{epstopdf}
 \epstopdfsetup{outdir=./build/plots/}
 
+\usepackage[hidelinks,pdfusetitle]{hyperref}
+\usepackage[backend=biber, sorting=none, sortlocale=cs_CZ]{biblatex}
+\addbibresource{references.bib}
+
+\title{Langmuirova sonda}
+\author{Pavel Kosík, Jan Slaný}
+
 \jmenopraktika={Praktikum z fyziky plazmatu}  % jmeno predmetu
 \jmeno={Pavel Kosík, Jan Slaný}                             % jmeno mericiho
 \obor={F}                               % zkratka studovaneho oboru
@@ -106,7 +113,8 @@ Typická voltampérová chrakteristika rovinné sondy je na~obrázku
 \begin{figure}[hbp]
 	\centering
 	\includegraphics{vac-simple}
-	\caption{Voltampérová charakteristika jednoduché sondy.}
+	\caption{Voltampérová charakteristika jednoduché sondy.
+		Převzato z~\autocite{assignment-simpleprobe}.}
 	\label{fig:vac-simple}
 \end{figure}
 
@@ -177,4 +185,5 @@ Naměřené voltampérové charakteristiky jsou na obrázcích
 \figvac{5}{50}{10}
 \figvac{6}{50}{5}
 
+\printbibliography
 \end{document}
