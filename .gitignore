@@ -13,9 +13,12 @@ octave-workspace
 protokol.aux
 protokol.log
 protokol.bbl
+protokol.bcf
 protokol.blg
 protokol.fls
 protokol.fdb_latexmk
+protokol.out
+protokol.run.xml
 
 *.geany
 
