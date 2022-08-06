@@ -10,20 +10,19 @@ for x = X
 	gp = gnuplotter();
 	gp.load("../plotsettings.gp");
 	gp.plot(x.U, x.Im, 'w l ls 1 t "$\\iprobe$ (celkový)"');
-	if (columns(x.I) > 1)
-		for c = 1:columns(x.I)
-			if (c == 1)
-				title = "jednotlivá měření";
-			else
-				title = "";
-			endif
+##	if (columns(x.I) > 1)
+##		for c = 1:columns(x.I)
+##			if (c == 1)
+##				title = "jednotlivá měření";
+##			else
+##				title = "";
+##			endif
 ##			gp.plot(x.U, x.I(:,c), ['w l ls 1 dt 3 t "' title '"']);
-			gp.plot(x.U, x.I(:,c), 'w l ls 1 dt 3 t ""');
-		endfor
-	endif
+##		endfor
+##	endif
 	gp.plot(x.U, x.Ii, 'w l lc "black" dt 2 t "$\\iion$ (iontový)"');
-	gp.plot(x.U, x.Ie, 'w l ls 2 t "$\\ielec$ (elektronový)"');
-	gp.xlabel('napětí $\\potprobe\\,[\\si{\\volt}]$');
+	gp.plot(x.U, x.Ie, 'w l ls 2 dt 4 t "$\\ielec$ (elektronový)"');
+	gp.xlabel('potenciál sondy $\\potprobe\\,[\\si{\\volt}]$');
 	gp.ylabel('sondový proud $\\iprobe\\,[\\si{\\micro\\ampere}]$');
 	gp.exec("set key top left reverse Left samplen 2 height 1");
 	gp.exec(sprintf("set label \
@@ -39,7 +38,7 @@ $\\\\plpot=\\\\SI{%.0f}{\\\\volt}$\" \
 	gp.plot(x.U, x.Ie, 'w l ls 2');
 	gp.plot(x.U, x.bfit(x.U), 'w l ls 2 dt 2');
 	gp.plot(x.U, x.cfit(x.U), 'w l ls 2 dt 3');
-	gp.xlabel('napětí $\\potprobe\\,[\\si{\\volt}]$');
+	gp.xlabel('potenciál sondy $\\potprobe\\,[\\si{\\volt}]$');
 	gp.ylabel('elektronový proud $\\ielec\\,[\\si{\\micro\\ampere}]$');
 	gp.exec(sprintf("set xrange [%s]", xrange{k}));
 	gp.exec(sprintf("set yrange [%s]", yrange{k}));
@@ -47,7 +46,7 @@ $\\\\plpot=\\\\SI{%.0f}{\\\\volt}$\" \
 		set xtics 5 \n\
 		set log y \n\
 		set ytics nolog \n\
-		set format y '10^{%L}' \n\
+		set format y '$10^{%L}$' \n\
 		unset ymtics \n\
 		unset key \n\
 	");
