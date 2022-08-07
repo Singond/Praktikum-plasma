@@ -115,8 +115,9 @@
 	{
 		\sf
 		\noindent \begin{tabular}{p{3cm} p{0.6\textwidth}}
-			\Large  Úloha č. {\bfseries \the\cisloulohy:}
-			\IfStrEq{\the\teplota\the\tlak\the\vlhkost}{}{}{\par \smallskip}
+			\IfStrEq{\the\cisloulohy}{}{}{%
+				\Large  Úloha č. {\bfseries \the\cisloulohy:}%
+				\IfStrEq{\the\teplota\the\tlak\the\vlhkost}{}{}{\par \smallskip}}
 			\IfStrEq{\the\teplota}{}{}{$T=\the\teplota$~$^\circ$C \par}
 			\IfStrEq{\the\tlak}{}{}{$p=\the\tlak$~hPa \par}
 			\IfStrEq{\the\vlhkost}{}{}{$\varphi=\the\vlhkost$~\%}

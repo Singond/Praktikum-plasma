@@ -1,3 +1,5 @@
+.DEFAULT_GOAL = protokol.pdf
+
 # Calculation results
 %-result.csv: %.m %.csv
 	@mkdir -p plots
