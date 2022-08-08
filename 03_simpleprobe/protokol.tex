@@ -172,8 +172,54 @@ začíná sonda přitahovat elektrony a odpuzovat kladné ionty.
 V~případě válcové sondy proud v~této oblasti parabolicky roste.
 
 \section{Metoda}
-Byla použita sonda s válcovou geometrií
-o~poloměru $r=\SI{0.1}{\milli\metre}$ a délce $l=\SI{8}{\milli\metre}$.
+Schéma měřicí aparatury je na obrázku č.~\ref{fig:diagram-simple}.
+Elektrody ve válcové výbojové trubici jsou připojeny k~laditelnému zdroji
+stejnostměrného napětí a výbojový proud $\idisch$ je snímán ampérmetrem.
+Válcová sonda o~poloměru $r=\SI{0.1}{\milli\metre}$
+a délce $l=\SI{8}{\milli\metre}$ je umístěna poblíž anody.
+Sondový obvod je napájen stejnosměrným zdrojem s~automatizovaým laděním.
+Potenciál sondy $\potprobe$ a~sondový proud $\iprobe$ jsou měřeny
+voltmetrem a~přesným ampérmetrem připojeným k~počítači.
+
+\begin{figure}[hbp]
+	\centering
+	\includegraphics{diagram-simple.png}
+	\caption{Uspořádání experimentu pro jednoduchou sondu.
+		Převzato z~\autocite{assignment-simpleprobe}.}
+	\label{fig:diagram-simple}
+\end{figure}
+
+Pro každou sadu podmínek byl nejprve přibližně určen plovoucí potenciál sondy
+$\flpot$ jako bod, v~němž je proud sondou $\iprobe$ nulový.
+Voltampérová charakteristika byla následně naměřena v~rozsahu~\SI{20}{\volt}
+kolem plovoucího potenciálu.
+Potenciál sondy byl automaticky lineárně zvyšován z~nejnižší hodnoty
+na~nejvyšší a~zpět, čímž byly získány dvě datové sady.
+Z~datových sad byly vyřazeny ty, u~nichž došlo k~nevysvětlenému kolísání
+sondového proudu.
+Kde zůstaly obě sady pro stejné podmínky, byly získány dvě voltampérové
+charakteristiky, které byly zprůměrovány,
+
+Hodnoty $\potprobe$ a~$\iprobe$ byly asynchronně zaznamenávány počítačem
+spolu s~časovými značkami, které umožnily přiřazení odpovídajících hodnot
+napětí a~proudu.
+Vzhledem k~zaokrouhlení časových údajů na celé sekundy lze očekávat
+nepřesnost přiřazení dat v~řádu desetin sekundy.
+
+\subsection{Elektronový proud a potenciály}
+Levá část získané voltampérové charakteristiky byla proložena lineární funkcí
+a~extrapolována pro celou oblast, kde nabývala záporných hodnot
+(což nastalo pro všechny hodnoty potenciálu $\potprobe$).
+Tato funkce byla považována za iontovou část sondového proudu $\iion$.
+Elektronový proud byl získán odečtením iontového proudu od celkového:
+\begin{equation}
+	\label{eq:ielec}
+	\ielec = \iprobe - \iion.
+\end{equation}
+
+Potenciál neporušeného plazmatu $\plpot$ byl určen z~průsečíku přímek
+proložených střední a~koncovou částí elektronového proudu v~logaritmickém
+měřítku.
 
 \section{Výsledky}
 Naměřené voltampérové charakteristiky jsou na obrázcích
