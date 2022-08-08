@@ -1,6 +1,9 @@
 pkg load signal;
 
-0;  # Not a function
+global electronmass = 9.109384e-31;  # Electron mass [kg]
+global elemcharge = 1.602177e-19;    # Elementary charge [C]
+
+global probesurf = 2*pi*1e-3*8e-3;   # Probe surface area [m3]
 
 Id = [50 40 30 50 50 50 50];  ## Discharge current [mA]
 p = [50 50 50 20 10 5 100];   ## Pressure [Pa]
@@ -108,6 +111,12 @@ function x = extract_vacx(x, varargin)
 	[x.U, x.I] = extract_vac(x.Utime, x.Uraw, x.Itime, x.Iraw, varargin{:});
 endfunction
 
+function f = eedf(u, i, A = 1)
+	global electronmass elemcharge
+	f = (1/A) .* sqrt(8 .* electronmass .* elemcharge.^-3 .* abs(u(1:end-2)))...
+		.* diff(i, 2) ./ diff(u(1:end-1)).^2;
+endfunction
+
 function x = process(x)
 	x.Im = mean(x.I, 2);
 	x.Ufl = zerocrossing(x.U, x.Im);    # Floating potential
@@ -135,6 +144,19 @@ function x = process(x)
 
 	## Probe voltage wrt plasma
 	x.Us = x.U - x.Up;
+
+	## Smooth Ie by fitting a polynomial
+	uu = x.Us .^ (8:-1:0);
+	b = ols(x.Ie, uu);
+	x.Ies = @(Us) polyval(b, Us);
+
+	## Determine electron energy distribution function
+	u = x.Us(x.Us < 0);
+	global probesurf;
+	f = eedf(u, x.Ies(u), probesurf);
+	## Select only positive values (negative density is meaningless)
+	x.eedfu = u(1:end-2)(f >= 0);
+	x.eedf = f(f >= 0);
 endfunction
 
 U = struct();

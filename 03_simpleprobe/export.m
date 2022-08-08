@@ -5,6 +5,9 @@ main;
 xrange = [repmat({"-50:-30"}, 6, 1); "-60:-35"];
 yrange = [repmat({"0.1:1000"}, 6, 1); "*:*"];
 
+exec_eedf = cell(7, 1);
+exec_eedf(7) = "set label 1 at graph 0.1,0.7";
+
 k = 1;
 for x = X
 	gp = gnuplotter();
@@ -51,5 +54,24 @@ $\\\\plpot=\\\\SI{%.0f}{\\\\volt}$\" \
 		unset key \n\
 	");
 	gp.export(sprintf("plots/vac-log-%d.tex", k), "epslatex", "size 8cm,6cm");
+
+	gp = gnuplotter();
+	gp.load("../plotsettings.gp");
+	gp.plot(-x.eedfu, x.eedf.*1e-18, 'w l ls 2');
+	gp.xlabel('$\\enelec\\,[\\si\\electronvolt]$');
+	gp.ylabel('$\\eedf\\,[\\SI{e18}{\\per\\metre\\cubed}]$');
+	gp.exec("\
+		unset key \n\
+	");
+	gp.exec(sprintf("set label 1 \
+\"$\\\\idisch=\\\\SI{%.0f}{\\\\milli\\\\ampere}$\\n\
+$\\\\pres=\\\\SI{%.0f}{\\\\pascal}$\\n\
+$\\\\plpot=\\\\SI{%.0f}{\\\\volt}$\" \
+		at graph 0.1,0.4",
+		x.Id, x.p, x.Up));
+	if (!isempty(exec_eedf{k}))
+		gp.exec(exec_eedf{k});
+	endif
+	gp.export(sprintf("plots/eedf-%d.tex", k), "epslatex", "size 8cm,6cm");
 	k++;
 endfor

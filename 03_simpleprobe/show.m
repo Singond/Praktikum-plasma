@@ -66,3 +66,12 @@ for x = X
 	plot_logvac(x)
 endfor
 hold off;
+
+figure(3);
+clf;
+title("Electron energy distribution function");
+hold on;
+for x = X
+	plot(abs(x.eedfu), x.eedf);
+endfor
+hold off;

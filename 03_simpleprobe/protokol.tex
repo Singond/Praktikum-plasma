@@ -82,6 +82,8 @@
 \newcommand\uprobe{U_\mathrm{s}}
 \newcommand\dension{n_\mathrm{i}}
 \newcommand\denselec{n_\mathrm{e}}
+\newcommand\enelec{\mathcal E_\mathrm{e}}
+\newcommand\eedf{f(\enelec)}
 
 \begin{document}
 \header
@@ -221,6 +223,18 @@ Potenciál neporušeného plazmatu $\plpot$ byl určen z~průsečíku přímek
 proložených střední a~koncovou částí elektronového proudu v~logaritmickém
 měřítku.
 
+\subsection{Rozdělovací funkce elektronů}
+Rozdělovací funkce elektronů podle energie $\eedf$ byla určena ze vztahu:
+\begin{equation}
+	\label{eq:eedf}
+	\eedf = \frac{1}{A} \sqrt{\frac{8\,\masselec}{\elemcharge^3}\,|\uprobe|}
+		\,\frac{\mathrm d^2 \ielec}{\mathrm d\uprobe^2},
+\end{equation}
+kde $A$ je plocha sondy, $\masselec$ je hmotnost elektronu
+a $\elemcharge$ elementární náboj.
+Derivace voltampérové charakteristiky byla spočtena z~naměřených dat
+po vyhlazení polynomem osmého stupně.
+
 \section{Výsledky}
 Naměřené voltampérové charakteristiky jsou na obrázcích
 č.~\ref{fig:vac-1}--\ref{fig:vac-6}.
@@ -245,6 +259,23 @@ Naměřené voltampérové charakteristiky jsou na obrázcích
 \figvac{4}{50}{20}
 \figvac{5}{50}{10}
 \figvac{6}{50}{5}
+
+\newcommand\figeedf[3]{
+	\input{plots/eedf-#1}
+}
+
+\begin{figure}
+	\centering
+	\figeedf{1}{50}{50}
+	\figeedf{2}{40}{50}
+	\figeedf{3}{30}{50}
+	\figeedf{7}{50}{100}
+	\figeedf{4}{50}{20}
+	\figeedf{5}{50}{10}
+	\figeedf{6}{50}{5}
+	\caption{Rozdělovací funkce elektronů $\eedf$ podle energie.}
+	\label{fig:eedf}
+\end{figure}
 
 \printbibliography
 \end{document}
