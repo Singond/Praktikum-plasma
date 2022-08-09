@@ -42,6 +42,7 @@ function plot_logvac(x)
 	hold on;
 	color = get(gca, "colororder")(get(gca, "colororderindex"), :);
 
+	warning("off", "Octave:negative-data-log-axis");
 	semilogy(x.U, x.Ie, "", "color", color);
 	ub = x.U;
 	semilogy(ub, x.bfit(ub), "--", "color", color);
