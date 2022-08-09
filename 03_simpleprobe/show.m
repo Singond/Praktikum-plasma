@@ -72,9 +72,24 @@ figure(3);
 clf;
 title("Second derivative of V-A characteristic");
 hold on;
+k = 1;
 for x = X
-	plot(x.Us(1:end-2), diff(x.Ies(x.Us), 2) ./ diff(x.Us(1:end-1)).^2);
+	plot(x.U(1:end-2), x.didu2,
+		"displayname", sprintf("%.0f mA, %.0f Pa", x.Id, x.p));
+	set(gca, "colororderindex", k);
+	plot(x.Upd, interp1(x.U(1:end-2), x.didu2, x.Upd), "^",
+		"handlevisibility", "off");
+	set(gca, "colororderindex", k);
+	plot(x.Upa, interp1(x.U(1:end-2), x.didu2, x.Upa), "o",
+		"handlevisibility", "off");
+	k++;
 endfor
+set(gca, "colororderindex", 1);
+plot(x.Upd, NA, "^", "displayname", "plasma potential V_p (by derivative)");
+set(gca, "colororderindex", 1);
+plot(x.Upd, NA, "o", "displayname", "plasma potential V_p (by asymptotes)");
+legend location northwest;
+legend("numcolumns", 2);
 hold off;
 
 figure(4);

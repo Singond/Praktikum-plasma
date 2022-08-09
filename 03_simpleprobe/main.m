@@ -1,4 +1,5 @@
 pkg load signal;
+pkg load singon-ext;
 
 global electronmass = 9.109384e-31;  # Electron mass [kg]
 global elemcharge = 1.602177e-19;    # Elementary charge [C]
@@ -119,7 +120,7 @@ function f = eedf(u, i, A = 1)
 endfunction
 
 function x = process(x)
-	x.Im = mean(x.I, 2);
+	x.Im = mean(x.I, 2);                # Mean probe current
 	x.Ufl = zerocrossing(x.U, x.Im);    # Floating potential
 	assert(size(x.Ufl, 1));
 
@@ -127,10 +128,32 @@ function x = process(x)
 	z = find(x.Im < 0)(end);
 	saturated = (1:round(0.4*z))';
 	b = ols(x.Im(saturated), [x.U(saturated) ones(size(find(saturated)))]);
-	x.Ii = b(1) * x.U + b(2);
-	x.Ie = x.Im - x.Ii;
+	x.Ii = b(1) * x.U + b(2);           # Ion current
+	x.Ie = x.Im - x.Ii;                 # Electron current
 
-	## Determine plasma potential Up
+	## Smooth Ie by fitting a polynomial
+	## Add some constant C to voltage to avoid singular matrix in fit
+	C = -mean(x.U([1 end]));
+	uu = (x.U + C) .^ (8:-1:0);
+	b = ols(x.Ie, uu);
+	x.Ies = polyval(b, x.U + C);
+	clear b;
+
+	## Second derivative of electron current
+	x.didu2 = diff(x.Ies, 2) ./ diff(x.U(1:end-1)).^2;
+
+	## Determine plasma potential from the second derivative.
+	## This should occur at its zero, but in practice, there is no zero nearby.
+	## Instead, take the rightmost local minimum.
+	[~, loc] = findpeaksp(-x.didu2);
+	if (!isempty(loc))
+		x.Upd = x.U(loc(end));
+	else
+		warning("Cannot find local minimum in d2I/dU2");
+		x.Upd = NA;
+	endif
+
+	## Determine plasma potential Up using the asymptote method
 	n = numel(x.Ie);
 	partb = (round(n/4):round(n/2))';
 	partc = (round(3*n/4):n)';
@@ -141,7 +164,8 @@ function x = process(x)
 	x.c = c;
 	x.bfit = @(U) exp(b(1) .* U + b(2));
 	x.cfit = @(U) exp(c(1) .* U + c(2));
-	x.Up = (c(2) - b(2)) / (b(1) - c(1));
+	x.Upa = (c(2) - b(2)) / (b(1) - c(1));
+	x.Up = x.Upa;
 
 	## Probe voltage wrt plasma
 	x.Us = x.U - x.Up;
@@ -150,15 +174,10 @@ function x = process(x)
 	global elemcharge boltzmann;
 	x.Te = elemcharge / (boltzmann * x.b(1));  # Electron temperature
 
-	## Smooth Ie by fitting a polynomial
-	uu = x.Us .^ (8:-1:0);
-	b = ols(x.Ie, uu);
-	x.Ies = @(Us) polyval(b, Us);
-
 	## Determine electron energy distribution function
 	u = x.Us(x.Us < 0);
 	global probesurf;
-	f = eedf(u, x.Ies(u), probesurf);
+	f = eedf(u, x.Ies(x.Us < 0), probesurf);
 	## Select only positive values (negative density is meaningless)
 	x.eedfu = u(1:end-2)(f >= 0);
 	x.eedf = f(f >= 0);
