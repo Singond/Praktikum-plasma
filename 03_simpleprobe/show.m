@@ -69,6 +69,15 @@ hold off;
 
 figure(3);
 clf;
+title("Second derivative of V-A characteristic");
+hold on;
+for x = X
+	plot(x.Us(1:end-2), diff(x.Ies(x.Us), 2) ./ diff(x.Us(1:end-1)).^2);
+endfor
+hold off;
+
+figure(4);
+clf;
 title("Electron energy distribution function");
 hold on;
 for x = X
