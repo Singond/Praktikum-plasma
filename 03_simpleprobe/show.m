@@ -100,3 +100,14 @@ for x = X
 	plot(abs(x.eedfu), x.eedf);
 endfor
 hold off;
+
+figure(5);
+clf;
+title("Electron density");
+hold on;
+for x = X
+	plot(x.Us, x.ne, "displayname", sprintf("%.0f mA, %.0f Pa", x.Id, x.p));
+endfor
+xlabel("probe voltage U_s [V]");
+ylabel("electron density n_e [m^{-3}]");
+hold off;

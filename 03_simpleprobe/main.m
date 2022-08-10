@@ -4,8 +4,10 @@ pkg load singon-ext;
 global electronmass = 9.109384e-31;  # Electron mass [kg]
 global elemcharge = 1.602177e-19;    # Elementary charge [C]
 global boltzmann = 1.380649e-23;     # Boltzmann constant [J/K]
+global amu = 1.660539e-27;           # Atomic mass unit [kg]
 
-global probesurf = 2*pi*1e-3*8e-3;   # Probe surface area [m3]
+global ionmass = 40*amu;             # Ion mass (argon) [kg]
+global probesurf = 2*pi*1e-4*8e-3;   # Probe surface area [m3]
 
 Id = [50 40 30 50 50 50 50];  ## Discharge current [mA]
 p = [50 50 50 20 10 5 100];   ## Pressure [Pa]
@@ -165,18 +167,33 @@ function x = process(x)
 	x.bfit = @(U) exp(b(1) .* U + b(2));
 	x.cfit = @(U) exp(c(1) .* U + c(2));
 	x.Upa = (c(2) - b(2)) / (b(1) - c(1));
-	x.Up = x.Upa;
+
+	## Choose from the values of plasma potential.
+	## Using the value from the second derivative gives better results.
+	x.Up = x.Upd;
 
 	## Probe voltage wrt plasma
 	x.Us = x.U - x.Up;
 
-	## Electron temperature
+	## Electron temperature from asymptote method
 	global elemcharge boltzmann;
-	x.Te = elemcharge / (boltzmann * x.b(1));  # Electron temperature
+	x.Tea = elemcharge / (boltzmann * x.b(1));  # Electron temperature
+
+	## Electron temperature from floating potential
+	global electronmass ionmass;
+	x.Tep = abs(x.Ufl - x.Up) * 2 * elemcharge...
+		/ (log(ionmass / (4 * pi * electronmass)) * boltzmann);
+
+	## Choose from the values of electron temperature
+	x.Te = mean([x.Tea x.Tep], 2);
+
+	## Electron density
+	global probesurf;
+	x.ne = x.Ie .* 1e-6 .* sqrt(2 * pi * electronmass / (boltzmann * x.Te))...
+		/ (probesurf * elemcharge);
 
 	## Determine electron energy distribution function
 	u = x.Us(x.Us < 0);
-	global probesurf;
 	f = eedf(u, x.Ies(x.Us < 0), probesurf);
 	## Select only positive values (negative density is meaningless)
 	x.eedfu = u(1:end-2)(f >= 0);
@@ -207,3 +224,6 @@ X(6) = extract_vacx(X(6), [12 282; 288 556], 500);
 X(7) = extract_vacx(X(7), [291 559], 500);
 
 X = arrayfun(@(x) process(x), X);
+
+Tea = [X.Tea]';
+Tep = [X.Tep]';
