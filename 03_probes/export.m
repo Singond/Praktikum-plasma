@@ -1,6 +1,6 @@
 pkg load report;
 
-main;
+probesimple1;
 
 xrange = [repmat({"-50:-30"}, 6, 1); "-60:-35"];
 yrange = [repmat({"0.1:1000"}, 6, 1); "*:*"];
