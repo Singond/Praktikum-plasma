@@ -1,8 +1,9 @@
 function plot_vac(X)
 	ax = gca();
 	hold on;
+	k = 1;
 	for x = X
-		color = get(ax, "colororder")(get(ax, "colororderindex"), :);
+		color = get(ax, "colororder")(k++, :);
 		first = true;
 		for ii = x.I
 			args = {};
@@ -12,12 +13,12 @@ function plot_vac(X)
 			else
 				args(end+[1 2]) = {"handlevisibility", "off"};
 			endif
-			plot(ax, x.Us, ii, "color", color, args{:});
+			plot(ax, x.U, ii, "color", color, args{:});
 			first = false;
 		endfor
 	endfor
 	hold off;
-	xlabel(ax, "voltage U [V]");
-	ylabel(ax, "current I [uA]");
+	xlabel(ax, "probe potential V_s [V]");
+	ylabel(ax, "total probe current I_s [uA]");
 	legend location northwest;
 endfunction

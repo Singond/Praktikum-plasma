@@ -5,15 +5,16 @@ endif
 fig = 1;
 figure(fig++);
 clf;
-title("V-A characteristics");
+title("Total probe current");
 plot_vac(X);
 
 figure(fig++);
 clf;
-title("V-A characteristics (log)");
+title("Electron current (log)");
 hold on;
+k = 1;
 for x = X
-	plot_logvac(x)
+	plot_logvac(x, k++)
 endfor
 hold off;
 
@@ -30,7 +31,6 @@ for x = X
 	k++;
 endfor
 legend location northwest;
-legend("numcolumns", 2);
 hold off;
 
 figure(fig++);
