@@ -1,4 +1,9 @@
-function x = plasmaprops_simple(x)
+function x = plasmaprops_simple(x, varargin)
+	p = inputParser;
+	p.addParameter("polydeg", 8);
+	p.parse(varargin{:});
+	args = p.Results;
+
 	x.Im = mean(x.I, 2);                # Mean probe current
 	x.Ufl = zerocrossing(x.U, x.Im);    # Floating potential
 	if (numel(x.Ufl) > 1)
@@ -17,7 +22,11 @@ function x = plasmaprops_simple(x)
 	## Smooth Ie by fitting a polynomial
 	## Add some constant C to voltage to avoid singular matrix in fit
 	C = -mean(x.U([1 end]));
-	uu = (x.U + C) .^ (8:-1:0);
+	polydeg = args.polydeg;
+	if (isscalar(polydeg))
+		polydeg = polydeg:-1:0;
+	endif
+	uu = (x.U + C) .^ (polydeg);
 	b = ols(x.Ie, uu);
 	x.Ies = polyval(b, x.U + C);
 	clear b;
