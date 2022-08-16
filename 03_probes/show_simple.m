@@ -2,12 +2,13 @@ if (!exist("X"))
 	probesimple1;
 endif
 
-figure(1);
+fig = 1;
+figure(fig++);
 clf;
 title("V-A characteristics");
 plot_vac(X);
 
-figure(2);
+figure(fig++);
 clf;
 title("V-A characteristics (log)");
 hold on;
@@ -16,7 +17,7 @@ for x = X
 endfor
 hold off;
 
-figure(3);
+figure(fig++);
 clf;
 title("Second derivative of V-A characteristic");
 hold on;
@@ -40,7 +41,7 @@ legend location northwest;
 legend("numcolumns", 2);
 hold off;
 
-figure(4);
+figure(fig++);
 clf;
 title("Electron energy distribution function");
 hold on;
@@ -49,7 +50,7 @@ for x = X
 endfor
 hold off;
 
-figure(5);
+figure(fig++);
 clf;
 title("Electron density");
 hold on;
