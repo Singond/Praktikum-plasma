@@ -7,8 +7,8 @@ common;
 global ionmass = 40*amu;             # Ion mass (argon) [kg]
 global probesurf = 2*pi*1e-4*8e-3;   # Probe surface area [m3]
 
-Id = [50 40 30 50 50 50 50];  ## Discharge current [mA]
-p = [50 50 50 20 10 5 100];   ## Pressure [Pa]
+Id = [50 40 30 50 50 50 50];         # Discharge current [mA]
+p = [50 50 50 20 10 5 100];          # Pressure [Pa]
 
 U = struct();
 I = struct();
