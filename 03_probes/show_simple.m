@@ -19,6 +19,22 @@ hold off;
 
 figure(fig++);
 clf;
+title("Electron current");
+hold on;
+k = 1;
+for x = X
+	plot(x.U, x.Ie,
+		"displayname", sprintf("%.0f mA, %.0f Pa", x.Id, x.p));
+	set(gca, "colororderindex", k);
+	plot(x.U, x.Ies, "--", "handlevisibility", "off");
+	k++;
+endfor
+legend location northwest;
+legend("numcolumns", 2);
+hold off;
+
+figure(fig++);
+clf;
 title("Second derivative of V-A characteristic");
 hold on;
 k = 1;
