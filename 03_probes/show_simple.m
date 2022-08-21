@@ -30,12 +30,14 @@ for x = X
 	plot(x.U, x.Ies, "--", "handlevisibility", "off");
 	k++;
 endfor
+xlabel("probe potential V_s [V]");
+ylabel("electron current I_e [uA]");
 legend location northwest;
 hold off;
 
 figure(fig++);
 clf;
-title("Second derivative of V-A characteristic");
+title("Second derivative of electron current");
 hold on;
 k = 1;
 for x = X
@@ -53,6 +55,7 @@ set(gca, "colororderindex", 1);
 plot(x.Upd, NA, "^", "displayname", "plasma potential V_p (by derivative)");
 set(gca, "colororderindex", 1);
 plot(x.Upd, NA, "o", "displayname", "plasma potential V_p (by asymptotes)");
+xlabel("probe potential V_s [V]");
 legend location northwest;
 legend("numcolumns", 2);
 hold off;
