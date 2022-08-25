@@ -13,4 +13,5 @@ function f = eedfd(u, didu2, A = 1)
 	global electronmass elemcharge
 	f = (1/A) .* sqrt(8 .* electronmass .* elemcharge.^-3 .* abs(u))...
 		.* didu2;
+	f(f < 0) = nan;
 endfunction
