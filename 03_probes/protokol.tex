@@ -80,20 +80,27 @@
 \newcommand\plpot{V_\mathrm{p}}
 \newcommand\potprobe{V_\mathrm{s}}
 \newcommand\uprobe{U_\mathrm{s}}
+\newcommand\didu{\frac{\mathrm d^2 \ielec}{\mathrm d \uprobe^2}}
 \newcommand\dension{n_\mathrm{i}}
 \newcommand\denselec{n_\mathrm{e}}
 \newcommand\enelec{\mathcal E_\mathrm{e}}
 \newcommand\eedf{f(\enelec)}
+\newcommand\ueedf{\varepsilon}
+\newcommand\probesurf{S}
+\newcommand\tempelec{T_\mathrm{e}}
+\newcommand\tempeleca{T_\mathrm{e,a}}
+\newcommand\tempelecp{T_\mathrm{e,p}}
+\newcommand\massion{M}
 
 \begin{document}
 \header
 
+\section{Úvod}
+\label{sec:intro}
 \newcommand\parta{A}
 \newcommand\partb{B}
 \newcommand\partc{C}
-\newcommand\probesurf{S}
-\newcommand\tempelec{T_\mathrm{e}}
-\section{Úvod}
+\newcommand\slopeb{\beta}
 Předmětem této úlohy je studium kladného sloupce doutnavého výboje
 pomocí Langmuirovy sondy.
 Tato metoda umožňuje stanovit důležité parametry plazmatu jako je
@@ -123,6 +130,7 @@ Podle počtu součástí je možno rozlišit několik druhů sond,
 tato úloha se zaměřuje na dva nejjednodušší: jednoduchou a~dvojnou sondu.
 
 \subsection{Jednoduchá sonda}
+\label{sec:intro-simple}
 Jednoduchá Langmuirova sonda sestává z~jediného vodiče vnořeného do plazmatu.
 Typická voltampérová chrakteristika rovinné sondy je na~obrázku
 č.~\ref{fig:vac-simple} a~její průběh můžeme rozdělit na tři oblasti.
@@ -155,14 +163,17 @@ Další zvyšování napětí na sondě $\potprobe$ má za následek růst celko
 Zde již převládá proud elektronový $\ielec$, jehož průběh v~této oblasti lze
 za předpokladu Maxwell-Boltzmannova rozdělení popsat vztahem:
 \begin{equation}
+	\label{eq:partb}
 	\ielec = \probesurf \elemcharge \denselec
 		\sqrt{\frac{\boltzmann \tempelec}{2 \pi \masselec}}
 		e^{\frac{-\elemcharge\uprobe}{\boltzmann \tempelec}},
 \end{equation}
-jde $\probesurf$ je plocha sondy, $\denselec$ koncentrace elektronů,
-$\boltzmann$ Boltzmanova konstanta a~$\elemcharge$ náboj elektronu.
+kde $\probesurf$ je plocha sondy, $\denselec$ koncentrace elektronů,
+$\boltzmann$ Boltzmanova konstanta, $\tempelec$ elektronová teplota,
+$\elemcharge$~elementární náboj a~$\masselec$ hmotnost elektronu.
 Nastává změna polarizace sondy.
-Závislost $\ln(\ielec)=f(\uprobe)$ by měla být lineární.
+Ze~vztahu \eqref{eq:partb} plyne,
+že závislost $\ln(\ielec)=f(\uprobe)$ by měla být lineární.
 Směrnice přímky potom určuje teplotu elektronů $\tempelec$
 a~konstantní člen koncentraci elektronů $\denselec$.
 
@@ -173,7 +184,11 @@ začíná sonda přitahovat elektrony a odpuzovat kladné ionty.
 
 V~případě válcové sondy proud v~této oblasti parabolicky roste.
 
-\section{Metoda}
+\section{Jednoduchá sonda}
+\label{sec:simple}
+
+\subsection{Metoda}
+\label{sec:method-simple}
 Schéma měřicí aparatury je na obrázku č.~\ref{fig:diagram-simple}.
 Elektrody ve válcové výbojové trubici jsou připojeny k~laditelnému zdroji
 stejnostměrného napětí a výbojový proud $\idisch$ je snímán ampérmetrem.
@@ -208,7 +223,7 @@ napětí a~proudu.
 Vzhledem k~zaokrouhlení časových údajů na celé sekundy lze očekávat
 nepřesnost přiřazení dat v~řádu desetin sekundy.
 
-\subsection{Elektronový proud a potenciály}
+\subsubsection{Elektronový proud}
 Levá část získané voltampérové charakteristiky byla proložena lineární funkcí
 a~extrapolována pro celou oblast, kde nabývala záporných hodnot
 (což nastalo pro všechny hodnoty potenciálu $\potprobe$).
@@ -219,23 +234,39 @@ Elektronový proud byl získán odečtením iontového proudu od celkového:
 	\ielec = \iprobe - \iion.
 \end{equation}
 
-Potenciál neporušeného plazmatu $\plpot$ byl určen z~průsečíku přímek
+\subsubsection{Plazmový potenciál}
+Potenciál neporušeného plazmatu $\plpot$ byl určen dvěma metodami.
+První z~nich bylo stanovení tohoto potenciálu jako průsečíku přímek
 proložených střední a~koncovou částí elektronového proudu v~logaritmickém
 měřítku.
 
-\subsection{Rozdělovací funkce elektronů}
-Rozdělovací funkce elektronů podle energie $\eedf$ byla určena ze vztahu:
-\begin{equation}
-	\label{eq:eedf}
-	\eedf = \frac{1}{A} \sqrt{\frac{8\,\masselec}{\elemcharge^3}\,|\uprobe|}
-		\,\frac{\mathrm d^2 \ielec}{\mathrm d\uprobe^2},
-\end{equation}
-kde $A$ je plocha sondy, $\masselec$ je hmotnost elektronu
-a $\elemcharge$ elementární náboj.
-Derivace voltampérové charakteristiky byla spočtena z~naměřených dat
-po vyhlazení polynomem osmého stupně.
+Druhá metoda vychází z~poznatku, že v~okolí plazmového potenciálu $\plpot$
+bude mít voltampérová charakteristika inflexní bod:
+Elektronový proud byl kvůli potlačení šumu vyhlazen polynomem osmého stupně
+a plazmový potenciál byl stanoven jako nulový bod druhé derivace $\didu$
+proloženého polynomu.
 
-\section{Výsledky}
+\subsubsection{Elektronová teplota}
+Ze směrnice přímky proložené střední částí charakteristiky byla určena
+elektronová teplota $\tempelec$ podle vztahu:
+\begin{equation}
+	\label{eq:tempeleca}
+	\tempeleca = \frac{\elemcharge}{\boltzmann \slopeb},
+\end{equation}
+kde $\slopeb$ je směrnice proložené přímky.
+%
+Pro porovnání byla elektronová teplota určena také z~plovoucího potenciálu
+$\flpot$ jako:
+\begin{equation}
+	\label{eq:tempelecp}
+	\tempelecp = \frac{2\elemcharge}{\boltzmann}
+		\ln\left(\frac{4\pi\masselec}{\massion}\right)
+		|\flpot - \plpot|,
+\end{equation}
+kde $\massion$ je hmotnost iontu pracovního plynu.
+
+\subsection{Výsledky}
+\label{results-simple}
 Naměřené voltampérové charakteristiky jsou na obrázcích
 č.~\ref{fig:simple1-vac-1}--\ref{fig:simple1-vac-6}.
 
@@ -260,9 +291,59 @@ Naměřené voltampérové charakteristiky jsou na obrázcích
 \figvac{5}{50}{10}
 \figvac{6}{50}{5}
 
-\newcommand\figeedf[3]{
-	\input{plots/eedf-#1}
-}
+\clearpage
+\section{Jednoduchá sonda s~oscilujícím napětím}
+\label{sec:eedf}
+
+\subsection{Metoda}
+\label{sec:method-eedf}
+Modifikace zapojení popsaného v~části \ref{sec:method-simple}
+umožňuje stanovit derivaci $\didu$ jinou cestou.
+K~napětí na sondě je přidána malá střídavá složka $\ueedf\,\sin{\omega t}$,
+která způsobí nárůst sondového proudu přibližně o~hodnotu:
+\begin{equation}
+	\label{eq:eedf-idiff}
+	\Delta\iprobe = \frac{\ueedf^2}{4}\didu.
+\end{equation}
+Schéma tohoto zapojení je na obrázku č.~\ref{fig:diagram-eedf}.
+
+\begin{figure}[hbp]
+	\centering
+	\includegraphics{diagram-eedf.png}
+	\caption{Uspořádání experimentu pro jednoduchou sondu se střídavým napětím.
+		Převzato z~\autocite{assignment-simpleprobe}.}
+	\label{fig:diagram-eedf}
+\end{figure}
+
+\subsubsection{Rozdělovací funkce elektronů}
+Rozdělovací funkce elektronů podle energie $\eedf$ byla určena ze vztahu:
+\begin{equation}
+	\label{eq:eedf}
+	\eedf = \frac{1}{A} \sqrt{\frac{8\,\masselec}{\elemcharge^3}\,|\uprobe|}
+		\,\frac{\mathrm d^2 \ielec}{\mathrm d\uprobe^2},
+\end{equation}
+kde $A$ je plocha sondy, $\masselec$ je hmotnost elektronu
+a $\elemcharge$ elementární náboj.
+Derivace voltampérové charakteristiky byla spočtena z~naměřených dat
+po vyhlazení polynomem osmého stupně.
+
+\subsection{Výsledky}
+\label{sec:results-eedf}
+
+\begin{figure}[p]
+	\centering
+	\input{plots/simple2-vac-1}
+	\input{plots/simple2-vac-log-1}
+	\input{plots/simple2-vac-2}
+	\input{plots/simple2-vac-log-2}
+	\input{plots/simple2-vac-3}
+	\input{plots/simple2-vac-log-3}
+	\caption{Voltampérové charakteristiky jednoduché sondy
+		v~zapojení s~oscilujícím napětím
+		pro měření rozdělovací funkce elektronů.
+		$\idisch$ je výbojový proud a~$\pres$ je tlak.}
+	\label{fig:simple2-vac}
+\end{figure}
 
 \begin{figure}
 	\centering
