@@ -65,7 +65,7 @@ clf;
 title("Electron energy distribution function");
 hold on;
 for x = X
-	plot(abs(x.eedfu), x.eedf);
+	plot(abs(x.eedfn_U), x.eedfn);
 endfor
 hold off;
 
