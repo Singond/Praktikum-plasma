@@ -6,6 +6,7 @@ common;
 
 global ionmass = 40*amu;             # Ion mass (argon) [kg]
 global probesurf = 2*pi*1e-4*8e-3;   # Probe surface area [m3]
+global Ua = 1.0;                     # Alternating voltage added [V]
 
 Id = [50 50 30];                     # Discharge current [mA]
 p = [5 20 20];                       # Pressure [Pa]
@@ -35,11 +36,16 @@ clear k x y;
 
 X(1).U = [];
 X(1).I = [];
+Y(1).U = [];
+Y(1).I = [];
 X(1) = extract_vacx(X(1), [29 207; 380 550], 500);
 X(2) = extract_vacx(X(2), [20 195; 381 551], 500);
 X(3) = extract_vacx(X(3), [20 212; 355 548], 500);
+Y(1) = extract_vacx(Y(1), [29 207; 380 550], 500);
+Y(2) = extract_vacx(Y(2), [20 195; 381 551], 500);
+Y(3) = extract_vacx(Y(3), [20 212; 355 548], 500);
 
-X = arrayfun(@(x) plasmaprops_simple(x), X);
+X = arrayfun(@(x, y) plasmaprops_eedf(x, y), X, Y);
 
 Tea = [X.Tea]';
 Tep = [X.Tep]';

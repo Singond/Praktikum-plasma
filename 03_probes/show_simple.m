@@ -64,8 +64,14 @@ figure(fig++);
 clf;
 title("Electron energy distribution function");
 hold on;
+k = 1;
 for x = X
-	plot(abs(x.eedfn_U), x.eedfn);
+	set(gca, "colororderindex", k);
+	plot(abs(x.eedfn_U), x.eedfn, "", "displayname", "numerical");
+	set(gca, "colororderindex", k);
+	plot(abs(x.eedfa_U), x.eedfa, "--",
+		"displayname", "from alternating voltage");
+	k++;
 endfor
 hold off;
 
