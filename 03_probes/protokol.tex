@@ -237,17 +237,17 @@ po vyhlazení polynomem osmého stupně.
 
 \section{Výsledky}
 Naměřené voltampérové charakteristiky jsou na obrázcích
-č.~\ref{fig:vac-1}--\ref{fig:vac-6}.
+č.~\ref{fig:simple1-vac-1}--\ref{fig:simple1-vac-6}.
 
 \newcommand\figvac[3]{
 	\begin{figure}[htp]
 		\centering
-		\input{plots/vac-#1}
-		\input{plots/vac-log-#1}
+		\input{plots/simple1-vac-#1}
+		\input{plots/simple1-vac-log-#1}
 		\caption{Voltampérová charakteristika sondy
 			při výbojovém proudu $\idisch = \SI{#2}{\milli\ampere}$
 			a tlaku $\pres = \SI{#3}{\pascal}$.}
-		\label{fig:vac-#1}
+		\label{fig:simple1-vac-#1}
 	\end{figure}
 }
 
@@ -266,13 +266,9 @@ Naměřené voltampérové charakteristiky jsou na obrázcích
 
 \begin{figure}
 	\centering
-	\figeedf{1}{50}{50}
-	\figeedf{2}{40}{50}
-	\figeedf{3}{30}{50}
-	\figeedf{7}{50}{100}
-	\figeedf{4}{50}{20}
-	\figeedf{5}{50}{10}
-	\figeedf{6}{50}{5}
+	\input{plots/simple2-eedf-1}
+	\input{plots/simple2-eedf-2}
+	\input{plots/simple2-eedf-3}
 	\caption{Rozdělovací funkce elektronů $\eedf$ podle energie.}
 	\label{fig:eedf}
 \end{figure}

@@ -16,16 +16,25 @@ endif
 .PHONY: all
 all: protokol.pdf
 
-figs = $(shell echo plots/vac-{1..7}.{eps,tex})
-figs += $(shell echo plots/vac-log-{1..7}.{eps,tex})
+figs = $(shell echo plots/simple1-vac-{1..7}.{eps,tex})
+figs += $(shell echo plots/simple1-vac-log-{1..7}.{eps,tex})
+figs += $(shell echo plots/simple2-vac-{1..3}.{eps,tex})
+figs += $(shell echo plots/simple2-vac-log-{1..3}.{eps,tex})
+
+octave_deps = ../plotsettings.gp common.m
 
 tex_resources = build/plots ${figs}
 
 build/plots:
 	mkdir -p build/plots
 
-plots/vac-%.tex plots/vac-%.eps: ../plotsettings.gp main.m export.m
-	octave --norc export.m
+plots/simple1-%.tex plots/simple1-%.eps: export_simple1.m probesimple1.m \
+${octave_deps}
+	octave --norc export_simple1.m
+
+plots/simple2-%.tex plots/simple2-%.eps: export_simple2.m probesimple2.m \
+${octave_deps}
+	octave --norc export_simple2.m
 
 .PHONY: tex_resources
 tex_resources: makefile ${tex_resources}

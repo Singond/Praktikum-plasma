@@ -34,7 +34,7 @@ $\\\\pres=\\\\SI{%.0f}{\\\\pascal}$\\n\
 $\\\\plpot=\\\\SI{%.0f}{\\\\volt}$\" \
 		at graph 0.1,0.52",
 		x.Id, x.p, x.Up));
-	gp.export(sprintf("plots/vac-%d.tex", k), "epslatex", "size 8cm,6cm");
+	gp.export(sprintf("plots/simple1-vac-%d.tex", k), "epslatex", "size 8cm,6cm");
 
 	gp = gnuplotter();
 	gp.load("../plotsettings.gp");
@@ -53,25 +53,7 @@ $\\\\plpot=\\\\SI{%.0f}{\\\\volt}$\" \
 		unset ymtics \n\
 		unset key \n\
 	");
-	gp.export(sprintf("plots/vac-log-%d.tex", k), "epslatex", "size 8cm,6cm");
+	gp.export(sprintf("plots/simple1-vac-log-%d.tex", k), "epslatex", "size 8cm,6cm");
 
-	gp = gnuplotter();
-	gp.load("../plotsettings.gp");
-	gp.plot(-x.eedfn_U, x.eedfn.*1e-18, 'w l ls 2');
-	gp.xlabel('$\\enelec\\,[\\si\\electronvolt]$');
-	gp.ylabel('$\\eedf\\,[\\SI{e18}{\\per\\metre\\cubed}]$');
-	gp.exec("\
-		unset key \n\
-	");
-	gp.exec(sprintf("set label 1 \
-\"$\\\\idisch=\\\\SI{%.0f}{\\\\milli\\\\ampere}$\\n\
-$\\\\pres=\\\\SI{%.0f}{\\\\pascal}$\\n\
-$\\\\plpot=\\\\SI{%.0f}{\\\\volt}$\" \
-		at graph 0.1,0.4",
-		x.Id, x.p, x.Up));
-	if (!isempty(exec_eedf{k}))
-		gp.exec(exec_eedf{k});
-	endif
-	gp.export(sprintf("plots/eedf-%d.tex", k), "epslatex", "size 8cm,6cm");
 	k++;
 endfor
