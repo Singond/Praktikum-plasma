@@ -11,4 +11,6 @@ function x = plasmaprops_eedf(x, x_alt, varargin)
 	x.didu2a = 4 * (x.Ies2 - x.Ies) ./ x.Ua.^2;
 	uu = x.Us(x.Us < 0);
 	[x.eedfa, x.eedfa_E] = eedfd(uu, x.didu2a(x.Us < 0), probesurf);
+
+	x = fit_eedf(x);
 endfunction
