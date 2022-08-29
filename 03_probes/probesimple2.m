@@ -25,7 +25,7 @@ for k = 1:3
 
 	## Separate data and store individual parts for later inspection
 	S(k).all = I(k);
-	[i1, i2, S(k).sep] = separate_data(I(k), 30, 0.5);
+	[i1, i2, S(k).sep] = separate_data(I(k), 30, 0);
 	S(k).upper = i1;
 	S(k).lower = i2;
 
@@ -43,12 +43,12 @@ X(1).U = [];
 X(1).I = [];
 Y(1).U = [];
 Y(1).I = [];
-X(1) = extract_vacx(X(1), [29 207; 380 550], 500);
-X(2) = extract_vacx(X(2), [20 195; 381 551], 500);
-X(3) = extract_vacx(X(3), [20 212; 355 548], 500);
-Y(1) = extract_vacx(Y(1), [29 207; 380 550], 500);
-Y(2) = extract_vacx(Y(2), [20 195; 381 551], 500);
-Y(3) = extract_vacx(Y(3), [20 212; 355 548], 500);
+X(1) = extract_vacx(X(1), [23 285; 290 550], 500);
+X(2) = extract_vacx(X(2), [23 285; 290 550], 500);
+X(3) = extract_vacx(X(3), [21 285; 288 550], 500);
+Y(1) = extract_vacx(Y(1), [21 285; 288 550], 500);
+Y(2) = extract_vacx(Y(2), [16 278; 282 547], 500);
+Y(3) = extract_vacx(Y(3), [16 278; 282 547], 500);
 
 X = arrayfun(@(x, y) plasmaprops_eedf(x, y), X, Y);
 
