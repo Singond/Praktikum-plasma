@@ -85,5 +85,5 @@ function x = plasmaprops_simple(x, varargin)
 	## Determine electron energy distribution function
 	## using numerical derivative
 	u = x.Us(x.Us < 0);
-	[x.eedfn, x.eedfn_U] = eedf(u, x.Ies(x.Us < 0), probesurf);
+	[x.eedfn, x.eedfn_E] = eedf(u, x.Ies(x.Us < 0), probesurf);
 endfunction

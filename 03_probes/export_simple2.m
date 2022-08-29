@@ -52,7 +52,7 @@ $\\\\plpot=\\\\SI{%.0f}{\\\\volt}$\" \
 
 	gp = gnuplotter();
 	gp.load("../plotsettings.gp");
-	gp.plot(-x.eedfn_U, x.eedfn.*1e-18, 'w l ls 2');
+	gp.plot(-x.eedfn_E, x.eedfn.*1e-18, 'w l ls 2');
 	gp.xlabel('$\\enelec\\,[\\si\\electronvolt]$');
 	gp.ylabel('$\\eedf\\,[\\SI{e18}{\\per\\metre\\cubed}]$');
 	gp.exec("\

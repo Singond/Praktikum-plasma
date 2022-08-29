@@ -67,10 +67,10 @@ hold on;
 k = 1;
 for x = X
 	set(gca, "colororderindex", k);
-	plot(abs(x.eedfn_U), x.eedfn, "", "displayname", "numerical");
+	plot(abs(x.eedfn_E), x.eedfn, "", "displayname", "numerical");
 	if (isfield(X, "eedfa"))
 		set(gca, "colororderindex", k);
-		plot(abs(x.eedfa_U), x.eedfa, "--",
+		plot(abs(x.eedfa_E), x.eedfa, "--",
 			"displayname", "from alternating voltage");
 	endif
 	k++;
