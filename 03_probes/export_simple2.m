@@ -52,23 +52,36 @@ $\\\\plpot=\\\\SI{%.0f}{\\\\volt}$\" \
 
 	gp = gnuplotter();
 	gp.load("../plotsettings.gp");
-	gp.plot(-x.eedfn_E, x.eedfn.*1e-18, 'w l ls 2');
-	gp.xlabel('$\\enelec\\,[\\si\\electronvolt]$');
-	gp.ylabel('$\\eedf\\,[\\SI{e18}{\\per\\metre\\cubed}]$');
+	gp.plot(x.eedfn_E, x.eedfn.*1e-19, 'w l ls 1 t "dle spočtené derivace"');
+	gp.plot(x.eedfa_E, x.eedfa.*1e-19, 'w l ls 2 t "dle změřené derivace"');
+	gp.plot(x.eedfa_E, x.mbfit.f(x.eedfa_E).*1e-19, sprintf(
+		'w l ls 2 dt 2 t "$\\\\tempelec = \\\\SI{%.0f}{\\\\kelvin}$, $\\\\kappa = 1$ (M-B)"',
+		x.mbfit.T));
+	gp.plot(x.eedfa_E, x.drfit.f(x.eedfa_E).*1e-19, sprintf(
+		'w l ls 2 dt 3 t "$\\\\tempelec = \\\\SI{%.0f}{\\\\kelvin}$, $\\\\kappa = 2$ (Druyv.)"',
+		x.drfit.T));
+	gp.plot(x.eedfa_E, x.gfit.f(x.eedfa_E).*1e-19, sprintf(
+		'w l ls 2 dt 4 t "$\\\\tempelec = \\\\SI{%.0f}{\\\\kelvin}$, $\\\\kappa = \\\\num{%.2f}$"',
+		x.gfit.T, x.gfit.kappa));
+	gp.xlabel('energie $\\enelec\\,[\\si\\electronvolt]$');
+	gp.ylabel('$\\eedf\\,[\\SI{e19}{\\per\\metre\\cubed}]$');
 	gp.exec("\
-		unset key \n\
+		set lmargin 6 \n\
+		set key outside center right reverse Left \n\
+		set key samplen 2 \n\
+		set key width -6 \n\
+		set key height 4 \n\
+		set key spacing 1.2 \n\
 	");
-	gp.exec(sprintf("set label 1 \
+	gp.exec(sprintf("set key title left \
 \"$\\\\idisch=\\\\SI{%.0f}{\\\\milli\\\\ampere}$\\n\
-$\\\\pres=\\\\SI{%.0f}{\\\\pascal}$\\n\
-$\\\\plpot=\\\\SI{%.0f}{\\\\volt}$\" \
-		at graph 0.1,0.4",
-		x.Id, x.p, x.Up));
+$\\\\pres=\\\\SI{%.0f}{\\\\pascal}$\"",
+		x.Id, x.p));
 	if (!isempty(exec_eedf{k}))
 		gp.exec(exec_eedf{k});
 	endif
 	gp.export(sprintf("plots/simple2-eedf-%d.tex", k),
-		"epslatex", "size 8cm,6cm");
+		"epslatex", "size 16cm,7cm");
 
 	k++;
 endfor
