@@ -21,6 +21,8 @@ function x = fit_eedf(x)
 	x.fitE = E;
 	x.fitf = f;
 
+	global elemcharge boltzmann;
+
 	## Fit Maxwell-Boltzmann distribution (linearized)
 	## f(E) = a * sqrt(E) * exp(-E/b)
 	beta = ols(log(f) - log(E)/2, [ones(size(E)) E]);
@@ -29,6 +31,7 @@ function x = fit_eedf(x)
 	x.mbfit.a = exp(beta(1));
 	x.mbfit.b = -1/beta(2);
 	x.mbfit.f = @(E) exp(beta(1) + beta(2).*E) .* sqrt(E);
+	x.mbfit.T = x.mbfit.b * elemcharge / boltzmann;
 
 	## Fit Druyvesteyn distribution (linearized)
 	## f(E) = a * sqrt(E) * exp((-E/b)^2)
@@ -38,6 +41,7 @@ function x = fit_eedf(x)
 	x.drfit.a = exp(beta(1));
 	x.drfit.b = 1/sqrt(abs(beta(2)));  # XXX
 	x.drfit.f = @(E) exp(beta(1) + beta(2).*E.^2) .* sqrt(E);
+	x.drfit.T = x.drfit.b * elemcharge / boltzmann;
 
 	## Fit general distribution
 	## f(E) = a * sqrt(E) * exp((-E/b)^c)
@@ -49,4 +53,6 @@ function x = fit_eedf(x)
 	x.gfit.a = beta(1);
 	x.gfit.b = beta(2);
 	x.gfit.c = beta(3);
+	x.gfit.T = x.gfit.b * elemcharge / boltzmann;
+	x.gfit.kappa = x.gfit.c;
 endfunction
