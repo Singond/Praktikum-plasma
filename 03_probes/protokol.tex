@@ -268,28 +268,36 @@ kde $\massion$ je hmotnost iontu pracovního plynu.
 \subsection{Výsledky}
 \label{results-simple}
 Naměřené voltampérové charakteristiky jsou na obrázcích
-č.~\ref{fig:simple1-vac-1}--\ref{fig:simple1-vac-6}.
+č.~\ref{fig:simple1-vac-1}--\ref{fig:simple1-vac-2}.
 
-\newcommand\figvac[3]{
-	\begin{figure}[htp]
-		\centering
-		\input{plots/simple1-vac-#1}
-		\input{plots/simple1-vac-log-#1}
-		\caption{Voltampérová charakteristika sondy
-			při výbojovém proudu $\idisch = \SI{#2}{\milli\ampere}$
-			a tlaku $\pres = \SI{#3}{\pascal}$.}
-		\label{fig:simple1-vac-#1}
-	\end{figure}
-}
-
-\figvac{1}{50}{50}
-\figvac{2}{40}{50}
-\figvac{3}{30}{50}
-
-\figvac{7}{50}{100}
-\figvac{4}{50}{20}
-\figvac{5}{50}{10}
-\figvac{6}{50}{5}
+\begin{figure}[p]
+	\centering
+	\input{plots/simple1-vac-1}
+	\input{plots/simple1-vac-log-1}
+	\input{plots/simple1-vac-2}
+	\input{plots/simple1-vac-log-2}
+	\input{plots/simple1-vac-3}
+	\input{plots/simple1-vac-log-3}
+	\input{plots/simple1-vac-4}
+	\input{plots/simple1-vac-log-4}
+	\caption{Voltampérové charakteristiky jednoduché sondy
+		v~jednoduchém zapojení (1.~část).
+		$\idisch$ je výbojový proud a~$\pres$ je tlak.}
+	\label{fig:simple1-vac-1}
+\end{figure}
+\begin{figure}[p]
+	\centering
+	\input{plots/simple1-vac-5}
+	\input{plots/simple1-vac-log-5}
+	\input{plots/simple1-vac-6}
+	\input{plots/simple1-vac-log-6}
+	\input{plots/simple1-vac-7}
+	\input{plots/simple1-vac-log-7}
+	\caption{Voltampérové charakteristiky jednoduché sondy
+		v~jednoduchém zapojení (2.~část).
+		$\idisch$ je výbojový proud a~$\pres$ je tlak.}
+	\label{fig:simple1-vac-2}
+\end{figure}
 
 \clearpage
 \section{Jednoduchá sonda s~oscilujícím napětím}
