@@ -54,5 +54,5 @@ function x = fit_eedf(x)
 	x.gfit.b = beta(2);
 	x.gfit.c = beta(3);
 	x.gfit.T = x.gfit.b * elemcharge / boltzmann;
-	x.gfit.kappa = x.gfit.c;
+	x.kappa = x.gfit.c;
 endfunction
