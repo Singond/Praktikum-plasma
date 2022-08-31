@@ -23,7 +23,7 @@ figs += $(shell echo plots/simple2-vac-log-{1..3}.{eps,tex})
 
 octave_deps = ../plotsettings.gp common.m
 
-tex_resources = build/plots ${figs}
+tex_resources = build/plots ${figs} results/comparison.tsv
 
 build/plots:
 	mkdir -p build/plots
@@ -35,6 +35,9 @@ ${octave_deps}
 plots/simple2-%.tex plots/simple2-%.eps: export_simple2.m probesimple2.m \
 ${octave_deps}
 	octave --norc export_simple2.m
+
+results/comparison.tsv: probesimple1.m probesimple2.m ${octave_deps}
+	octave --norc export_comparison.m
 
 .PHONY: tex_resources
 tex_resources: makefile ${tex_resources}

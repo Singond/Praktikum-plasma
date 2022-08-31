@@ -16,6 +16,12 @@
 \usepackage{csvsimple}
 \usepackage{multirow}
 \usepackage{multicol}
+\usepackage{pgfplotstable}
+\pgfplotsset{compat=1.17}
+\pgfplotstableset{
+	use comma,
+	set thousands separator = {},
+}
 
 % Jednotky
 \usepackage{siunitx}
@@ -78,6 +84,8 @@
 \newcommand\ielec{I_\mathrm{e}}
 \newcommand\flpot{V_\mathrm{fl}}
 \newcommand\plpot{V_\mathrm{p}}
+\newcommand\plpota{V_\mathrm{p,a}}
+\newcommand\plpotd{V_\mathrm{p,d}}
 \newcommand\potprobe{V_\mathrm{s}}
 \newcommand\uprobe{U_\mathrm{s}}
 \newcommand\didu{\frac{\mathrm d^2 \ielec}{\mathrm d \uprobe^2}}
@@ -90,6 +98,7 @@
 \newcommand\tempelec{T_\mathrm{e}}
 \newcommand\tempeleca{T_\mathrm{e,a}}
 \newcommand\tempelecp{T_\mathrm{e,p}}
+\newcommand\tempelecf{T_\mathrm{e,f}}
 \newcommand\massion{M}
 
 \begin{document}
@@ -378,6 +387,109 @@ po vyhlazení polynomem osmého stupně.
 		a~rozdělením s~obecným $\kappa$.}
 	\label{fig:eedf}
 \end{figure}
+
+\section{Porovnání}
+
+\shorthandoff{-}
+\begin{table}[bh]
+	\centering
+	\caption{Porovnání výsledků různých metod.
+		Plazmový potenciál $\plpota$ byl určen metodou asymptot,
+		$\plpotd$ z~druhé derivace elektronového proudu.
+		Elektronová teplota $\tempeleca$ byla určena z~metody asymptot,
+		$\tempelecp$ z~plovoucího potenciálu
+		a~$\tempelecf$ z~aproximace rozdělovací funkce obecným rozdělením.
+		Exponent $\kappa$ je parametr tohoto rozdělení.
+	}
+	\label{tab:comparison}
+	\newcommand\rowsep{\medskip}
+	\sisetup{
+		table-alignment-mode = format,
+		table-number-alignment = center,
+	}
+	\pgfplotstabletypeset[
+		outfile=comparison.tex,
+		header = false,
+		col sep = tab,
+		skip first n = 1,
+		every head row/.style = {
+			before row = \toprule,
+			after row = \midrule
+		},
+		string type,
+		columns = {[index] 0, [index] 1, [index] 2, [index] 3, [index] 4,
+			[index] 5, [index] 6, [index] 7, [index] 8},
+		columns/0/.style = {
+			column name = $\pres\ [\si{\pascal}]$,
+			column type = {S[table-format = 3.0]},
+		},
+		columns/1/.style = {
+			column name = $\idisch\ [\si{\milli\ampere}]$,
+			column type = {S[table-format = 2.0]},
+		},
+		columns/2/.style = {
+			column name = $\flpot\ [\si{\volt}]$,
+			column type = {S[
+				table-format = -2.1,
+				round-mode = places,
+				round-precision = 1
+			]},
+		},
+		columns/3/.style = {
+			column name = $\plpota\ [\si{\volt}]$,
+			column type = {S[
+				table-format = -2.1,
+				round-mode = places,
+				round-precision = 1
+			]},
+		},
+		columns/4/.style = {
+			column name = $\plpotd\ [\si{\volt}]$,
+			column type = {S[
+				table-format = -2.1,
+				round-mode = places,
+				round-precision = 1
+			]},
+		},
+		columns/5/.style = {
+			column name = $\tempeleca\ [\si{\kelvin}]$,
+			column type = {S[
+				table-format = 5.0,
+				round-mode = figures,
+				round-precision = 3
+			]},
+		},
+		columns/6/.style = {
+			column name = $\tempelecp\ [\si{\kelvin}]$,
+			column type = {S[
+				table-format = 5.0,
+				round-mode = figures,
+				round-precision = 3
+			]},
+		},
+		columns/7/.style = {
+			column name = $\tempelecf\ [\si{\kelvin}]$,
+			column type = {S[
+				table-format = 5.0,
+				round-mode = figures,
+				round-precision = 3
+			]},
+			string replace={0}{},
+		},
+		columns/8/.style = {
+			column name = $\kappa$,
+			column type = {S[
+				table-format = 1.2,
+				round-mode = places,
+				round-precision = 2
+			]},
+			string replace={0}{},
+		},
+		every row no 6/.style = {before row = \rowsep},
+		every last row/.style = {after row = \bottomrule}
+		]{results/comparison.tsv}
+\end{table}
+\shorthandon{-}
 
 \printbibliography
 \end{document}
