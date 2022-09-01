@@ -54,12 +54,16 @@ function r = fit_eedf(x, df)
 	## f(E) = a * sqrt(E) * exp((-E/b)^c)
 	model = @(E, beta) sqrt(E) .* beta(1) .* exp(-(E./beta(2)).^beta(3));
 	beta0 = [r.dr.a r.dr.b 2];
-	[fm, beta, cvg, iter, ~, covp] = leasqr(E, f, beta0, model);
-	r.gen.beta = beta;
-	r.gen.f = @(E) model(E, beta);
-	r.gen.a = beta(1);
-	r.gen.b = beta(2);
-	r.gen.c = beta(3);
-	r.gen.T = r.gen.b * elemcharge / boltzmann;
-	r.kappa = r.gen.c;
+	try
+		[fm, beta, cvg, iter, ~, covp] = leasqr(E, f, beta0, model);
+		r.gen.beta = beta;
+		r.gen.f = @(E) model(E, beta);
+		r.gen.a = beta(1);
+		r.gen.b = beta(2);
+		r.gen.c = beta(3);
+		r.gen.T = r.gen.b * elemcharge / boltzmann;
+		r.kappa = r.gen.c;
+	catch err
+		warning(["Failed to fit general distribution: " err.message]);
+	end_try_catch
 endfunction

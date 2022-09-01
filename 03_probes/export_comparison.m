@@ -26,7 +26,9 @@ for x = X2
 	A(r,5) = x.Upd;
 	A(r,6) = x.Tea;
 	A(r,7) = x.Tep;
-	A(r,8) = x.fita.gen.T;
+	if (isfield(x.fita, "gen"))
+		A(r,8) = x.fita.gen.T;
+	endif
 	A(r,9) = x.fita.kappa;
 endfor
 

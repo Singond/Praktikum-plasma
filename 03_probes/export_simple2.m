@@ -60,9 +60,11 @@ $\\\\plpot=\\\\SI{%.0f}{\\\\volt}$\" \
 	gp.plot(x.fita.E, x.fita.dr.f(x.fita.E).*1e-19, sprintf(
 		'w l ls 2 dt 3 t "$\\\\tempelec = \\\\SI{%.0f}{\\\\kelvin}$, $\\\\kappa = 2$ (Druyv.)"',
 		x.fita.dr.T));
-	gp.plot(x.fita.E, x.fita.gen.f(x.fita.E).*1e-19, sprintf(
-		'w l ls 2 dt 4 t "$\\\\tempelec = \\\\SI{%.0f}{\\\\kelvin}$, $\\\\kappa = \\\\num{%.2f}$"',
-		x.fita.gen.T, x.fita.kappa));
+	if (isfield(x.fita, "gen"))
+		gp.plot(x.fita.E, x.fita.gen.f(x.fita.E).*1e-19, sprintf(
+			'w l ls 2 dt 4 t "$\\\\tempelec = \\\\SI{%.0f}{\\\\kelvin}$, $\\\\kappa = \\\\num{%.2f}$"',
+			x.fita.gen.T, x.fita.kappa));
+	endif
 	gp.xlabel('energie $\\enelec\\,[\\si\\electronvolt]$');
 	gp.ylabel('$\\eedf\\,[\\SI{e19}{\\per\\metre\\cubed}]$');
 	gp.exec("\
