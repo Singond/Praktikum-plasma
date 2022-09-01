@@ -20,6 +20,8 @@ figs = $(shell echo plots/simple1-vac-{1..7}.{eps,tex})
 figs += $(shell echo plots/simple1-vac-log-{1..7}.{eps,tex})
 figs += $(shell echo plots/simple2-vac-{1..3}.{eps,tex})
 figs += $(shell echo plots/simple2-vac-log-{1..3}.{eps,tex})
+figs += $(shell echo plots/simple2-eedf-{1..3}.{eps,tex})
+figs += $(shell echo plots/double-vac-{1..4}.{eps,tex})
 
 octave_deps = ../plotsettings.gp common.m
 
