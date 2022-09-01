@@ -62,7 +62,7 @@ $\\\\plpot=\\\\SI{%.0f}{\\\\volt}$\" \
 		x.drfit.T));
 	gp.plot(x.eedfa_E, x.gfit.f(x.eedfa_E).*1e-19, sprintf(
 		'w l ls 2 dt 4 t "$\\\\tempelec = \\\\SI{%.0f}{\\\\kelvin}$, $\\\\kappa = \\\\num{%.2f}$"',
-		x.gfit.T, x.gfit.kappa));
+		x.gfit.T, x.kappa));
 	gp.xlabel('energie $\\enelec\\,[\\si\\electronvolt]$');
 	gp.ylabel('$\\eedf\\,[\\SI{e19}{\\per\\metre\\cubed}]$');
 	gp.exec("\
