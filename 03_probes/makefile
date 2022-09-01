@@ -36,6 +36,10 @@ plots/simple2-%.tex plots/simple2-%.eps: export_simple2.m probesimple2.m \
 ${octave_deps}
 	octave --norc export_simple2.m
 
+plots/double-%.tex plots/double-%.eps: export_double.m probedouble.m \
+${octave_deps}
+	octave --norc export_double.m
+
 results/comparison.tsv: probesimple1.m probesimple2.m ${octave_deps}
 	octave --norc export_comparison.m
 
