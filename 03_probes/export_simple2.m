@@ -54,15 +54,15 @@ $\\\\plpot=\\\\SI{%.0f}{\\\\volt}$\" \
 	gp.load("../plotsettings.gp");
 	gp.plot(x.eedfn_E, x.eedfn.*1e-19, 'w l ls 1 t "dle spočtené derivace"');
 	gp.plot(x.eedfa_E, x.eedfa.*1e-19, 'w l ls 2 t "dle změřené derivace"');
-	gp.plot(x.eedfa_E, x.mbfit.f(x.eedfa_E).*1e-19, sprintf(
+	gp.plot(x.fita.E, x.fita.mb.f(x.fita.E).*1e-19, sprintf(
 		'w l ls 2 dt 2 t "$\\\\tempelec = \\\\SI{%.0f}{\\\\kelvin}$, $\\\\kappa = 1$ (M-B)"',
-		x.mbfit.T));
-	gp.plot(x.eedfa_E, x.drfit.f(x.eedfa_E).*1e-19, sprintf(
+		x.fita.mb.T));
+	gp.plot(x.fita.E, x.fita.dr.f(x.fita.E).*1e-19, sprintf(
 		'w l ls 2 dt 3 t "$\\\\tempelec = \\\\SI{%.0f}{\\\\kelvin}$, $\\\\kappa = 2$ (Druyv.)"',
-		x.drfit.T));
-	gp.plot(x.eedfa_E, x.gfit.f(x.eedfa_E).*1e-19, sprintf(
+		x.fita.dr.T));
+	gp.plot(x.fita.E, x.fita.gen.f(x.fita.E).*1e-19, sprintf(
 		'w l ls 2 dt 4 t "$\\\\tempelec = \\\\SI{%.0f}{\\\\kelvin}$, $\\\\kappa = \\\\num{%.2f}$"',
-		x.gfit.T, x.kappa));
+		x.fita.gen.T, x.fita.kappa));
 	gp.xlabel('energie $\\enelec\\,[\\si\\electronvolt]$');
 	gp.ylabel('$\\eedf\\,[\\SI{e19}{\\per\\metre\\cubed}]$');
 	gp.exec("\

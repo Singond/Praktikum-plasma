@@ -8,9 +8,9 @@ function plot_eedf(x)
 	## Use exactly one plot without color ("b") in third argument
 	## to ensure advancing to the next color in palette.
 	plot(
-		x.eedfa_E, x.eedfa, "", "color", color,
-		x.eedfa_E, x.mbfit.f(x.eedfa_E), "b--", "color", color,
-		x.eedfa_E, x.drfit.f(x.eedfa_E), "b:", "color", color,
-		x.eedfa_E, x.gfit.f(x.eedfa_E), "b-.", "color", color
+		x.E, x.f, "", "color", color,
+		x.E, x.mb.f(x.E), "b--", "color", color,
+		x.E, x.dr.f(x.E), "b:", "color", color,
+		x.E, x.gen.f(x.E), "b-.", "color", color
 	);
 endfunction

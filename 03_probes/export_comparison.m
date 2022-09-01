@@ -26,8 +26,8 @@ for x = X2
 	A(r,5) = x.Upd;
 	A(r,6) = x.Tea;
 	A(r,7) = x.Tep;
-	A(r,8) = x.gfit.T;
-	A(r,9) = x.kappa;
+	A(r,8) = x.fita.gen.T;
+	A(r,9) = x.fita.kappa;
 endfor
 
 if (!isfolder("results"))

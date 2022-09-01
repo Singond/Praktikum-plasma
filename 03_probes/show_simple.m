@@ -68,9 +68,9 @@ k = 1;
 for x = X
 	set(gca, "colororderindex", k);
 	plot(abs(x.eedfn_E), x.eedfn, "--", "displayname", "numerical");
-	if (isfield(X, "eedfa"))
+	if (isfield(x, "eedfa"))
 		set(gca, "colororderindex", k);
-		plot_eedf(x);
+		plot_eedf(x.fita);
 	endif
 	k++;
 endfor
