@@ -1,5 +1,6 @@
 function r = fit_eedf(x, df)
 	pkg load optim;
+	pkg load singon-ext;
 
 	if (isstruct(x) && !isscalar(x))
 		a = struct();
@@ -20,11 +21,19 @@ function r = fit_eedf(x, df)
 		error("DF must be either 'eedfa' or 'eedfn'");
 	endif
 
+	## Take only values up to first NaN or local minimum
+	Emax = max(E);
 	if (any(isnan(f)))
-		m = E < min(E(isnan(f)));
-		E = E(m);
-		f = f(m);
+		Emax = min(E(isnan(f)));
 	endif
+	[~, loc] = findpeaksp(-f);
+	minima = E(loc);
+	if (!isempty(minima))
+		Emax = min(Emax, min(minima));
+	endif
+	m = E < Emax;
+	E = E(m);
+	f = f(m);
 	r.E = E;
 	r.f = f;
 

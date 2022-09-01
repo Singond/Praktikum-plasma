@@ -52,7 +52,7 @@ $\\\\plpot=\\\\SI{%.0f}{\\\\volt}$\" \
 
 	gp = gnuplotter();
 	gp.load("../plotsettings.gp");
-	gp.plot(x.eedfn_E, x.eedfn.*1e-19, 'w l ls 1 axes x1y2 t "dle spočtené derivace"');
+	gp.plot(x.fitn.E, x.fitn.f.*1e-19, 'w l ls 1 axes x1y2 t "dle spočtené derivace"');
 	gp.plot(x.fitn.E, x.fitn.mb.f(x.fitn.E).*1e-19, sprintf(
 		'w l ls 1 dt 2 axes x1y2 t "$\\\\tempelec = \\\\SI{%.0f}{\\\\kelvin}$, $\\\\kappa = 1$ (M-B)"',
 		x.fitn.mb.T));
@@ -64,7 +64,7 @@ $\\\\plpot=\\\\SI{%.0f}{\\\\volt}$\" \
 			'w l ls 1 dt 4 axes x1y2 t "$\\\\tempelec = \\\\SI{%.0f}{\\\\kelvin}$, $\\\\kappa = \\\\num{%.2f}$"',
 			x.fitn.gen.T, x.fitn.kappa));
 	endif
-	gp.plot(x.eedfa_E, x.eedfa.*1e-19, 'w l ls 2 t "dle změřené derivace"');
+	gp.plot(x.fita.E, x.fita.f.*1e-19, 'w l ls 2 t "dle změřené derivace"');
 	gp.plot(x.fita.E, x.fita.mb.f(x.fita.E).*1e-19, sprintf(
 		'w l ls 2 dt 2 t "$\\\\tempelec = \\\\SI{%.0f}{\\\\kelvin}$, $\\\\kappa = 1$ (M-B)"',
 		x.fita.mb.T));
@@ -93,7 +93,7 @@ $\\\\plpot=\\\\SI{%.0f}{\\\\volt}$\" \
 	gp.exec(sprintf("set label 1 left \
 \"$\\\\idisch=\\\\SI{%.0f}{\\\\milli\\\\ampere}$\\n\
 $\\\\pres=\\\\SI{%.0f}{\\\\pascal}$\" \
-at graph 0.6,0.8",
+at graph 0.25,0.2",
 		x.Id, x.p));
 	if (!isempty(exec_eedf{k}))
 		gp.exec(exec_eedf{k});
