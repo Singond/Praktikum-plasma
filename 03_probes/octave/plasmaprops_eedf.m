@@ -12,5 +12,6 @@ function x = plasmaprops_eedf(x, x_alt, varargin)
 	uu = x.Us(x.Us < 0);
 	[x.eedfa, x.eedfa_E] = eedfd(uu, x.didu2a(x.Us < 0), probesurf);
 
-	x = fit_eedf(x);
+	## Fit EEDF calculated from alternating voltage.
+	x.fita = fit_eedf(x, "eedfa");
 endfunction

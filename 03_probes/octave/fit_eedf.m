@@ -1,17 +1,24 @@
-function x = fit_eedf(x)
+function r = fit_eedf(x, df)
 	pkg load optim;
 
 	if (isstruct(x) && !isscalar(x))
 		a = struct();
 		for k = 1:numel(x);
-			a(k) = arrayfun(@(x) fit_eedf(x), x(k));
+			a(k) = arrayfun(@(x) fit_eedf(x, df), x(k));
 		endfor
 		r = reshape(a, size(x));
 		return
 	endif
 
-	E = x.eedfa_E;
-	f = x.eedfa;
+	if (strcmp(df, "eedfa"))
+		E = x.eedfa_E;
+		f = x.eedfa;
+	elseif (strcmp(df, "eedfn"))
+		E = x.eedfn_E;
+		f = x.eedfn;
+	else
+		error("DF must be either 'eedfa' or 'eedfn'");
+	endif
 
 	if (any(isnan(f)))
 		m = E < min(E(isnan(f)));
