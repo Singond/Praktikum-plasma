@@ -66,10 +66,14 @@ title("Electron energy distribution function");
 hold on;
 k = 1;
 for x = X
-	set(gca, "colororderindex", k);
-	plot(abs(x.eedfn_E), x.eedfn, "--", "displayname", "numerical");
+	set(gca, "colororderindex", 2*k - 1);
+	if (isfield(x, "fitn"))
+		plot_eedf(x.fitn);
+	else
+		plot(x.eedfn_E, x.eedfn, "", "displayname", "numerical");
+	endif
 	if (isfield(x, "eedfa"))
-		set(gca, "colororderindex", k);
+		set(gca, "colororderindex", 2*k);
 		plot_eedf(x.fita);
 	endif
 	k++;

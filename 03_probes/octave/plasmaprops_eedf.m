@@ -3,6 +3,9 @@ function x = plasmaprops_eedf(x, x_alt, varargin)
 	xa = plasmaprops_simple(x_alt);
 	x.Ies2 = xa.Ies;
 
+	## Fit EEDF calculated from numerical derivative.
+	x.fitn = fit_eedf(x, "eedfn");
+
 	## Determine electron energy distribution function
 	## using derivative calculated from current increase with
 	## alternating voltage added.

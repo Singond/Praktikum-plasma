@@ -52,7 +52,18 @@ $\\\\plpot=\\\\SI{%.0f}{\\\\volt}$\" \
 
 	gp = gnuplotter();
 	gp.load("../plotsettings.gp");
-	gp.plot(x.eedfn_E, x.eedfn.*1e-19, 'w l ls 1 t "dle spočtené derivace"');
+	gp.plot(x.eedfn_E, x.eedfn.*1e-19, 'w l ls 1 axes x1y2 t "dle spočtené derivace"');
+	gp.plot(x.fitn.E, x.fitn.mb.f(x.fitn.E).*1e-19, sprintf(
+		'w l ls 1 dt 2 axes x1y2 t "$\\\\tempelec = \\\\SI{%.0f}{\\\\kelvin}$, $\\\\kappa = 1$ (M-B)"',
+		x.fitn.mb.T));
+	gp.plot(x.fitn.E, x.fitn.dr.f(x.fitn.E).*1e-19, sprintf(
+		'w l ls 1 dt 3 axes x1y2 t "$\\\\tempelec = \\\\SI{%.0f}{\\\\kelvin}$, $\\\\kappa = 2$ (Druyv.)"',
+		x.fitn.dr.T));
+	if (isfield(x.fitn, "gen"))
+		gp.plot(x.fitn.E, x.fitn.gen.f(x.fitn.E).*1e-19, sprintf(
+			'w l ls 1 dt 4 axes x1y2 t "$\\\\tempelec = \\\\SI{%.0f}{\\\\kelvin}$, $\\\\kappa = \\\\num{%.2f}$"',
+			x.fitn.gen.T, x.fitn.kappa));
+	endif
 	gp.plot(x.eedfa_E, x.eedfa.*1e-19, 'w l ls 2 t "dle změřené derivace"');
 	gp.plot(x.fita.E, x.fita.mb.f(x.fita.E).*1e-19, sprintf(
 		'w l ls 2 dt 2 t "$\\\\tempelec = \\\\SI{%.0f}{\\\\kelvin}$, $\\\\kappa = 1$ (M-B)"',
@@ -66,18 +77,23 @@ $\\\\plpot=\\\\SI{%.0f}{\\\\volt}$\" \
 			x.fita.gen.T, x.fita.kappa));
 	endif
 	gp.xlabel('energie $\\enelec\\,[\\si\\electronvolt]$');
-	gp.ylabel('$\\eedf\\,[\\SI{e19}{\\per\\metre\\cubed}]$');
+	gp.ylabel('$\\eedf\\,[\\SI{e19}{\\per\\electronvolt}]$');
 	gp.exec("\
-		set lmargin 6 \n\
+		set lmargin 5 \n\
+		set rmargin 32 \n\
+		set ytics nomirror \n\
+		set y2tics in nomirror \n\
 		set key outside center right reverse Left \n\
 		set key samplen 2 \n\
 		set key width -6 \n\
-		set key height 4 \n\
+		set key height 0 \n\
 		set key spacing 1.2 \n\
+		set key maxcols 1 \n\
 	");
-	gp.exec(sprintf("set key title left \
+	gp.exec(sprintf("set label 1 left \
 \"$\\\\idisch=\\\\SI{%.0f}{\\\\milli\\\\ampere}$\\n\
-$\\\\pres=\\\\SI{%.0f}{\\\\pascal}$\"",
+$\\\\pres=\\\\SI{%.0f}{\\\\pascal}$\" \
+at graph 0.6,0.8",
 		x.Id, x.p));
 	if (!isempty(exec_eedf{k}))
 		gp.exec(exec_eedf{k});
