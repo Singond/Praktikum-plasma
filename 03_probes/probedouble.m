@@ -2,6 +2,9 @@ addpath octave;
 
 common;
 
+global ionmass = 40*amu;             # Ion mass (argon) [kg]
+global probesurf = 2*pi*1e-4*8e-3;   # Probe surface area [m3]
+
 Id = [0.03 50 50 50];                # Discharge current [mA]
 p = [100 100 20 5];                  # Pressure [Pa]
 
