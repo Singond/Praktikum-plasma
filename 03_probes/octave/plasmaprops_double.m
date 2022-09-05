@@ -1,4 +1,6 @@
 function x = plasmaprops_double(x)
+	pkg load optim;
+
 	x.Im = mean(x.I, 2);                # Mean probe current
 
 	## Fit parts of the VAC with lines
@@ -60,4 +62,18 @@ function x = plasmaprops_double(x)
 	x.ve = sqrt(8 * boltzmann * x.Te / (pi * ionmass));  # Mean electron speed
 	S = 8e-3 * 2 * pi * 0.01;    # Surface of boundary layer (guess)
 	x.ne = 2 * x.Ip*1e-6 / (S * elemcharge * x.ve);
+
+	## General model
+	model = @(U, beta) beta(1) * tanh(beta(2) * U + beta(3))...
+			+ beta(4) * U + beta(5);
+	beta0 = [x.Ip/2 1 x.U(z) x.fitc.beta(1) 0];
+	try
+		[Imf, beta, cvg, iter, ~, covp] = leasqr(x.U, x.Im, beta0, model);
+		x.fitg.beta = beta;
+		x.fitg.cvg = cvg;
+		x.fitg.iter = iter;
+		x.fitg.f = @(U) model(U, beta);
+	catch err
+		warning(["Failed to fit general distribution: " err.message]);
+	end_try_catch
 endfunction

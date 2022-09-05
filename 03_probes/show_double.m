@@ -46,3 +46,24 @@ xlabel("probes voltage U_s [V]");
 ylabel("total probe current I_s [uA]");
 legend location northwest;
 
+figure(fig++);
+clf;
+hold on;
+title("General fit method");
+for k = 1:numel(D)
+	d = D(k);
+
+	## Data
+	set(gca, "colororderindex", k);
+	plot(d.U, d.Im, "displayname", sprintf("%.0f mA, %.0f Pa", d.Id, d.p));
+
+	## Left fit
+	set(gca, "colororderindex", k);
+	plot(d.U, d.fitg.f(d.U), "--", "handlevisibility", "off");
+
+	k++;
+endfor
+hold off;
+xlabel("probes voltage U_s [V]");
+ylabel("total probe current I_s [uA]");
+legend location northwest;
