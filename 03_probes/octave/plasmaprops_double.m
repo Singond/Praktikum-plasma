@@ -51,17 +51,17 @@ function x = plasmaprops_double(x)
 	x.Itot = x.Ie - x.Ip;
 	assert(x.Itot, 0, 1e-14);
 
-	## Electron temperature
+	## Electron temperature from asymptote method
 	global elemcharge boltzmann;
 	R0 = 1 / x.fitb.beta(1);   # Probe equivalent resistance
 	G = x.Ie2 ./ x.Ip;
-	x.Te = -(elemcharge / boltzmann) * (G - G^2) * R0 * x.Ip;
+	x.Tea = -(elemcharge / boltzmann) * (G - G^2) * R0 * x.Ip;
 
-	## Electron density
+	## Electron density from asymptote method
 	global ionmass probesurf;
-	x.ve = sqrt(8 * boltzmann * x.Te / (pi * ionmass));  # Mean electron speed
+	x.vea = sqrt(8 * boltzmann * x.Tea / (pi * ionmass));  # Mean electron speed
 	S = 8e-3 * 2 * pi * 0.01;    # Surface of boundary layer (guess)
-	x.ne = 2 * x.Ip*1e-6 / (S * elemcharge * x.ve);
+	x.nea = 2 * x.Ip*1e-6 / (S * elemcharge * x.vea);
 
 	## General model
 	model = @(U, beta) beta(1) * tanh(beta(2) * U + beta(3))...
