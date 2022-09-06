@@ -22,6 +22,7 @@ figs += $(shell echo plots/simple2-vac-{1..3}.{eps,tex})
 figs += $(shell echo plots/simple2-vac-log-{1..3}.{eps,tex})
 figs += $(shell echo plots/simple2-eedf-{1..3}.{eps,tex})
 figs += $(shell echo plots/double-vac-{1..4}.{eps,tex})
+figs += $(shell echo plots/separation.{eps,tex})
 
 octave_deps = ../plotsettings.gp common.m
 
@@ -41,6 +42,10 @@ ${octave_deps}
 plots/double-%.tex plots/double-%.eps: export_double.m probedouble.m \
 ${octave_deps}
 	octave --norc export_double.m
+
+plots/separation.tex plots/separation.eps: export_separation.m probesimple2.m \
+${octave_deps}
+	octave --norc export_separation.m
 
 results/comparison.tsv: probesimple1.m probesimple2.m ${octave_deps}
 	octave --norc export_comparison.m
