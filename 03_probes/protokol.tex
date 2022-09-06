@@ -76,6 +76,7 @@
 \newcommand\boltzmann{k}
 % \newcommand\boltzmann{k_\mathrm{B}}
 \newcommand\masselec{m_\mathrm{e}}
+\newcommand{\tgh}{\mathrm{tgh}}
 
 \newcommand\pres{p}
 \newcommand\idisch{I_\mathrm{d}}
@@ -88,7 +89,6 @@
 \newcommand\plpotd{V_\mathrm{p,d}}
 \newcommand\potprobe{V_\mathrm{s}}
 \newcommand\uprobe{U_\mathrm{s}}
-\newcommand\udoubleprobe{V_\mathrm{d}}
 \newcommand\didu{\frac{\mathrm d^2 \ielec}{\mathrm d \uprobe^2}}
 \newcommand\dension{n_\mathrm{i}}
 \newcommand\denselec{n_\mathrm{e}}
@@ -96,12 +96,24 @@
 \newcommand\eedf{f(\enelec)}
 \newcommand\ueedf{\varepsilon}
 \newcommand\probesurf{S}
+\newcommand\sheathsurf{S_\mathrm{s}}
 \newcommand\tempelec{T_\mathrm{e}}
 \newcommand\tempeleca{T_\mathrm{e,a}}
 \newcommand\tempelecp{T_\mathrm{e,p}}
 \newcommand\tempelecf{T_\mathrm{e,f}}
 \newcommand\massion{M}
 \newcommand\tim{t}
+
+\newcommand\iioni{I_{\mathrm{i}1}}
+\newcommand\iionii{I_{\mathrm{i}2}}
+\newcommand\iionsat{I_{\mathrm{i}0}}
+\newcommand\ieleci{I_{\mathrm{e}1}}
+\newcommand\ielecii{I_{\mathrm{e}2}}
+\newcommand\idouble{I_{\mathrm{c}}}
+\newcommand\poti{V_1}
+\newcommand\potii{V_2}
+\newcommand\udouble{U_\mathrm{d}}
+\newcommand\udoubleprobe{\udouble}
 
 \begin{document}
 \header
@@ -194,6 +206,66 @@ Je-li překročeno nulové napětí $\uprobe$ na sondě
 začíná sonda přitahovat elektrony a odpuzovat kladné ionty.
 
 V~případě válcové sondy proud v~této oblasti parabolicky roste.
+
+\subsection{Dvojná sonda}
+Dvojnou sondou rozumíme dvě shodné Langmuirovy sondy vnořené do plazmatu;
+jejich plochy $\probesurf_1$ a~$\probesurf_2$ považujeme za shodné.
+Vzájemná vzdálenost sond musí být taková, aby se jejich stěnové vrstvy
+nepřekrývaly.
+Schéma dvojné sondy je znázorněno na obrázku č.~\ref{fig:probe-double}.
+Iontové proudy jednotlivých sond jsou označeny $\iioni$ a $\iionii$,
+elektronové proudy $\ieleci$ a $\ielecii$.
+Veličina $\idouble$ značí proud tekoucí mezi sondami,
+takzvaný cirkulační proud.
+
+\begin{figure}[hbp]
+	\centering
+	\includegraphics{probe-double}
+	\caption{Schéma dvojné sondy.
+		Převzato z~\autocite{assignment-doubleprobe}.}
+	\label{fig:probe-double}
+\end{figure}
+
+Voltampérová charakteristika dvojné sondy je závislost cirkulačního proudu
+na napětí $\udouble = \potii - \poti$ mezi sondami.
+Přílad takové charakteristiky je znázorněn na obrázku č.~\ref{fig:vac-double}.
+Pokud je napětí $\udouble$ nulové, tečou na obě sondy stejné proudy.
+Při snižování $\udouble$ do záporných hodnot se potenciál první sondy $\poti$
+blíží potenciálu plazmatu a roste proud $\ieleci$,
+proud $\ielecii$ naopak klesá.
+Další snižování $\udouble$ vede až k~tomu,
+že proud $\ielecii$ vymizí a~veškeré elektrony dopadají na první sondu.
+V~ideálním případě je proud $\idouble$ dále konstantní,
+což odpovídá nasycenému iontovému proudu $\iionii$.
+Při skutečném měření proud $\idouble$ dále mírně poroste.
+Kladná napětí $\udouble$ vykazují stejné chování v~důsledku symetrie soustavy.
+
+Voltampérovou charakteristiku ideální dvojné sondy lze aproximovat
+následujícím vztahem:
+\begin{equation}
+	\label{eq:double-idouble}
+	\idouble = \iionsat \, \tgh \left(
+		\frac{\elemcharge\udouble}{\boltzmann\tempelec} \right).
+\end{equation}
+Zde $\tempelec$ je elektronová teplota
+a~$\iionsat$ je saturovaný iontový proud, jehož velikost lze přibližně
+vyjádřit jako:
+\begin{equation}
+	\label{eq:double-iionsat}
+	\iionsat = \num{0.61} \denselec \sheathsurf
+		\sqrt{\frac{\boltzmann\tempelec}{\massion}},
+\end{equation}
+kde $\sheathsurf$ je plocha stěnové vrstvy sondy
+a $\massion$ je hmotnost iontu pracovního plynu.
+
+\begin{figure}[tbp]
+	\centering
+	\includegraphics{vac-double}
+	\caption{Voltampérová charakteristika dvojné sondy.
+		Převzato z~\autocite{talsky}.}
+	\label{fig:vac-double}
+\end{figure}
+
 
 \section{Jednoduchá sonda}
 \label{sec:simple}
