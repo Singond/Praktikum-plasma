@@ -269,6 +269,8 @@ a $\massion$ je hmotnost iontu pracovního plynu.
 
 \section{Jednoduchá sonda}
 \label{sec:simple}
+První sada pokusů byla provedena na aparatuře s~jednoduchou sondou
+připojenou ke~zdroji stejnosměrného napětí.
 
 \subsection{Metoda}
 \label{sec:method-simple}
@@ -281,7 +283,7 @@ Sondový obvod je napájen stejnosměrným zdrojem s~automatizovaým laděním.
 Potenciál sondy $\potprobe$ a~sondový proud $\iprobe$ jsou měřeny
 voltmetrem a~přesným ampérmetrem připojeným k~počítači.
 
-\begin{figure}[hbp]
+\begin{figure}[htp]
 	\centering
 	\includegraphics{diagram-simple.png}
 	\caption{Uspořádání experimentu pro jednoduchou sondu.
@@ -322,6 +324,7 @@ Potenciál neporušeného plazmatu $\plpot$ byl určen dvěma metodami.
 První z~nich bylo stanovení tohoto potenciálu jako průsečíku přímek
 proložených střední a~koncovou částí elektronového proudu v~logaritmickém
 měřítku.
+Tento způsob je zde nazýván metodou asymptot.
 
 Druhá metoda vychází z~poznatku, že v~okolí plazmového potenciálu $\plpot$
 bude mít voltampérová charakteristika inflexní bod:
@@ -346,12 +349,20 @@ $\flpot$ jako:
 		\ln\left(\frac{4\pi\masselec}{\massion}\right)
 		|\flpot - \plpot|,
 \end{equation}
-kde $\massion$ je hmotnost iontu pracovního plynu.
+kde $\massion$ je hmotnost iontu pracovního plynu, kterým byl argon,
+proto $\massion = \SI{40}{\atomicmassunit} = \SI{6.6422e-26}{\kilogram}$.
 
 \subsection{Výsledky}
 \label{results-simple}
 Naměřené voltampérové charakteristiky jsou na obrázcích
 č.~\ref{fig:simple1-vac-1}--\ref{fig:simple1-vac-2}.
+Spočtené hodnoty plovoucího a~plaz\-mo\-vého potenciálu a~elektronové teploty
+jsou v~souhrnné tabulce č.~\ref{tab:comparison}.
+Pozoruhodné je, že plazmové potenciály určené oběma metodami vycházejí
+(až na případ vysokého tlaku $\pres$) vůči sobě posunuty o~zhruba konstatní
+hodnotu:
+Potenciál z~metody asymptot je vždy asi o~$\SI{3}{\volt}$ nižší.
+Tento jev se nepodařilo objasnit.
 
 \begin{figure}[p]
 	\centering
