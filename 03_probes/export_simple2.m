@@ -2,8 +2,8 @@ pkg load report;
 
 probesimple2;
 
-xrange = {"-48:-36"; "-48:-36"; "-52:-40"};
-yrange = {"1:100"; "1:100"; "1:100"};
+xrange = {"-52:-36"; "-54:-38"; "-56:-40"};
+yrange = {"0.1:100"; "0.1:100"; "0.1:100"};
 
 exec_eedf = cell(7, 1);
 exec_eedf(7) = "set label 1 at graph 0.1,0.7";
