@@ -44,7 +44,6 @@ $\\\\plpot=\\\\SI{%.0f}{\\\\volt}$\" \
 		set log y \n\
 		set ytics nolog \n\
 		set format y '$10^{%L}$' \n\
-		unset ymtics \n\
 		unset key \n\
 	");
 	gp.export(sprintf("plots/simple2-vac-log-%d.tex", k),
