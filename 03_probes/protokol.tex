@@ -320,6 +320,7 @@ Elektronový proud byl získán odečtením iontového proudu od celkového:
 \end{equation}
 
 \subsubsection{Plazmový potenciál}
+\label{sec:plpot}
 Potenciál neporušeného plazmatu $\plpot$ byl určen dvěma metodami.
 První z~nich bylo stanovení tohoto potenciálu jako průsečíku přímek
 proložených střední a~koncovou částí elektronového proudu v~logaritmickém
@@ -402,29 +403,23 @@ Tento jev se nepodařilo objasnit.
 	\label{fig:simple1-vac-2}
 \end{figure}
 
+
 \clearpage
 \section{Jednoduchá sonda s~oscilujícím napětím}
 \label{sec:eedf}
+Druhá sada pokusů byla provedena na téže aparatuře s~modifikací,
+která umožňovala k~napětí sondy přidat malé střídavé napětí.
+Zpracování bylo podobné jako v~předchozí části,
+byla však navíc vyhodnocena rozdělovací funkce elektronů podle energie.
 
 \subsection{Metoda}
 \label{sec:method-eedf}
-Modifikace zapojení popsaného v~části \ref{sec:method-simple}
-umožňuje stanovit derivaci $\didu$ jinou cestou.
-K~napětí na sondě je přidána malá střídavá složka $\ueedf\,\sin{\omega t}$,
-která způsobí nárůst sondového proudu přibližně o~hodnotu:
-\begin{equation}
-	\label{eq:eedf-idiff}
-	\Delta\iprobe = \frac{\ueedf^2}{4}\didu.
-\end{equation}
-Schéma tohoto zapojení je na obrázku č.~\ref{fig:diagram-eedf}.
-
-\begin{figure}[hbp]
-	\centering
-	\input{plots/separation}
-	\caption{Příklad rozdělení dat do sérií se~střídavým napětím a bez~něj.
-		Čárkovaná rozhodovací funkce je klouzavý průměr z~třiceti bodů.}
-	\label{fig:separation}
-\end{figure}
+Aparatura popsaná v~části \ref{sec:method-simple} je upravena
+vložením transformátoru do~sondového obvodu,
+jak je znázorněno na~obrázku č.~\ref{fig:diagram-eedf}.
+Vnější obvod transformátoru je napájen střídavým napětím,
+ve vnitřním obvodu je indukováno malé střídavé napětí,
+které se sčítá s~větším stejnosměrným napětím ze zdroje.
 
 \begin{figure}[hbp]
 	\centering
@@ -435,19 +430,87 @@ Schéma tohoto zapojení je na obrázku č.~\ref{fig:diagram-eedf}.
 \end{figure}
 
 \subsubsection{Rozdělovací funkce elektronů}
+\label{sec:eedf}
 Rozdělovací funkce elektronů podle energie $\eedf$ byla určena ze vztahu:
 \begin{equation}
 	\label{eq:eedf}
-	\eedf = \frac{1}{A} \sqrt{\frac{8\,\masselec}{\elemcharge^3}\,|\uprobe|}
+	\eedf = \frac{1}{\probesurf}
+		\sqrt{\frac{8\,\masselec}{\elemcharge^3}\,|\uprobe|}
 		\,\frac{\mathrm d^2 \ielec}{\mathrm d\uprobe^2},
 \end{equation}
-kde $A$ je plocha sondy, $\masselec$ je hmotnost elektronu
+kde $\probesurf$ je plocha sondy, $\masselec$ je hmotnost elektronu
 a $\elemcharge$ elementární náboj.
-Derivace voltampérové charakteristiky byla spočtena z~naměřených dat
-po vyhlazení polynomem osmého stupně.
+Derivace voltampérové charakteristiky $\didu$ byla stanovena dvěma způsoby,
+což vedlo ke~dvěma variantám rozdělovací funkce.
+
+Prvním způsobem byla numerická derivace naměřených dat po vyhlazení.
+Toto bylo provedeno na voltampérové charakteristice získané bez~střídavého
+napětí, vyhlazení bylo provedeno polynomem osmého stupně,
+stejně jako při určování plazmového potenciálu v~části \ref{sec:plpot}.
+
+Druhým přístupem je využití střídavého napětí, které aparatura umožňuje.
+Předpokládejme, že ke stejnosměrnému napětí sondy je přidána malá
+střídavá složka $\ueedf\cdot\sin{\omega t}$,
+jejíž amplituda je výrazně menší než stejnosměrné napětí.
+V~takovém případě dojde k~nárůstu sondového proudu o~hodnotu,
+již lze v~prvním přiblížení vyjádřit následovně:
+\begin{equation}
+	\label{eq:eedf-idiff}
+	\Delta\iprobe \approx \frac{\ueedf^2}{4}\didu.
+\end{equation}
+Změřením charakteristiky se~střídavým napětím i~bez něj lze přírůstek
+$\Delta\iprobe$ přímo určit.
+
+\subsubsection{Charakterizace rozdělovací funkce}
+Získané rozdělovací funkce byly aproximovány variantami následujícího
+rozdělení pomocí metody nejmenších čtverců:
+\begin{equation}
+	\label{eq:model}
+	\eedf = a \sqrt{\enelec}
+		e^{(\frac{-\enelec}{\boltzmann\tempelec})^\kappa}.
+\end{equation}
+Aproximované parametry vždy zahrnovaly parametr $a$ a~teplotu $\tempelec$.
+V~první variantě bylo $\kappa = 1$, což odpovídá Maxwellovu-Boltzmannovu
+rozdělení.
+V~druhé bylo $\kappa = 2$, takové rozdělení se nazývá Druy\-ve\-steynovo.
+Třetí variantou bylo rozdělení s~obecným exponentem $\kappa$,
+který se stal třetím hledaným parametrem.
+
+\subsubsection{Měřicí procedura}
+Aby bylo možno měřit sondový proud zároveň se~střídavým napětím i~bez něj,
+bylo nutno přizpůsobit průběh experimentu.
+Měření probíhalo souvisle a~střídavý proud byl v~pětisekundových intervalech
+zapínán a~vypínán.
+Tím vznikla jedna datová řada, kterou bylo třeba rozdělit.
+To bylo provedeno spočtením klouzavého průměru oknem o~délce třiceti bodů,
+který sloužil jako rozhodovací funkce.
+Body nad~rozhodovací funkcí byly přisouzeny stavu se~zapnutým střídavým
+napětím, body pod~ní stavu bez~střídavého napětí.
+Oba získané průběhy byly posléze proloženy polynomem osmého stupně,
+aby se překrývaly.
+Příklad tohoto postupu je na~obrázku č.~\ref{fig:separation}.
+
+Vyhodnocení dat bylo prováděno na sadě bez~střídavého napětí,
+data se~střídavým napětím posloužila pouze pro získání přírůstku
+sondového proudu $\Delta\iprobe$.
+
+\begin{figure}[hbp]
+	\centering
+	\input{plots/separation}
+	\caption{Příklad rozdělení dat do sérií se~střídavým napětím a bez~něj.
+		Čárkovaná rozhodovací funkce je klouzavý průměr z~třiceti bodů.}
+	\label{fig:separation}
+\end{figure}
 
 \subsection{Výsledky}
 \label{sec:results-eedf}
+Měření bylo provedeno pro tři kombinace tlaku $\pres$ a~výbojového
+proudu $\idisch$.
+Na obrázku č.~\ref{fig:simple2-vac} je uvedeno zpracování v~rozsahu
+analogickém části~\ref{sec:simple}.
+Rozdělovací funkce $\eedf$ určené podle obou variant derivace $\didu$
+jsou na obrázku č.~\ref{fig:eedf} spolu s~optimalizovanými modelovými
+funkcemi a~jejich parametry.
 
 \begin{figure}[p]
 	\centering
@@ -485,6 +548,7 @@ po vyhlazení polynomem osmého stupně.
 		a~rozdělením s~obecným $\kappa$.}
 	\label{fig:eedf}
 \end{figure}
+
 
 \clearpage
 \section{Dvojná sonda}
