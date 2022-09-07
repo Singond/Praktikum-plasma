@@ -31,7 +31,7 @@ for x = X
 	gp.exec(sprintf("set label \
 \"$\\\\idisch=\\\\SI{%.0f}{\\\\milli\\\\ampere}$\\n\
 $\\\\pres=\\\\SI{%.0f}{\\\\pascal}$\\n\
-$\\\\plpot=\\\\SI{%.0f}{\\\\volt}$\" \
+$\\\\plpotd=\\\\SI{%.0f}{\\\\volt}$\" \
 		at graph 0.1,0.52",
 		x.Id, x.p, x.Up));
 	gp.export(sprintf("plots/simple1-vac-%d.tex", k), "epslatex", "size 8cm,6cm");
@@ -41,10 +41,14 @@ $\\\\plpot=\\\\SI{%.0f}{\\\\volt}$\" \
 	gp.plot(x.U, x.Ie, 'w l ls 2');
 	gp.plot(x.U, x.bfit(x.U), 'w l ls 2 dt 2');
 	gp.plot(x.U, x.cfit(x.U), 'w l ls 2 dt 3');
+	gp.plot(x.Upa, x.bfit(x.Upa), 'w p ls 2');
 	gp.xlabel('potenciál sondy $\\potprobe\\,[\\si{\\volt}]$');
 	gp.ylabel('elektronový proud $\\ielec\\,[\\si{\\micro\\ampere}]$');
 	gp.exec(sprintf("set xrange [%s]", xrange{k}));
 	gp.exec(sprintf("set yrange [%s]", yrange{k}));
+	gp.exec(sprintf(
+		"set label \"$\\\\plpota=\\\\SI{%.1f}{\\\\volt}$\" at %g,%g",
+		x.Upa, x.Upa, x.bfit(x.Upa) / 4));
 	gp.exec("\
 		set xtics 5 \n\
 		set log y \n\
