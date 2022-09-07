@@ -607,7 +607,10 @@ funkcemi a~jejich parametry.
 		skip first n = 1,
 		every head row/.style = {
 			before row = \toprule,
-			after row = \midrule
+			after row = {
+				\midrule
+				\multicolumn{6}{l}{\small\bf{jednoduchá sonda}} \\
+			}
 		},
 		string type,
 		columns = {[index] 0, [index] 1, [index] 2, [index] 3, [index] 4,
@@ -678,7 +681,10 @@ funkcemi a~jejich parametry.
 			]},
 			string replace={0}{},
 		},
-		every row no 6/.style = {before row = \rowsep},
+		every row no 6/.style = {before row = \medskip},
+		every row no 7/.style = {before row = {
+			\multicolumn{6}{l}{\small\bf{jednoduchá sonda se~střídavým napětím}} \\
+		}},
 		every last row/.style = {after row = \bottomrule}
 		]{results/comparison.tsv}
 \end{table}
