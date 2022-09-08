@@ -41,7 +41,7 @@ $\\\\plpotd=\\\\SI{%.0f}{\\\\volt}$\" \
 	gp.exec(sprintf("set xrange [%s]", xrange{k}));
 	gp.exec(sprintf("set yrange [%s]", yrange{k}));
 	gp.exec(sprintf(
-		"set label \"$\\\\plpot=\\\\SI{%.1f}{\\\\volt}$\" at %g,%g",
+		"set label \"$\\\\plpota=\\\\SI{%.1f}{\\\\volt}$\" at %g,%g",
 		x.Upa, x.Upa, x.bfit(x.Upa) / 4));
 	gp.exec("\
 		set xtics 4 \n\
