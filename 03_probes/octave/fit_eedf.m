@@ -49,6 +49,26 @@ function r = fit_eedf(x, df)
 	r.mb.f = @(E) exp(beta(1) + beta(2).*E) .* sqrt(E);
 	r.mb.T = r.mb.b * elemcharge / boltzmann;
 
+	## Fit Maxwell-Boltzmann distribution non-linearly
+	## f(E) = a * sqrt(E) * exp(-E/b)
+	model = @(E, beta) sqrt(E) .* beta(1) .* exp(-E./beta(2));
+	beta0 = [r.mb.a 10000 * boltzmann / elemcharge];
+	try
+		[fm, beta, cvg, iter, ~, covp] = leasqr(E, f, beta0, model);
+		r.mbnl.beta = beta;
+		r.mbnl.f = @(E) model(E, beta);
+		r.mbnl.a = beta(1);
+		r.mbnl.b = beta(2);
+		r.mbnl.T = r.mbnl.b * elemcharge / boltzmann;
+		if (!cvg)
+			warning("Maxwell-Boltzmann fit did not converge");
+		elseif (iter == 1)
+			warning("Maxwell-Boltzmann fit stopped after first iteration");
+		endif
+	catch err
+		warning(["Failed to fit Maxwell-Boltzmann distribution: " err.message]);
+	end_try_catch
+
 	## Fit Druyvesteyn distribution (linearized)
 	## f(E) = a * sqrt(E) * exp((-E/b)^2)
 	beta = ols(log(f) - log(E)/2, [ones(size(E)) E.^2]);
@@ -58,6 +78,26 @@ function r = fit_eedf(x, df)
 	r.dr.b = 1/sqrt(abs(beta(2)));  # XXX
 	r.dr.f = @(E) exp(beta(1) + beta(2).*E.^2) .* sqrt(E);
 	r.dr.T = r.dr.b * elemcharge / boltzmann;
+
+	## Fit Druyvesteyn distribution non-linearly
+	## f(E) = a * sqrt(E) * exp((-E/b)^2)
+	model = @(E, beta) sqrt(E) .* beta(1) .* exp(-(E./beta(2)).^2);
+	beta0 = [r.mb.a 10000 * boltzmann / elemcharge];
+	try
+		[fm, beta, cvg, iter, ~, covp] = leasqr(E, f, beta0, model);
+		r.drnl.beta = beta;
+		r.drnl.f = @(E) model(E, beta);
+		r.drnl.a = beta(1);
+		r.drnl.b = beta(2);
+		r.drnl.T = r.drnl.b * elemcharge / boltzmann;
+		if (!cvg)
+			warning("Druyvesteyn fit did not converge");
+		elseif (iter == 1)
+			warning("Druyvesteyn fit stopped after first iteration");
+		endif
+	catch err
+		warning(["Failed to fit Druyvesteyn distribution: " err.message]);
+	end_try_catch
 
 	## Fit general distribution
 	## f(E) = a * sqrt(E) * exp((-E/b)^c)
