@@ -80,12 +80,12 @@ $\\\\plpotd=\\\\SI{%.0f}{\\\\volt}$\" \
 			x.fita.gen.T, x.fita.kappa));
 	endif
 	gp.xlabel('energie $\\enelec\\,[\\si\\electronvolt]$');
-	gp.ylabel('$\\eedf\\,[\\SI{e19}{\\per\\electronvolt}]$');
+	gp.ylabel('$\\eedf$');
 	gp.exec("\
-		set lmargin 5 \n\
-		set rmargin 32 \n\
-		set ytics nomirror \n\
-		set y2tics in nomirror \n\
+		set lmargin 2 \n\
+		set rmargin 30 \n\
+		unset ytics \n\
+		unset y2tics \n\
 		set key outside center right reverse Left \n\
 		set key samplen 2 \n\
 		set key width -6 \n\
