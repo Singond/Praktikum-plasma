@@ -53,8 +53,13 @@ function r = fit_eedf(x, df)
 	## f(E) = a * sqrt(E) * exp(-E/b)
 	model = @(E, beta) sqrt(E) .* beta(1) .* exp(-E./beta(2));
 	beta0 = [r.mbl.a 10000 * boltzmann / elemcharge];
+	opts.bounds = [
+		0 Inf
+		0 Inf
+	];
 	try
-		[fm, beta, cvg, iter, ~, covp] = leasqr(E, f, beta0, model);
+		[fm, beta, cvg, iter, ~, covp] = leasqr(E, f,
+			beta0, model, [], [], [], [], [], opts);
 		r.mbnl.beta = beta;
 		r.mbnl.f = @(E) model(E, beta);
 		r.mbnl.a = beta(1);
@@ -86,8 +91,13 @@ function r = fit_eedf(x, df)
 	## f(E) = a * sqrt(E) * exp((-E/b)^2)
 	model = @(E, beta) sqrt(E) .* beta(1) .* exp(-(E./beta(2)).^2);
 	beta0 = [r.drl.a 10000 * boltzmann / elemcharge];
+	opts.bounds = [
+		0 Inf
+		0 Inf
+	];
 	try
-		[fm, beta, cvg, iter, ~, covp] = leasqr(E, f, beta0, model);
+		[fm, beta, cvg, iter, ~, covp] = leasqr(E, f,
+			beta0, model, [], [], [], [], [], opts);
 		r.drnl.beta = beta;
 		r.drnl.f = @(E) model(E, beta);
 		r.drnl.a = beta(1);
@@ -109,8 +119,14 @@ function r = fit_eedf(x, df)
 	## f(E) = a * sqrt(E) * exp((-E/b)^c)
 	model = @(E, beta) sqrt(E) .* beta(1) .* exp(-(E./beta(2)).^beta(3));
 	beta0 = [r.drl.a r.drl.b 2];
+	opts.bounds = [
+		0 Inf
+		0 Inf
+		0 Inf
+	];
 	try
-		[fm, beta, cvg, iter, ~, covp] = leasqr(E, f, beta0, model);
+		[fm, beta, cvg, iter, ~, covp] = leasqr(E, f,
+			beta0, model, [], [], [], [], [], opts);
 		r.gen.beta = beta;
 		r.gen.f = @(E) model(E, beta);
 		r.gen.a = beta(1);
