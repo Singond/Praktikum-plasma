@@ -112,6 +112,11 @@ function r = fit_eedf(x, df)
 		r.gen.c = beta(3);
 		r.gen.T = r.gen.b * elemcharge / boltzmann;
 		r.kappa = r.gen.c;
+		if (!cvg)
+			warning("General fit did not converge");
+		elseif (iter == 1)
+			warning("General fit stopped after first iteration");
+		endif
 	catch err
 		warning(["Failed to fit general distribution: " err.message]);
 	end_try_catch
