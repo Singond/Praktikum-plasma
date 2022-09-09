@@ -13,13 +13,13 @@ function plot_eedf(x)
 	plot(x.E, x.f, "", "color", color);
 
 	## Maxwell-Boltzmann distribution fit
-	plot(x.E, x.mb.f(x.E), "b--", "color", color);
+	plot(x.E, x.mbl.f(x.E), "b--", "color", color);
 	if (isfield(x, "mbnl") && isfield(x.mbnl, "f"))
 		plot(x.E, x.mbnl.f(x.E), "b--", "color", color);
 	endif
 
 	## Druyvesteyn distribution fit
-	plot(x.E, x.dr.f(x.E), "b:", "color", color);
+	plot(x.E, x.drl.f(x.E), "b:", "color", color);
 	if (isfield(x, "drnl") && isfield(x.drnl, "f"))
 		## Have non-linear Druyvesteyn fit: Do not print linearized one
 		plot(x.E, x.drnl.f(x.E), "b:", "color", color);

@@ -42,17 +42,17 @@ function r = fit_eedf(x, df)
 	## Fit Maxwell-Boltzmann distribution (linearized)
 	## f(E) = a * sqrt(E) * exp(-E/b)
 	beta = ols(log(f) - log(E)/2, [ones(size(E)) E]);
-	r.mb = struct();
-	r.mb.beta = beta;
-	r.mb.a = exp(beta(1));
-	r.mb.b = -1/beta(2);
-	r.mb.f = @(E) exp(beta(1) + beta(2).*E) .* sqrt(E);
-	r.mb.T = r.mb.b * elemcharge / boltzmann;
+	r.mbl = struct();
+	r.mbl.beta = beta;
+	r.mbl.a = exp(beta(1));
+	r.mbl.b = -1/beta(2);
+	r.mbl.f = @(E) exp(beta(1) + beta(2).*E) .* sqrt(E);
+	r.mbl.T = r.mbl.b * elemcharge / boltzmann;
 
 	## Fit Maxwell-Boltzmann distribution non-linearly
 	## f(E) = a * sqrt(E) * exp(-E/b)
 	model = @(E, beta) sqrt(E) .* beta(1) .* exp(-E./beta(2));
-	beta0 = [r.mb.a 10000 * boltzmann / elemcharge];
+	beta0 = [r.mbl.a 10000 * boltzmann / elemcharge];
 	try
 		[fm, beta, cvg, iter, ~, covp] = leasqr(E, f, beta0, model);
 		r.mbnl.beta = beta;
@@ -65,24 +65,27 @@ function r = fit_eedf(x, df)
 		elseif (iter == 1)
 			warning("Maxwell-Boltzmann fit stopped after first iteration");
 		endif
+		r.mb = r.mbnl;
 	catch err
 		warning(["Failed to fit Maxwell-Boltzmann distribution: " err.message]);
+		warning("Falling back to linearized fit");
+		r.mb = r.mbl;
 	end_try_catch
 
 	## Fit Druyvesteyn distribution (linearized)
 	## f(E) = a * sqrt(E) * exp((-E/b)^2)
 	beta = ols(log(f) - log(E)/2, [ones(size(E)) E.^2]);
-	r.dr = struct();
-	r.dr.beta = beta;
-	r.dr.a = exp(beta(1));
-	r.dr.b = 1/sqrt(abs(beta(2)));  # XXX
-	r.dr.f = @(E) exp(beta(1) + beta(2).*E.^2) .* sqrt(E);
-	r.dr.T = r.dr.b * elemcharge / boltzmann;
+	r.drl = struct();
+	r.drl.beta = beta;
+	r.drl.a = exp(beta(1));
+	r.drl.b = 1/sqrt(abs(beta(2)));  # XXX
+	r.drl.f = @(E) exp(beta(1) + beta(2).*E.^2) .* sqrt(E);
+	r.drl.T = r.drl.b * elemcharge / boltzmann;
 
 	## Fit Druyvesteyn distribution non-linearly
 	## f(E) = a * sqrt(E) * exp((-E/b)^2)
 	model = @(E, beta) sqrt(E) .* beta(1) .* exp(-(E./beta(2)).^2);
-	beta0 = [r.mb.a 10000 * boltzmann / elemcharge];
+	beta0 = [r.drl.a 10000 * boltzmann / elemcharge];
 	try
 		[fm, beta, cvg, iter, ~, covp] = leasqr(E, f, beta0, model);
 		r.drnl.beta = beta;
@@ -95,14 +98,17 @@ function r = fit_eedf(x, df)
 		elseif (iter == 1)
 			warning("Druyvesteyn fit stopped after first iteration");
 		endif
+		r.dr = r.drnl;
 	catch err
 		warning(["Failed to fit Druyvesteyn distribution: " err.message]);
+		warning("Falling back to linearized fit");
+		r.dr = r.drl;
 	end_try_catch
 
 	## Fit general distribution
 	## f(E) = a * sqrt(E) * exp((-E/b)^c)
 	model = @(E, beta) sqrt(E) .* beta(1) .* exp(-(E./beta(2)).^beta(3));
-	beta0 = [r.dr.a r.dr.b 2];
+	beta0 = [r.drl.a r.drl.b 2];
 	try
 		[fm, beta, cvg, iter, ~, covp] = leasqr(E, f, beta0, model);
 		r.gen.beta = beta;
