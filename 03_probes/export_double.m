@@ -34,3 +34,23 @@ $\\\\pres=\\\\SI{%.0f}{\\\\pascal}$\" \
 
 	k++;
 endfor
+
+gp = gnuplotter();
+gp.load("../plotsettings.gp");
+for k = 1:numel(D)
+	x = D(k);
+	gp.plot(x.U(1:10:end), x.Im(1:10:end), sprintf(
+		'w p ls %d pt %d t "$\\\\SI{%g}{\\\\milli\\\\ampere}, \\\\SI{%g}{\\\\pascal}$"',
+		k, 2 + k*2, x.Id, x.p));
+	gp.plot(x.U, x.fitg.f(x.U), sprintf(
+		'w l ls %d dt 1 t ""', k));
+endfor
+##gp.plot(nan, nan, 'w p ls 1 pt 4 t "data"');
+##gp.plot(nan, nan, 'w l ls 1 dt 1 t "aproximace"');
+gp.xlabel('napětí sondy $\\udoubleprobe\\,[\\si{\\volt}]$');
+gp.ylabel('sondový proud $\\iprobe\\,[\\si{\\micro\\ampere}]$');
+gp.exec("\
+	set key top left reverse Left samplen 2 height 2 \n\
+");
+gp.export(sprintf("plots/double-fit.tex", k),
+	"epslatex", "size 16cm,8cm");
