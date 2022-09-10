@@ -40,14 +40,15 @@ ${octave_deps}
 	octave --norc export_simple2.m
 
 plots/double-%.tex plots/double-%.eps: export_double.m probedouble.m \
-${octave_deps}
+octave/plasmaprops_double.m ${octave_deps}
 	octave --norc export_double.m
 
 plots/separation.tex plots/separation.eps: export_separation.m probesimple2.m \
 ${octave_deps}
 	octave --norc export_separation.m
 
-results/comparison.tsv: probesimple1.m probesimple2.m ${octave_deps}
+results/comparison.tsv: export_comparison.m probesimple1.m probesimple2.m \
+${octave_deps}
 	octave --norc export_comparison.m
 
 .PHONY: tex_resources
