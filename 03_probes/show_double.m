@@ -57,7 +57,7 @@ for k = 1:numel(D)
 	set(gca, "colororderindex", k);
 	plot(d.U, d.Im, "displayname", sprintf("%.0f mA, %.0f Pa", d.Id, d.p));
 
-	## Left fit
+	## Fit
 	set(gca, "colororderindex", k);
 	plot(d.U, d.fitg.f(d.U), "--", "handlevisibility", "off");
 
