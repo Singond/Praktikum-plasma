@@ -73,6 +73,14 @@ function x = plasmaprops_double(x)
 		x.fitg.cvg = cvg;
 		x.fitg.iter = iter;
 		x.fitg.f = @(U) model(U, beta);
+		x.fitg.didu = @(U) beta(1) * beta(2)...
+			* (1 - tanh(beta(2) * U + beta(3)).^2) + beta(4);
+		## Electron temperature and density from fit
+		x.fitg.Te = elemcharge * (x.Ip/2) / (2 * boltzmann * x.fitg.didu(0));
+		x.fitg.ne = x.Ip*1e-6...
+			/ (2 * 0.61 * probesurf * sqrt(boltzmann * x.fitg.Te / ionmass));
+		x.fitg.ve = sqrt(8 * boltzmann * x.fitg.Te / (pi * ionmass));
+		x.fitg.ne2 = 2 * x.Ip*1e-6 / (S * elemcharge * x.fitg.ve);
 	catch err
 		warning(["Failed to fit general distribution: " err.message]);
 	end_try_catch

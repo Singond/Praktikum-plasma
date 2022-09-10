@@ -26,7 +26,8 @@ figs += $(shell echo plots/separation.{eps,tex})
 
 octave_deps = ../plotsettings.gp common.m
 
-tex_resources = build/plots ${figs} results/comparison.tsv
+tex_resources = build/plots ${figs} \
+results/comparison.tsv results/comparison-double.tsv
 
 build/plots:
 	mkdir -p build/plots
@@ -49,6 +50,10 @@ ${octave_deps}
 
 results/comparison.tsv: export_comparison.m probesimple1.m probesimple2.m \
 ${octave_deps}
+	octave --norc export_comparison.m
+
+results/comparison-double.tsv: export_comparison.m probedouble.m \
+octave/plasmaprops_double.m ${octave_deps}
 	octave --norc export_comparison.m
 
 .PHONY: tex_resources

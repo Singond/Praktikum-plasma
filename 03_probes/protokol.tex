@@ -114,6 +114,9 @@
 \newcommand\potii{V_2}
 \newcommand\udouble{U_\mathrm{d}}
 \newcommand\udoubleprobe{\udouble}
+\newcommand\denseleca{n_\mathrm{e,a}}
+\newcommand\denselecf{n_\mathrm{e,f}}
+\newcommand\denselecfii{n_{\mathrm{e,f}2}}
 
 \begin{document}
 \header
@@ -695,7 +698,86 @@ funkcemi a~jejich parametry.
 			\multicolumn{6}{l}{\small\bf{jednoduchá sonda se~střídavým napětím}} \\
 		}},
 		every last row/.style = {after row = \bottomrule}
-		]{results/comparison.tsv}
+	]{results/comparison.tsv}
+\end{table}
+\shorthandon{-}
+
+\shorthandoff{-}
+\begin{table}[bh]
+	\centering
+	\caption{Výsledky experimentu s~dvojnou sondou.}
+	\label{tab:comparison-double}
+	\sisetup{
+		table-alignment-mode = format,
+		table-number-alignment = center,
+	}
+	\pgfplotstabletypeset[
+		outfile = results/comparison-double.tex,
+		header = false,
+		col sep = tab,
+		skip first n = 1,
+		every head row/.style = {
+			before row = \toprule,
+			after row = {
+				\midrule
+			}
+		},
+		string type,
+		columns = {[index] 0, [index] 1, [index] 2, [index] 3, [index] 4,
+			[index] 5, [index] 6},
+		columns/0/.style = {
+			column name = $\pres\ [\si{\pascal}]$,
+			column type = {S[table-format = 3.0]},
+		},
+		columns/1/.style = {
+			column name = $\idisch\ [\si{\milli\ampere}]$,
+			column type = {S[table-format = 2.2]},
+		},
+		columns/2/.style = {
+			column name = $\tempeleca\ [\si{\kelvin}]$,
+			column type = {S[
+				table-format = 5.0,
+				round-mode = figures,
+				round-precision = 3
+			]},
+		},
+		columns/3/.style = {
+			column name = $\tempelecf\ [\si{\kelvin}]$,
+			column type = {S[
+				table-format = 5.0,
+				round-mode = figures,
+				round-precision = 3
+			]},
+		},
+		display columns/4/.style = {
+			column name = $\denseleca\ [\si{\per\metre\cubed}]$,
+			column type = {S[
+				table-format = 1.3e2,
+				round-mode = places,
+				round-precision = 3,
+				exponent-mode = scientific
+			]},
+		},
+		columns/5/.style = {
+			column name = $\denselecf\ [\si{\per\metre\cubed}]$,
+			column type = {S[
+				table-format = 1.3e2,
+				round-mode = places,
+				round-precision = 3,
+				exponent-mode = scientific
+			]},
+		},
+		columns/6/.style = {
+			column name = $\denselecfii\ [\si{\per\metre\cubed}]$,
+			column type = {S[
+				table-format = 1.3e2,
+				round-mode = places,
+				round-precision = 3,
+				exponent-mode = scientific
+			]},
+		},
+		every last row/.style = {after row = \bottomrule}
+	]{results/comparison-double.tsv}
 \end{table}
 \shorthandon{-}
 
