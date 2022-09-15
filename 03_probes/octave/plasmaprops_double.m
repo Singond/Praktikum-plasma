@@ -70,15 +70,16 @@ function x = plasmaprops_double(x)
 	try
 		[Imf, beta, cvg, iter, ~, covp] = leasqr(x.U, x.Im, beta0, model);
 		x.fitg.beta = beta;
+		x.fitg.I0 = beta(1);
 		x.fitg.cvg = cvg;
 		x.fitg.iter = iter;
 		x.fitg.f = @(U) model(U, beta);
 		x.fitg.didu = @(U) beta(1) * beta(2)...
 			* (1 - tanh(beta(2) * U + beta(3)).^2) + beta(4);
 		## Electron temperature and density from fit
-		x.fitg.Te = elemcharge * (x.Ip/2) / (2 * boltzmann * x.fitg.didu(0));
-		x.fitg.ne = x.Ip*1e-6...
-			/ (2 * 0.61 * probesurf * sqrt(boltzmann * x.fitg.Te / ionmass));
+		x.fitg.Te = elemcharge / (boltzmann * beta(2));
+		x.fitg.ne = x.fitg.I0*1e-6...
+			/ (0.61 * probesurf * sqrt(boltzmann * x.fitg.Te / ionmass));
 		x.fitg.ve = sqrt(8 * boltzmann * x.fitg.Te / (pi * ionmass));
 		x.fitg.ne2 = 2 * x.Ip*1e-6 / (S * elemcharge * x.fitg.ve);
 	catch err
