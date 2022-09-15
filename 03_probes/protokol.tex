@@ -97,6 +97,7 @@
 \newcommand\ueedf{\varepsilon}
 \newcommand\probesurf{S}
 \newcommand\sheathsurf{S_\mathrm{s}}
+\newcommand\tempion{T_\mathrm{i}}
 \newcommand\tempelec{T_\mathrm{e}}
 \newcommand\tempeleca{T_\mathrm{e,a}}
 \newcommand\tempelecp{T_\mathrm{e,p}}
@@ -117,6 +118,9 @@
 \newcommand\denseleca{n_\mathrm{e,a}}
 \newcommand\denselecf{n_\mathrm{e,f}}
 \newcommand\denselecfii{n_{\mathrm{e,f}2}}
+\newcommand\speedion{v_\mathrm{i}}
+\newcommand\speedelec{v_\mathrm{e}}
+\newcommand\eqresist{R_0}
 
 \begin{document}
 \header
@@ -556,9 +560,15 @@ funkcemi a~jejich parametry.
 \clearpage
 \section{Dvojná sonda}
 \label{sec:double}
+% \renewcommand\iion{I_\mathrm{i}}
+Třetí sada pokusů se zabývala dvojnou sondou.
+Zkoumanými veličinami byly především elektronová teplota a~hustota.
 
 \subsection{Metoda}
 \label{sec:method-double}
+Schéma aparatury je na~obrázku č.~\ref{fig:diagram-double}.
+Záznam napětí a~proudu je automatizován stejným způsobem jako
+v~předchozích částech.
 
 \begin{figure}[hbp]
 	\centering
@@ -567,6 +577,83 @@ funkcemi a~jejich parametry.
 		Převzato z~\autocite{assignment-doubleprobe}.}
 	\label{fig:diagram-double}
 \end{figure}
+
+\subsubsection{Iontový a~elektronový proud}
+Iontové proudy $\iioni$ a~$\iionii$ pro nulové napětí na sondě $\udouble$
+byly určeny průsečíkovou metodou z~celkového proudu.
+Proudy ve střední části a v~obou větvích byly proloženy přímkami.
+Průsečík přímky nasyceného proudu v~příslušné větvi s~přímkou proloženou
+střední částí byl pomocný bod~X.
+Iontový proud byl odečten z~přímky nasyceného proudu v~jedné pětině
+úsečky vedoucí od osy~$\idouble$ k~bodu~X.
+
+Elektronové proudy byly určeny jako rozdíl příslušného iontového proudu
+a~celkového proudu při nulovém napětí na~sondě:
+\begin{align}
+	\label{eq:ieleci}
+	\ieleci  &= \iioni  - \idouble(\udouble = 0) \\
+	\ielecii &= \iionii - \idouble(\udouble = 0)
+\end{align}
+
+\subsubsection{Elektronová teplota}
+\label{sec:double-tempelec}
+Elektronová teplota byla určena dvěma metodami.
+V~první metodě byl nejprve stanoven takzvaný ekvivalentní odpor
+dvojné sondy~$\eqresist$ jako směrnice přímky proložené střední
+částí charakteristiky.
+Teplota pak byla spočtena podle vztahu:
+\begin{equation}
+	\label{eq:tempeleca-double}
+	\tempeleca = \frac{\elemcharge}{\boltzmann}
+		(G - G^2) \eqresist \sum \iion,
+\end{equation}
+kde veličina $G$ je poměr proudů:
+\begin{equation}
+	\label{eq:g}
+	\frac{\ielecii}{\sum \iion}.
+\end{equation}
+
+\newcommand\paramc{\alpha}
+\newcommand\parame{\beta}
+V~druhé variantě byla charakteristika proložena následující zobecněnou
+charakteristikou (srovnej ideální charakteristiku \eqref{eq:double-ideal})
+a~teplota určena z~nalezeného parametru:
+\begin{equation}
+	\label{eq:double-fit}
+	\idouble = \iionsat\,
+		\tgh\left(
+			\frac{\elemcharge\udouble}{\boltzmann\tempelec} + \paramc
+		\right)
+		+ \parame.
+\end{equation}
+
+\subsubsection{Elektronová hustota}
+Koncentrace elektronů byla stanovena nepřímo z~koncentrace iontů
+pomocí předpokladu, že v~kvazineutrálním plazmatu bez vícenásobné ionizace
+se tyto hustoty musejí rovnat.
+Iontová hustota byla určena z~iontového proudu pomocí vztahu:
+\begin{align}
+	\label{eq:denselec-iion}
+	\denselec &\approx \dension = \frac{4 \iion}
+		{\sheathsurf \, \denselec \, \langle\speedion\rangle} &
+	\langle\speedion\rangle &= \sqrt\frac{8 \boltzmann \tempion}{\pi\massion},
+\end{align}
+kde $\langle\speedion\rangle$ je střední rychlost iontů
+a~$\sheathsurf$ je plocha stěnové vrstvy sondy
+odhadnutá na~$\SI{5}{\centi\meter\squared}$.
+Iontový proud na jednu sondu $\iion$ byl spočten jako průměr proudů
+$\iioni$ a~$\iionii$.
+Teplota iontů $\tempion$ nebyla známa, zde byla nahrazena teplotou elektronů.
+
+Pro porovnání byla teplota také spočtena z~nasyceného iontového proudu
+ze vztahu:
+\begin{equation}
+	\label{eq:denselec-iionsat}
+	\iionsat = \num{0.61} \denselec\sheathsurf
+		\sqrt\frac{\boltzmann\tempelec}{\massion},
+\end{equation}
+kde nasycený proud $\iionsat$ byl určen z~parametrů proložené
+funkce~\eqref{eq:double-fit}.
 
 \subsection{Výsledky}
 \label{sec:results-double}
