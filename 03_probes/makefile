@@ -27,7 +27,9 @@ figs += $(shell echo plots/separation.{eps,tex})
 octave_deps = ../plotsettings.gp common.m
 
 tex_resources = build/plots ${figs} \
-results/comparison.tsv results/comparison-double.tsv
+results/comparison.tsv results/comparison-double.tsv \
+img/vac-simple.pdf img/vac-double.png img/probe-double.png \
+img/diagram-simple.png img/diagram-eedf.png img/diagram-double.png
 
 build/plots:
 	mkdir -p build/plots
