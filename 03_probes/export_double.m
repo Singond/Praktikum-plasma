@@ -17,8 +17,8 @@ for x = D
 		set arrow nohead from first 0, graph 0 to first 0, graph 1 lc 'black' dt 2 \n\
 		set arrow nohead from graph 0, first 0 to graph 1, first 0 lc 'black' dt 2 \n\
 		");
-	gp.xlabel('napětí sondy $\\udoubleprobe\\,[\\si{\\volt}]$');
-	gp.ylabel('sondový proud $\\iprobe\\,[\\si{\\micro\\ampere}]$');
+	gp.xlabel('napětí sondy $\\udouble\\,[\\si{\\volt}]$');
+	gp.ylabel('cirkulační proud $\\idouble\\,[\\si{\\micro\\ampere}]$');
 	gp.exec("\
 		set xtics 4 \n\
 		set key bottom right reverse Left samplen 2 height 1 \n\
@@ -47,8 +47,8 @@ for k = 1:numel(D)
 endfor
 ##gp.plot(nan, nan, 'w p ls 1 pt 4 t "data"');
 ##gp.plot(nan, nan, 'w l ls 1 dt 1 t "aproximace"');
-gp.xlabel('napětí sondy $\\udoubleprobe\\,[\\si{\\volt}]$');
-gp.ylabel('sondový proud $\\iprobe\\,[\\si{\\micro\\ampere}]$');
+gp.xlabel('napětí sondy $\\udouble\\,[\\si{\\volt}]$');
+gp.ylabel('cirkulační proud $\\idouble\\,[\\si{\\micro\\ampere}]$');
 gp.exec("\
 	set key top left reverse Left samplen 2 height 2 \n\
 ");
