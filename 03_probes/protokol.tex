@@ -690,14 +690,15 @@ je v~tabulce č.~\ref{tab:comparison-double}.
 
 \section{Porovnání}
 \label{sec:comparison}
-Zde je souhrn výsledků ze~všech tří experimentů.
+Pro přehlednost je uveden souhrn výsledků ze~všech tří experimentů.
 Výsledky pokusů s~jednoduchou sondou jsou shrnuty
 v~tabulce č.~\ref{tab:comparison}
 a~výsledky týkající se dvojné sondy jsou
 v~tabulce č.~\ref{tab:comparison-double}.
 
 \shorthandoff{-}
-\begin{table}[bh]
+\begin{table}
+	\RawFloats
 	\centering
 	\caption{Porovnání výsledků různých metod.
 		Plazmový potenciál $\plpota$ byl určen metodou asymptot,
@@ -799,12 +800,9 @@ v~tabulce č.~\ref{tab:comparison-double}.
 		}},
 		every last row/.style = {after row = \bottomrule}
 	]{results/comparison.tsv}
-\end{table}
-\shorthandon{-}
 
-\shorthandoff{-}
-\begin{table}[bh]
-	\centering
+	\bigskip\bigskip
+
 	\caption{Výsledky experimentu s~dvojnou sondou.
 		Teplota $\tempeleca$ byla stanovena z~ekvivalentního odporu
 		podle vztahu~\eqref{eq:tempeleca-double}.
