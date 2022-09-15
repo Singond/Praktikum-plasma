@@ -657,8 +657,16 @@ funkce~\eqref{eq:double-fit}.
 
 \subsection{Výsledky}
 \label{sec:results-double}
+Byly naměřeny čtyři charakteristiky pro různé výbojové proudy $\idisch$
+a~tlaky $\pres$.
+Naměřená data jsou na obrázku č.~\ref{fig:double-vac} spolu s~iontovými proudy
+určenými průsečikovou metodou.
+Aproximace naměřených dat modelovou funkcí~\eqref{eq:double-fit}
+je na obrázku č.~\ref{fig:double-fit}.
+Teplota a~koncentrace elektronů určená různými metodami
+je v~tabulce č.~\ref{tab:comparison-double}.
 
-\begin{figure}
+\begin{figure}[htbp]
 	\centering
 	\input{plots/double-vac-1}
 	\input{plots/double-vac-2}
@@ -792,7 +800,15 @@ funkce~\eqref{eq:double-fit}.
 \shorthandoff{-}
 \begin{table}[bh]
 	\centering
-	\caption{Výsledky experimentu s~dvojnou sondou.}
+	\caption{Výsledky experimentu s~dvojnou sondou.
+		Teplota $\tempeleca$ byla stanovena z~ekvivalentního odporu
+		podle vztahu~\eqref{eq:tempeleca-double}.
+		Koncentrace $\denseleca$ byla určena z~teploty $\tempeleca$
+		pomocí vztahu \eqref{eq:denselec-iion}.
+		Teplota $\tempelecf$ je z~aproximace~\eqref{eq:double-fit},
+		z~ní byla určena koncentrace $\denselecf$ podle
+		vztahu~\ref{eq:denselec-iionsat}
+		a~$\denselecfii$ podle vztahu~\eqref{eq:denselec-iion}.}
 	\label{tab:comparison-double}
 	\sisetup{
 		table-alignment-mode = format,
